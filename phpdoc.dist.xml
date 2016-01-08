@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<phpdoc>
+  <title>FluentHtml</title>
+  <parser>
+    <target>tmp/phpdoc/output</target>
+  </parser>
+  <transformer>
+    <target>docs/api</target>
+  </transformer>
+  <transformations>
+    <template name="responsive" />
+  </transformations>
+  <files>
+    <directory>src</directory>
+    <ignore>src/Facades/*</ignore>
+  </files>
+</phpdoc>
