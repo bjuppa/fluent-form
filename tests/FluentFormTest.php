@@ -1,8 +1,8 @@
 <?php
 
-include('tests/FluentHtmlTestCase.php');
+use FewAgency\FluentHtml\Testing\ComparesFluentHtml;
 
-class FluentFormTest extends FluentHtmlTestCase
+class FluentFormTest extends PHPUnit_Framework_TestCase
 {
-
+    use ComparesFluentHtml;
 }
