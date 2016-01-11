@@ -2,7 +2,7 @@
 namespace FewAgency\FluentForm\FormBlockContainer;
 
 use FewAgency\FluentHtml\FluentHtml;
-use FewAgency\FluentForm\FormInput\HiddenInput;
+use FewAgency\FluentForm\FormInput\HiddenInputElement;
 
 abstract class FormBlockContainer extends FluentHtml
 {
@@ -14,7 +14,7 @@ abstract class FormBlockContainer extends FluentHtml
 
     public function withHiddenInput($name, $value)
     {
-        $this->withContent(HiddenInput::create($name, $value));
+        $this->withContent(HiddenInputElement::create($name, $value));
     }
 
     /* TODO: implement these methods on FormBlockContainer

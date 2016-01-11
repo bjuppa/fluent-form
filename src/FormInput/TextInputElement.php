@@ -1,7 +1,7 @@
 <?php
 namespace FewAgency\FluentForm\FormInput;
 
-class TextInput extends InputElement
+class TextInputElement extends InputElement
 {
 
 }

@@ -1,7 +1,7 @@
 <?php
 namespace FewAgency\FluentForm\FormInput;
 
-class HiddenInput extends InputElement
+class HiddenInputElement extends InputElement
 {
     /**
      * InputElement constructor.
