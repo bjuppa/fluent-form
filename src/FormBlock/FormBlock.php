@@ -1,10 +1,27 @@
 <?php
 namespace FewAgency\FluentHtml\FormBlock;
 
+use FewAgency\FluentForm\FormInput\FormInput;
 use FewAgency\FluentHtml\FluentHtml;
 
 abstract class FormBlock extends FluentHtml
 {
+    /**
+     * FormBlock constructor.
+     * @param FormInput $input element
+     */
+    public function __construct(FormInput $input)
+    {
+        //TODO: add label element
+        parent::__construct('div', $input);
+    }
+
+    public static function create(FormInput $input)
+    {
+        return new static($input);
+    }
+
+
     /* TODO: implement these methods on FormBlock:
     ->withLabel(text)
     ->getForm()
