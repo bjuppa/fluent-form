@@ -3,7 +3,7 @@ namespace FewAgency\FluentForm\FormInput;
 
 use FewAgency\FluentHtml\FluentHtml;
 
-class InputElement extends FluentHtml
+abstract class InputElement extends FluentHtml
 {
     /**
      * InputElement constructor.
@@ -24,7 +24,7 @@ class InputElement extends FluentHtml
      */
     public static function create($name, $type = 'text')
     {
-        return parent::create($name, $type);
+        return new static($name, $type);
     }
 
     /**
@@ -36,6 +36,7 @@ class InputElement extends FluentHtml
     public function withValue($value)
     {
         $this->withAttribute('value', $value);
+
         return $this;
     }
 
