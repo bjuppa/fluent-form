@@ -21,7 +21,7 @@ class FluentForm extends FormBlockContainer
 
     public static function create()
     {
-        return parent::create();
+        return new static();
     }
 
     /**
