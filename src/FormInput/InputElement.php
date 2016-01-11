@@ -5,6 +5,8 @@ use FewAgency\FluentHtml\FluentHtml;
 
 abstract class InputElement extends FluentHtml
 {
+    use FormInput;
+
     /**
      * InputElement constructor.
      * @param callable|string $name of input
@@ -13,8 +15,9 @@ abstract class InputElement extends FluentHtml
     public function __construct($name, $type = 'text')
     {
         $tag_contents = null;
-        $tag_attributes = compact('name', 'type');
-        parent::__construct('input', $tag_contents, $tag_attributes);
+        parent::__construct('input');
+        $this->withName($name);
+        $this->withAttribute('type', $type);
     }
 
     /**
