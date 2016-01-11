@@ -19,6 +19,11 @@ class FluentForm extends FormBlockContainer
         parent::__construct($html_element_name, $tag_contents, $tag_attributes);
     }
 
+    public static function create()
+    {
+        return parent::create();
+    }
+
     /**
      * Set action url on form
      * @param string|callable|false $url to set as form's action
@@ -45,6 +50,19 @@ class FluentForm extends FormBlockContainer
     public function hasMethodGet()
     {
         return $this->hasMethod('GET');
+    }
+
+    /**
+     * Set a hidden CSRF token input on the form
+     * @param $token string|callable
+     * @param string $name optional name for the token input
+     * @return $this|FluentForm
+     */
+    public function withToken($token, $name = '_token')
+    {
+        $this->withHiddenInput($name, $token);
+
+        return $this;
     }
 
     /*
