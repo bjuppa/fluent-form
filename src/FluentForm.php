@@ -69,4 +69,12 @@ class FluentForm extends FormBlockContainer
 TODO: implement these methods on FluentForm
 ->withMethod(method, name=_method) sets hidden REST method if needed
     */
+
+    /**
+     * Overrides method in FormBlockContainer
+     * @return $this
+     */
+    public function getForm() {
+        return $this;
+    }
 }
