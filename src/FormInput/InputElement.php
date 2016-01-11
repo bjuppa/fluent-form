@@ -3,6 +3,28 @@ namespace FewAgency\FluentForm\FormInput;
 
 use FewAgency\FluentHtml\FluentHtml;
 
+//TODO: subclass these HTML inputs:
+// PasswordInputElement
+// SubmitInputElement
+// RadioInputElement
+// CheckboxInputElement
+// ButtonInputElement
+
+//TODO: subclass these HTML5 inputs:
+// NumberInputElement
+// DateInputElement
+// ColorInputElement
+// RangeInputElement
+// MonthInputElement
+// WeekInputElement
+// TimeInputElement
+// DatetimeInputElement
+// DatetimeLocalInputElement
+// EmailInputElement
+// SearchInputElement
+// TelInputElement
+// UrlInputElement
+
 abstract class InputElement extends FluentHtml
 {
     use FormInput;
