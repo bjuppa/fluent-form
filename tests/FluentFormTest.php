@@ -42,6 +42,15 @@ class FluentFormTest extends PHPUnit_Framework_TestCase
             $f);
     }
 
+    public function testContainingInputBlock()
+    {
+        $block = FluentForm::create()->containingInputBlock('test');
+
+        $this->assertInstanceOf('FewAgency\FluentForm\FormBlock\InputBlock', $block);
+        $this->assertContains('input', (string)$block);
+        $this->assertContains('label', (string)$block);
+    }
+
     public function testWithTelInput()
     {
         $f = FluentForm::create()->withInputBlock('phone', 'tel');
