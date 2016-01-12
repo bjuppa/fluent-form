@@ -28,6 +28,7 @@ abstract class FormBlockContainer extends FluentHtml implements FormElementContr
 ->isAligned()
 ->withValues(object or array)
 ->withValues(overriding values)
+->getValue(name)
 ->withErrors(messages)
 ->withWarnings(messages)
 ->with…Block(name, type)
