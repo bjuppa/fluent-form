@@ -2,9 +2,10 @@
 namespace FewAgency\FluentForm\FormBlockContainer;
 
 use FewAgency\FluentHtml\FluentHtml;
+use FewAgency\FluentForm\Support\FormElementContract;
 use FewAgency\FluentForm\FormInput\HiddenInputElement;
 
-abstract class FormBlockContainer extends FluentHtml
+abstract class FormBlockContainer extends FluentHtml implements FormElementContract
 {
     protected $is_aligned;
     protected $alignment_classes;
