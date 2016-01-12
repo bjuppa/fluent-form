@@ -37,6 +37,20 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
         return new static($input);
     }
 
+    /**
+     * @return FormInputElement
+     */
+    public function getInputElement() {
+        return $this->input_element;
+    }
+
+    /**
+     * @return LabelElement
+     */
+    public function getLabelElement() {
+        return $this->label_element;
+    }
+
     /* TODO: implement these methods on FormBlock:
     ->withLabel(text)
     ->getFormBlockContainer()
@@ -50,8 +64,6 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
     ->withWarning(messages)
     ->withSuccess(true)
     ->withFeedback(html)
-    ->getInputElement()
-    ->getLabelElement()
     ->getDescriptionElement()
     ->getColumnElement(column number)
     ->getScreenReaderOnlyClass()
