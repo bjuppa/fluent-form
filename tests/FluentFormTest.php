@@ -24,4 +24,14 @@ class FluentFormTest extends PHPUnit_Framework_TestCase
             $f);
     }
 
+    public function testWithMethod()
+    {
+        $f = FluentForm::create()->withMethod('DELETE');
+        $this->assertHtmlEquals('<form method="POST"><input name="_method" type="hidden" value="DELETE"></form>', $f);
+
+        $f = FluentForm::create()->withMethod('put', 'overriden_name');
+        $this->assertHtmlEquals(
+            '<form method="POST"> <input name="overriden_name" type="hidden" value="put"> </form>',
+            $f);
+    }
 }
