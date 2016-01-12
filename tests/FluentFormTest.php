@@ -38,6 +38,26 @@ class FluentFormTest extends PHPUnit_Framework_TestCase
     public function testWithInputBlock()
     {
         $f = FluentForm::create()->withInputBlock('test');
-        $this->assertHtmlContentEquals('<div> <label for="test">Test</label> <input name="test" type="text" id="test"> </div>', $f);
+        $this->assertHtmlContentEquals('<div> <label for="test">Test</label> <input name="test" type="text" id="test"> </div>',
+            $f);
+    }
+
+    public function testWithTelInput()
+    {
+        $f = FluentForm::create()->withInputBlock('phone', 'tel');
+
+        $this->assertContains('type="tel"', (string)$f);
+        $this->assertContains('autocorrect="off"', (string)$f);
+        $this->assertContains('autocomplete="tel"', (string)$f);
+    }
+
+    public function testWithEmailInput()
+    {
+        $f = FluentForm::create()->withInputBlock('mail', 'email');
+
+        $this->assertContains('type="email"', (string)$f);
+        $this->assertContains('autocapitalize="off"', (string)$f);
+        $this->assertContains('autocorrect="off"', (string)$f);
+        $this->assertContains('autocomplete="email"', (string)$f);
     }
 }

@@ -33,7 +33,6 @@ abstract class InputElement extends FormInputElement
      */
     public function __construct($name, $type = 'text')
     {
-        $tag_contents = null;
         parent::__construct('input');
         $this->withName($name);
         $this->withAttribute('type', $type);
