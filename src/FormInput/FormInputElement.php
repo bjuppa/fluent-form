@@ -45,7 +45,7 @@ protected ->getValueFromAncestor()
      */
     public function getNameAttribute()
     {
-        //TODO: transform name from dot-notation and take care of multiple
+        //TODO: transform name from dot-notation and take care of multiple attribute
         return $this->input_name;
     }
 

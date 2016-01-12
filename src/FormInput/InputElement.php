@@ -12,8 +12,6 @@ namespace FewAgency\FluentForm\FormInput;
 //TODO: subclass these HTML5 inputs:
 // NumberInputElement
 // DateInputElement
-// ColorInputElement
-// RangeInputElement
 // MonthInputElement
 // WeekInputElement
 // TimeInputElement
@@ -23,6 +21,8 @@ namespace FewAgency\FluentForm\FormInput;
 // SearchInputElement
 // TelInputElement
 // UrlInputElement
+// ColorInputElement
+// RangeInputElement
 
 abstract class InputElement extends FormInputElement
 {
