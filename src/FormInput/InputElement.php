@@ -1,14 +1,13 @@
 <?php
 namespace FewAgency\FluentForm\FormInput;
 
-use FewAgency\FluentHtml\FluentHtml;
-
 //TODO: subclass these HTML inputs:
 // PasswordInputElement
 // SubmitInputElement
 // RadioInputElement
 // CheckboxInputElement
 // ButtonInputElement
+// FileInputElement
 
 //TODO: subclass these HTML5 inputs:
 // NumberInputElement
@@ -25,10 +24,8 @@ use FewAgency\FluentHtml\FluentHtml;
 // TelInputElement
 // UrlInputElement
 
-abstract class InputElement extends FluentHtml
+abstract class InputElement extends FormInputElement
 {
-    use FormInput;
-
     /**
      * InputElement constructor.
      * @param callable|string $name of input

@@ -1,10 +1,11 @@
 <?php
 namespace FewAgency\FluentForm\FormInput;
 
+use FewAgency\FluentHtml\FluentHtml;
 
-trait FormInput
+abstract class FormInputElement extends FluentHtml
 {
-    /* TODO: implement these methods
+    /* TODO: define these methods on FormInputElement
  ->getForm()
 ->getFormBlockContainer()
 ->getValue()
