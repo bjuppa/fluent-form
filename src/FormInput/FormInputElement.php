@@ -1,12 +1,15 @@
 <?php
 namespace FewAgency\FluentForm\FormInput;
 
+use FewAgency\FluentForm\Support\FormElement;
 use FewAgency\FluentHtml\FluentHtml;
+use FewAgency\FluentForm\Support\FormElementContract;
 
-abstract class FormInputElement extends FluentHtml
+abstract class FormInputElement extends FluentHtml implements FormElementContract
 {
+    use FormElement;
+
     /* TODO: define these methods on FormInputElement
- ->getForm()
 ->getFormBlockContainer()
 ->getValue()
 protected ->getValueFromAncestor()
@@ -21,6 +24,7 @@ protected ->getValueFromAncestor()
     {
         //TODO: add dot-notation to withName(), set name in an instance variable?
         $this->withAttribute('name', $name);
+
         return $this;
     }
 }

@@ -1,12 +1,8 @@
 <?php
 namespace FewAgency\FluentHtml\FormBlock;
 
-use FewAgency\FluentForm\Support\FormElement;
-
 class InputBlock extends FormBlock
 {
-    use FormElement;
-
     public function __construct($name, $type = 'text')
     {
         $classname = '\FewAgency\FluentForm\FormInput\typeInputElement' . $type . 'InputElement';

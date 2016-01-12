@@ -2,14 +2,17 @@
 namespace FewAgency\FluentHtml\FormBlock;
 
 use FewAgency\FluentForm\FormInput\FormInputElement;
-use FewAgency\FluentForm\Support\FormElementContract;
 use FewAgency\FluentHtml\FluentHtml;
+use FewAgency\FluentForm\Support\FormElementContract;
+use FewAgency\FluentForm\Support\FormElement;
+
 
 abstract class FormBlock extends FluentHtml implements FormElementContract
 {
+    use FormElement;
     /**
      * FormBlock constructor.
-     * @param FormInput $input element
+     * @param FormInputElement $input element
      */
     public function __construct(FormInputElement $input)
     {
@@ -25,7 +28,6 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
 
     /* TODO: implement these methods on FormBlock:
     ->withLabel(text)
-    ->getForm()
     ->getFormBlockContainer()
     ->getAlignmentClasses(column number, bool with_offset=false)
     ->followedBy…Block()

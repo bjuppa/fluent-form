@@ -3,10 +3,13 @@ namespace FewAgency\FluentForm\FormBlockContainer;
 
 use FewAgency\FluentHtml\FluentHtml;
 use FewAgency\FluentForm\Support\FormElementContract;
+use FewAgency\FluentForm\Support\FormElement;
 use FewAgency\FluentForm\FormInput\HiddenInputElement;
 
 abstract class FormBlockContainer extends FluentHtml implements FormElementContract
 {
+    use FormElement;
+
     protected $is_aligned;
     protected $alignment_classes;
     protected $alignment_classes_default = [1 => 'half-width float-left align-right', 2 => 'half-width', 3 => ''];
@@ -19,7 +22,6 @@ abstract class FormBlockContainer extends FluentHtml implements FormElementContr
     }
 
     /* TODO: implement these methods on FormBlockContainer
-->getForm()
 ->withAlignmentClasses(col 1, col 2, col 3, offset 2, offset 3=null)
 ->getAlignmentClasses(column number, bool with_offset=false)
 ->align(true)
