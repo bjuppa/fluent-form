@@ -1,5 +1,5 @@
 <?php
-namespace FewAgency\FluentHtml\FormBlock;
+namespace FewAgency\FluentForm\FormBlock;
 
 use FewAgency\FluentForm\FormInput\FormInputElement;
 use FewAgency\FluentHtml\FluentHtml;

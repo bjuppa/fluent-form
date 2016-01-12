@@ -5,6 +5,7 @@ use FewAgency\FluentHtml\FluentHtml;
 use FewAgency\FluentForm\Support\FormElementContract;
 use FewAgency\FluentForm\Support\FormElement;
 use FewAgency\FluentForm\FormInput\HiddenInputElement;
+use FewAgency\FluentForm\FormBlock\InputBlock;
 
 abstract class FormBlockContainer extends FluentHtml implements FormElementContract
 {
@@ -35,4 +36,17 @@ abstract class FormBlockContainer extends FluentHtml implements FormElementContr
 ->with…Blocks(array of input names and types)
 ->containing…Block(name)->withLabel(text)->followedBy…Block()
      */
+
+    /**
+     * Put an input block on the form
+     * @param string $name
+     * @param string $type
+     * @return $this|FormBlockContainer
+     */
+    public function withInputBlock($name, $type = 'text')
+    {
+        $block = new InputBlock($name, $type);
+
+        return $this->withContent($block);
+    }
 }

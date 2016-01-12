@@ -34,4 +34,10 @@ class FluentFormTest extends PHPUnit_Framework_TestCase
             '<form method="POST"> <input name="overriden_name" type="hidden" value="put"> </form>',
             $f);
     }
+
+    public function testWithInputBlock()
+    {
+        $f = FluentForm::create()->withInputBlock('test');
+        $this->assertHtmlContentEquals('<div><input name="test" type="text"></div>', $f);
+    }
 }
