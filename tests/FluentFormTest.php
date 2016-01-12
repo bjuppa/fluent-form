@@ -38,6 +38,6 @@ class FluentFormTest extends PHPUnit_Framework_TestCase
     public function testWithInputBlock()
     {
         $f = FluentForm::create()->withInputBlock('test');
-        $this->assertHtmlContentEquals('<div><input name="test" type="text"></div>', $f);
+        $this->assertHtmlContentEquals('<div> <label for="test">Test</label> <input name="test" type="text" id="test"> </div>', $f);
     }
 }

@@ -21,6 +21,8 @@ class InputBlock extends FormBlock
             $input = new TextInputElement($name, $type);
         }
         parent::__construct($input);
+        $this->withContent($this->label_element, $this->input_element);
+        $this->label_element->forInput($this->input_element);
     }
 
     /**

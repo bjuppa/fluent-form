@@ -2,6 +2,7 @@
 namespace FewAgency\FluentForm\FormBlock;
 
 use FewAgency\FluentForm\FormInput\FormInputElement;
+use FewAgency\FluentForm\FormLabel\LabelElement;
 use FewAgency\FluentHtml\FluentHtml;
 use FewAgency\FluentForm\Support\FormElementContract;
 use FewAgency\FluentForm\Support\FormElement;
@@ -10,22 +11,31 @@ use FewAgency\FluentForm\Support\FormElement;
 abstract class FormBlock extends FluentHtml implements FormElementContract
 {
     use FormElement;
+
+    /**
+     * @var LabelElement
+     */
+    protected $label_element;
+    /**
+     * @var FormInputElement
+     */
+    protected $input_element;
+
     /**
      * FormBlock constructor.
      * @param FormInputElement $input element
      */
     public function __construct(FormInputElement $input)
     {
-        //TODO: add label element
-        parent::__construct('div', $input);
-        //TODO: save reference to the input element
+        parent::__construct('div');
+        $this->input_element = $input;
+        $this->label_element = new LabelElement();
     }
 
     public static function create(FormInputElement $input)
     {
         return new static($input);
     }
-
 
     /* TODO: implement these methods on FormBlock:
     ->withLabel(text)

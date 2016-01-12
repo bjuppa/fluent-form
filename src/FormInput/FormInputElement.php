@@ -9,6 +9,8 @@ abstract class FormInputElement extends FluentHtml implements FormElementContrac
 {
     use FormElement;
 
+    protected $input_name;
+
     /* TODO: define these methods on FormInputElement
 ->getFormBlockContainer()
 ->getValue()
@@ -22,9 +24,43 @@ protected ->getValueFromAncestor()
      */
     public function withName($name)
     {
-        //TODO: add dot-notation to withName(), set name in an instance variable?
-        $this->withAttribute('name', $name);
+        $this->input_name = $name;
+        $this->withAttribute('name', function (FormInputElement $input) {
+            return $input->getNameAttribute();
+        });
 
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->input_name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNameAttribute()
+    {
+        //TODO: transform name from dot-notation and take care of multiple
+        return $this->input_name;
+    }
+
+    /**
+     * @return string suitable for label
+     */
+    public function getHumanName()
+    {
+        return ucwords(str_replace(['.', '_'], ' ', $this->getName()));
+    }
+
+    public function getId($desired_id = null)
+    {
+        return parent::getId($desired_id ?: $this->getName());
+    }
+
+
 }
