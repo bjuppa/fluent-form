@@ -2,6 +2,7 @@
 namespace FewAgency\FluentForm;
 
 use FewAgency\FluentForm\FormBlockContainer\FormBlockContainer;
+use FewAgency\FluentForm\FormLabel\LabelElement;
 
 class FluentForm extends FormBlockContainer
 {
@@ -86,5 +87,17 @@ class FluentForm extends FormBlockContainer
     public function getForm()
     {
         return $this;
+    }
+
+    //TODO: does this form of element creation really work?
+    // When in an element constructor we don't have getForm() yet because it's not placed in the tree.
+    // Could we place new empty elements in the tree first and then initialize or boot them?
+    /**
+     * Create a new instance implementing LabelElement
+     * @return LabelElement
+     */
+    public function createLabelElement()
+    {
+        return new LabelElement();
     }
 }
