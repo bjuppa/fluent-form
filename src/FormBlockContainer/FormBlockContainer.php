@@ -58,6 +58,7 @@ abstract class FormBlockContainer extends FluentHtml implements FormElementContr
      */
     public function containingInputBlock($name, $type = 'text')
     {
+        //TODO: create InputBlock via form
         $block = new InputBlock($name, $type);
         $this->withContent($block);
 

@@ -12,6 +12,7 @@ class InputBlock extends FormBlock
      */
     public function __construct($name, $type = 'text')
     {
+        //TODO: create FormInputElement via form
         $classname = '\FewAgency\FluentForm\FormInput\\' . ucfirst($type) . 'InputElement';
         if (class_exists($classname)) {
             $input = new $classname($name);

@@ -29,6 +29,7 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
     {
         parent::__construct('div');
         $this->input_element = $input;
+        //TODO: create LabelElement via form
         $this->label_element = new LabelElement();
     }
 
