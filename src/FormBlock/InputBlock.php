@@ -25,14 +25,4 @@ class InputBlock extends FormBlock
         $this->withContent($this->label_element, $this->input_element);
         $this->label_element->forInput($this->input_element);
     }
-
-    /**
-     * @param string $name
-     * @param string $type
-     * @return static
-     */
-    public static function create($name, $type = 'text')
-    {
-        return new static($name, $type);
-    }
 }

@@ -39,16 +39,6 @@ abstract class InputElement extends FormInputElement
     }
 
     /**
-     * @param callable|string $name of input
-     * @param string $type of input, defaults to text
-     * @return static
-     */
-    public static function create($name, $type = 'text')
-    {
-        return new static($name, $type);
-    }
-
-    /**
      * Set input value
      *
      * @param $value string|callable

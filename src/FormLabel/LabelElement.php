@@ -28,15 +28,6 @@ class LabelElement extends FluentHtml implements FormElementContract
     }
 
     /**
-     * @param string|Htmlable|array|Arrayable|null $label_contents
-     * @return static
-     */
-    public static function create($label_contents = null)
-    {
-        return new static($label_contents);
-    }
-
-    /**
      * @param FormInputElement $input
      * @return $this
      */

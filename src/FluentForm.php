@@ -28,10 +28,13 @@ class FluentForm extends FormBlockContainer
     /**
      * Set action url on form
      * @param string|callable|false $url to set as form's action
+     * @return $this|FluentForm
      */
     public function withAction($url)
     {
         $this->withAttribute('action', $url);
+
+        return $this;
     }
 
     /**
@@ -87,17 +90,5 @@ class FluentForm extends FormBlockContainer
     public function getForm()
     {
         return $this;
-    }
-
-    //TODO: does this form of element creation really work?
-    // When in an element constructor we don't have getForm() yet because it's not placed in the tree.
-    // Could we place new empty elements in the tree first and then initialize or boot them?
-    /**
-     * Create a new instance implementing LabelElement
-     * @return LabelElement
-     */
-    public function createLabelElement()
-    {
-        return new LabelElement();
     }
 }

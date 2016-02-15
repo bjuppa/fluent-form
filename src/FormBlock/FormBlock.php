@@ -33,11 +33,6 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
         $this->label_element = new LabelElement();
     }
 
-    public static function create(FormInputElement $input)
-    {
-        return new static($input);
-    }
-
     /**
      * @return FormInputElement
      */
