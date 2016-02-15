@@ -4,7 +4,6 @@ namespace FewAgency\FluentForm\FormBlockContainer;
 use FewAgency\FluentHtml\FluentHtml;
 use FewAgency\FluentForm\Support\FormElementContract;
 use FewAgency\FluentForm\Support\FormElement;
-use FewAgency\FluentForm\FormInput\HiddenInputElement;
 use FewAgency\FluentForm\FormBlock\InputBlock;
 
 abstract class FormBlockContainer extends FluentHtml implements FormElementContract
@@ -19,7 +18,9 @@ abstract class FormBlockContainer extends FluentHtml implements FormElementContr
 
     public function withHiddenInput($name, $value)
     {
-        $this->withContent(HiddenInputElement::create($name, $value));
+        $this->withContent($this->createInstanceOf('FormInput\HiddenInputElement', [$name, $value]));
+
+        return $this;
     }
 
     /* TODO: implement these methods on FormBlockContainer
@@ -58,8 +59,7 @@ abstract class FormBlockContainer extends FluentHtml implements FormElementContr
      */
     public function containingInputBlock($name, $type = 'text')
     {
-        //TODO: create InputBlock via form
-        $block = new InputBlock($name, $type);
+        $block = $this->createInstanceOf('FormBlock\InputBlock', [$name, $type]);
         $this->withContent($block);
 
         return $block;
