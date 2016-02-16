@@ -51,8 +51,16 @@ protected ->getValueFromAncestor()
      */
     public function getNameAttribute()
     {
-        //TODO: transform name from dot-notation and take care of multiple attribute
-        return $this->getName();
+        //transform name from dot-notation
+        $name_parts = explode('.', $this->getName());
+        $name = array_shift($name_parts);
+        foreach ($name_parts as $name_part) {
+            $name .= "[$name_part]";
+        }
+
+        //TODO: multiple attribute should add [] to $name
+
+        return $name;
     }
 
     /**

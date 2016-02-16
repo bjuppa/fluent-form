@@ -47,8 +47,16 @@ class FluentFormTest extends PHPUnit_Framework_TestCase
         $block = FluentForm::create()->containingInputBlock('test');
 
         $this->assertInstanceOf('FewAgency\FluentForm\FormBlock\InputBlock', $block);
-        $this->assertContains('input', (string)$block);
-        $this->assertContains('label', (string)$block);
+        $this->assertContains('<input', (string)$block);
+        $this->assertContains('<label', (string)$block);
+    }
+
+    public function testInputNameDotNotation()
+    {
+        $f = FluentForm::create()->withInputBlock('test.test');
+        $this->assertHtmlContentEquals(
+            '<div> <label for="test.test">Test Test</label> <input name="test[test]" type="text" id="test.test"> </div>',
+            $f);
     }
 
     public function testWithTelInput()
