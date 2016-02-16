@@ -39,7 +39,7 @@ abstract class InputElement extends FormInputElement
     }
 
     /**
-     * Set input value
+     * Set input value.
      *
      * @param $value string|callable
      * @return $this

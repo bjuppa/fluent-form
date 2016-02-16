@@ -13,7 +13,7 @@ class LabelElement extends FluentHtml implements FormElementContract
     use FormElement;
 
     /**
-     * @var FormInputElement
+     * @var FormInputElement referenced by the label
      */
     private $for_input_element;
 
@@ -28,7 +28,8 @@ class LabelElement extends FluentHtml implements FormElementContract
     }
 
     /**
-     * @param FormInputElement $input
+     * Set the referenced input for this label.
+     * @param FormInputElement $input that label should reference
      * @return $this
      */
     public function forInput(FormInputElement $input)
@@ -46,6 +47,7 @@ class LabelElement extends FluentHtml implements FormElementContract
     }
 
     /**
+     * Get referenced input element.
      * @return FormInputElement the input element related to this label
      */
     public function getInputElement()

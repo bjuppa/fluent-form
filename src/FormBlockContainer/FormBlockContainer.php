@@ -16,6 +16,13 @@ abstract class FormBlockContainer extends FluentHtml implements FormElementContr
     protected $alignment_offset_classes;
     protected $alignment_offset_classes_default = [2 => 'half-width half-margin-left', 3 => ''];
 
+
+    /**
+     * Add a hidden input to the form
+     * @param $name
+     * @param $value
+     * @return $this
+     */
     public function withHiddenInput($name, $value)
     {
         $this->withContent($this->createInstanceOf('FormInput\HiddenInputElement', [$name, $value]));

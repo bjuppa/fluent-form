@@ -2,12 +2,14 @@
 namespace FewAgency\FluentForm;
 
 use FewAgency\FluentForm\FormBlockContainer\FormBlockContainer;
-use FewAgency\FluentForm\FormLabel\LabelElement;
 
 class FluentForm extends FormBlockContainer
 {
     private $form_method = 'POST';
 
+    /**
+     * FluentForm constructor.
+     */
     public function __construct()
     {
         $html_element_name = 'form';
@@ -20,13 +22,17 @@ class FluentForm extends FormBlockContainer
         parent::__construct($html_element_name, $tag_contents, $tag_attributes);
     }
 
+    /**
+     * Static builder for convenience.
+     * @return static
+     */
     public static function create()
     {
         return new static();
     }
 
     /**
-     * Set action url on form
+     * Set action url on form.
      * @param string|callable|false $url to set as form's action
      * @return $this|FluentForm
      */
@@ -38,7 +44,7 @@ class FluentForm extends FormBlockContainer
     }
 
     /**
-     * Check if form has a specified method set
+     * Check if form has a specified method set.
      * @param string $method to check for
      * @return bool
      */
@@ -48,7 +54,7 @@ class FluentForm extends FormBlockContainer
     }
 
     /**
-     * Check if method is GET
+     * Check if method is GET.
      * @return bool true if form's method is GET
      */
     public function hasMethodGet()
@@ -57,7 +63,7 @@ class FluentForm extends FormBlockContainer
     }
 
     /**
-     * Set a hidden CSRF token input on the form
+     * Set a hidden CSRF token input on the form.
      * @param $token string|callable
      * @param string $name optional name for the token input
      * @return $this|FluentForm
@@ -70,7 +76,7 @@ class FluentForm extends FormBlockContainer
     }
 
     /**
-     * Set a hidden REST method input on the form
+     * Set a hidden REST method input on the form.
      * @param $method string
      * @param string $name optional name for the method input
      * @return $this|FluentForm
@@ -78,13 +84,15 @@ class FluentForm extends FormBlockContainer
     public function withMethod($method, $name = '_method')
     {
         $this->form_method = $method;
-        $this->withHiddenInput($name, $method);
+        if (!$this->hasMethodGet()) {
+            $this->withHiddenInput($name, $method);
+        }
 
         return $this;
     }
 
     /**
-     * Overrides method in FormBlockContainer
+     * Overrides method in FormBlockContainer.
      * @return $this
      */
     public function getForm()

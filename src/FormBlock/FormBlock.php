@@ -23,6 +23,7 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
     private $input_element;
 
     /**
+     * Get the input element of the block.
      * @return FormInputElement
      */
     public function getInputElement()
@@ -30,6 +31,11 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
         return $this->input_element;
     }
 
+    /**
+     * Set the input element of the block.
+     * @param FormInputElement $input_element
+     * @return $this
+     */
     public function withInputElement(FormInputElement $input_element)
     {
         $this->input_element = $input_element;
@@ -40,6 +46,7 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
     }
 
     /**
+     * Get the label element of the block.
      * @return LabelElement
      */
     public function getLabelElement()
@@ -47,6 +54,11 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
         return $this->label_element;
     }
 
+    /**
+     * Set the label element of the block.
+     * @param LabelElement $label_element
+     * @return $this
+     */
     public function withLabelElement(LabelElement $label_element)
     {
         $this->label_element = $label_element;
