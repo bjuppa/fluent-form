@@ -9,7 +9,7 @@ abstract class FormInputElement extends FluentHtml implements FormElementContrac
 {
     use FormElement;
 
-    protected $input_name;
+    private $input_name;
 
     /* TODO: define these methods on FormInputElement
 ->getFormBlockContainer()

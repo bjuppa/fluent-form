@@ -15,7 +15,7 @@ class LabelElement extends FluentHtml implements FormElementContract
     /**
      * @var FormInputElement
      */
-    protected $for_input_element;
+    private $for_input_element;
 
     /**
      * LabelElement constructor.

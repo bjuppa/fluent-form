@@ -16,11 +16,11 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
     /**
      * @var LabelElement
      */
-    protected $label_element;
+    private $label_element;
     /**
      * @var FormInputElement
      */
-    protected $input_element;
+    private $input_element;
 
     /**
      * @return FormInputElement
@@ -30,12 +30,29 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
         return $this->input_element;
     }
 
+    public function withInputElement(FormInputElement $input_element)
+    {
+        $this->input_element = $input_element;
+        $this->withContent($this->input_element);
+        $this->getLabelElement()->forInput($this->input_element);
+
+        return $this;
+    }
+
     /**
      * @return LabelElement
      */
     public function getLabelElement()
     {
         return $this->label_element;
+    }
+
+    public function withLabelElement(LabelElement $label_element)
+    {
+        $this->label_element = $label_element;
+        $this->withContent($this->label_element);
+
+        return $this;
     }
 
     /* TODO: implement these methods on FormBlock:
@@ -69,9 +86,8 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
         if (!$this->hasHtmlElementName()) {
             $this->withHtmlElementName('div');
         }
-        if (!$this->label_element) {
-            $this->label_element = $this->createInstanceOf('FormLabel\LabelElement');
-            $this->withContent($this->label_element);
+        if (!$this->getLabelElement()) {
+            $this->withLabelElement($this->createInstanceOf('FormLabel\LabelElement'));
         }
     }
 

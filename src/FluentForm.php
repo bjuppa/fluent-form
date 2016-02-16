@@ -6,7 +6,7 @@ use FewAgency\FluentForm\FormLabel\LabelElement;
 
 class FluentForm extends FormBlockContainer
 {
-    protected $form_method = 'POST';
+    private $form_method = 'POST';
 
     public function __construct()
     {

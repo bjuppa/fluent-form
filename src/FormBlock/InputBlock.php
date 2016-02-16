@@ -9,12 +9,12 @@ class InputBlock extends FormBlock
     /**
      * @var string
      */
-    protected $input_type = 'text';
+    private $input_type = 'text';
 
     /**
      * @var string
      */
-    protected $input_name;
+    private $input_name;
 
     /**
      * InputBlock constructor.
@@ -36,20 +36,18 @@ class InputBlock extends FormBlock
     protected function setParent(FluentHtmlElement $parent = null)
     {
         parent::setParent($parent);
-        if (!$this->input_element) {
+        if (!$this->getInputElement()) {
             try {
                 $classname = 'FormInput\\' . ucfirst($this->input_type) . 'InputElement';
-                $input = $this->createInstanceOf($classname, [$this->input_name]);
+                $input_element = $this->createInstanceOf($classname, [$this->input_name]);
             } catch (\Exception $e) {
                 try {
-                    $input = $this->createInstanceOf($this->input_type, [$this->input_name]);
+                    $input_element = $this->createInstanceOf($this->input_type, [$this->input_name]);
                 } catch (\Exception $e) {
-                    $input = $this->createInstanceOf('FormInput\\TextInputElement', [$this->input_name]);
+                    $input_element = $this->createInstanceOf('FormInput\\TextInputElement', [$this->input_name]);
                 }
             }
-            $this->input_element = $input;
-            $this->withContent($this->input_element);
-            $this->label_element->forInput($this->input_element);
+            $this->withInputElement($input_element);
         }
     }
 
