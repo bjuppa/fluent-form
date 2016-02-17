@@ -20,6 +20,11 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
     private $label_element;
 
     /**
+     * @var bool|callable indicating if the block's inputs are disabled
+     */
+    private $disabled = false;
+
+    /**
      * Set label content.
      * @param string|Htmlable|callable|array|Arrayable $html_contents,...
      * @return $this|FluentHtmlElement can be method-chained to modify the current element
@@ -60,16 +65,32 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
      * @param string $type
      * @return InputBlock
      */
-    public function followedByInputBlock($name, $type='text')
+    public function followedByInputBlock($name, $type = 'text')
     {
         return $this->getFormBlockContainer()->containingInputBlock($name, $type);
     }
 
-    /* TODO: implement these methods on FormBlock:
-    ->getColumnElement(column number)
-    ->getAlignmentClasses(column number, bool with_offset=false)
+    /**
+     * Make the input(s) in the block disabled
+     * @param bool|callable $disabled
+     * @return $this
+     */
+    public function disabled($disabled = true)
+    {
+        $this->disabled = $disabled;
 
-    ->disabled(true)
+        return $this;
+    }
+
+    /**
+     * @return bool true if the block is considered disabled
+     */
+    public function isDisabled()
+    {
+        return (bool)$this->evaluate($this->disabled);
+    }
+
+    /* TODO: implement these methods on FormBlock:
     ->readonly(true)
     ->required(true)
 
@@ -83,6 +104,9 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
 
     ->getScreenReaderOnlyClass()
     ->hideLabel()
+
+    ->getColumnElement(column number)
+    ->getAlignmentClasses(column number, bool with_offset=false)
 
     ->followedBy…Block()
      */
@@ -98,6 +122,11 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
         if (!$this->hasHtmlElementName()) {
             $this->withHtmlElementName('div');
         }
+        $this->withClass([
+            'disabled' => function (FormBlock $form_block) {
+                return $form_block->isDisabled();
+            }
+        ]);
     }
 
 }

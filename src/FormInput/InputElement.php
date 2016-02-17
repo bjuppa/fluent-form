@@ -64,9 +64,22 @@ abstract class InputElement extends FormInputElement
     public function getValue()
     {
         $value = $this->evaluate($this->input_value);
-        if(is_null($value)) {
+        if (is_null($value)) {
             $value = $this->getValueFromAncestor($this->getName());
         }
+
         return $value;
+    }
+
+    /**
+     * Make this input disabled
+     * @param bool|callable $disabled
+     * @return $this
+     */
+    public function disabled($disabled = true)
+    {
+        $this->withAttribute('disabled', $disabled);
+
+        return $this;
     }
 }

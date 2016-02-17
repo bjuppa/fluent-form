@@ -58,4 +58,12 @@ class FormBlockTest extends PHPUnit_Framework_TestCase
         $this->assertContains('<input name="test" ', (string)$b);
         $this->assertContains('<input name="follow" ', (string)$b);
     }
+
+    public function testDisabled()
+    {
+        $b = $this->getTestBlock()->disabled();
+
+        $this->assertContains('<div class="disabled">', (string)$b);
+        $this->assertContains('<input name="test" type="text" disabled ', (string)$b);
+    }
 }
