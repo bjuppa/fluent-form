@@ -16,11 +16,12 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
     /**
      * @var LabelElement
      */
-    private $label_element;
+    private $label_element; //TODO: could this label element be a legend for a fieldset?
+
     /**
      * @var FormInputElement
      */
-    private $input_element;
+    private $input_element; //TODO: should we move input-related stuff to extension InputBlock
 
     /**
      * Get the input element of the block.
