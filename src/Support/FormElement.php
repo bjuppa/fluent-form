@@ -21,4 +21,14 @@ trait FormElement
     public function getFormBlockContainer() {
         return $this->getAncestorInstanceOf('FewAgency\FluentForm\FormBlockContainer\FormBlockContainer');
     }
+
+    /**
+     * Get input values set higher up in the form structure.
+     * @param string $key in dot-notation
+     * @return string|null
+     */
+    protected function getValueFromAncestor($key) {
+        //TODO: get the value from higher up in form.
+        return null;
+    }
 }

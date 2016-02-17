@@ -4,6 +4,7 @@ namespace FewAgency\FluentForm\FormInput;
 use FewAgency\FluentForm\Support\FormElement;
 use FewAgency\FluentHtml\FluentHtml;
 use FewAgency\FluentForm\Support\FormElementContract;
+use FewAgency\FluentHtml\FluentHtmlElement;
 
 abstract class FormInputElement extends FluentHtml implements FormElementContract
 {
@@ -13,12 +14,6 @@ abstract class FormInputElement extends FluentHtml implements FormElementContrac
      * @var string|callable
      */
     private $input_name;
-
-    /* TODO: define these methods on FormInputElement
-->getValue()
-protected ->getValueFromAncestor()
-->withValue(value) - perhaps in an interface?
-     */
 
     /**
      * Set the name of the input element.
@@ -72,6 +67,21 @@ protected ->getValueFromAncestor()
     }
 
     /**
+     * Set input value.
+     *
+     * @param $value string|callable
+     * @return $this|FluentHtmlElement
+     */
+    abstract public function withValue($value);
+
+    /**
+     * Get input value.
+     *
+     * @return string
+     */
+    abstract public function getValue();
+
+    /**
      * Get the element's id string if set, or generate a new id.
      * @param null $desired_id
      * @return string
@@ -80,6 +90,5 @@ protected ->getValueFromAncestor()
     {
         return parent::getId($desired_id ?: $this->getName());
     }
-
 
 }

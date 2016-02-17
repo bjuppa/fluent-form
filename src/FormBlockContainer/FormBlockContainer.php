@@ -31,18 +31,21 @@ abstract class FormBlockContainer extends FluentHtml implements FormElementContr
     }
 
     /* TODO: implement these methods on FormBlockContainer
+->with…Block(name, type)
+->with…Blocks(array of input names and types)
+->containing…Block(name)->withLabel(text)->followedBy…Block()
+
 ->withAlignmentClasses(col 1, col 2, col 3, offset 2, offset 3=null)
 ->getAlignmentClasses(column number, bool with_offset=false)
 ->align(true)
 ->isAligned()
+
 ->withValues(object or array)
 ->withValues(overriding values)
 ->getValue(name)
+
 ->withErrors(messages)
 ->withWarnings(messages)
-->with…Block(name, type)
-->with…Blocks(array of input names and types)
-->containing…Block(name)->withLabel(text)->followedBy…Block()
      */
 
     /**

@@ -26,6 +26,11 @@ namespace FewAgency\FluentForm\FormInput;
 abstract class InputElement extends FormInputElement
 {
     /**
+     * @var string|callable
+     */
+    private $input_value;
+
+    /**
      * InputElement constructor.
      * @param callable|string $name of input
      * @param string $type of input, defaults to text
@@ -35,19 +40,33 @@ abstract class InputElement extends FormInputElement
         parent::__construct('input');
         $this->withName($name);
         $this->withAttribute('type', $type);
+        $this->withAttribute('value', function (FormInputElement $input) {
+            return $input->getValue();
+        });
     }
 
     /**
      * Set input value.
-     *
      * @param $value string|callable
      * @return $this
      */
     public function withValue($value)
     {
-        $this->withAttribute('value', $value);
+        $this->input_value = $value;
 
         return $this;
     }
 
+    /**
+     * Get input value.
+     * @return string|null
+     */
+    public function getValue()
+    {
+        $value = $this->evaluate($this->input_value);
+        if(is_null($value)) {
+            $value = $this->getValueFromAncestor($this->getName());
+        }
+        return $value;
+    }
 }

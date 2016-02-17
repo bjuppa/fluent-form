@@ -54,18 +54,23 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
     }
 
     /* TODO: implement these methods on FormBlock:
-    ->getAlignmentClasses(column number, bool with_offset=false)
     ->followedBy…Block()
+
+    ->getColumnElement(column number)
+    ->getAlignmentClasses(column number, bool with_offset=false)
+
     ->disabled(true)
     ->readonly(true)
     ->required(true)
+
+    ->getDescriptionElement()
     ->withDescription(text)
+
     ->withError(messages)
     ->withWarning(messages)
     ->withSuccess(true)
     ->withFeedback(html)
-    ->getDescriptionElement()
-    ->getColumnElement(column number)
+
     ->getScreenReaderOnlyClass()
     ->hideLabel()
      */
