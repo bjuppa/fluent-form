@@ -5,14 +5,12 @@ class HiddenInputElement extends InputElement
 {
     /**
      * InputElement constructor.
-     * @param callable|string $name of input
-     * @param string $value of input
+     * @param callable|string $name
+     * @param string|callable $value
      */
     public function __construct($name, $value = null)
     {
         parent::__construct($name, 'hidden');
-        if (!empty($value)) {
-            $this->withValue($value);
-        }
+        $this->withValue($value);
     }
 }

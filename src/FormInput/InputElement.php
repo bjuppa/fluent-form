@@ -47,7 +47,7 @@ abstract class InputElement extends FormInputElement
 
     /**
      * Set input value.
-     * @param $value string|callable
+     * @param string|callable|null $value
      * @return $this
      */
     public function withValue($value)
