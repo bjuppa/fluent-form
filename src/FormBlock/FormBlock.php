@@ -6,6 +6,8 @@ use FewAgency\FluentHtml\FluentHtml;
 use FewAgency\FluentForm\Support\FormElementContract;
 use FewAgency\FluentForm\Support\FormElement;
 use FewAgency\FluentHtml\FluentHtmlElement;
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Htmlable;
 
 
 abstract class FormBlock extends FluentHtml implements FormElementContract
@@ -16,6 +18,18 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
      * @var FormLabel
      */
     private $label_element;
+
+    /**
+     * Set label content.
+     * @param string|Htmlable|callable|array|Arrayable $html_contents,...
+     * @return $this|FluentHtmlElement can be method-chained to modify the current element
+     */
+    public function withLabel($html_contents)
+    {
+        $this->getLabelElement()->withContent(func_get_args());
+
+        return $this;
+    }
 
     /**
      * Get the label element of the block.
@@ -29,7 +43,7 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
     /**
      * Set the label element of the block.
      * @param FormLabel $label_element
-     * @return $this
+     * @return $this|FluentHtmlElement can be method-chained to modify the current element
      */
     public function withLabelElement(FormLabel $label_element)
     {
@@ -40,7 +54,6 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
     }
 
     /* TODO: implement these methods on FormBlock:
-    ->withLabel(text)
     ->getAlignmentClasses(column number, bool with_offset=false)
     ->followedBy…Block()
     ->disabled(true)

@@ -43,4 +43,11 @@ class FormBlockTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf('FewAgency\FluentForm\FormBlockContainer\FormBlockContainer',
             $b->getFormBlockContainer());
     }
+
+    public function testWithLabel()
+    {
+        $b = $this->getTestBlock()->withLabel('custom label');
+
+        $this->assertContains('>custom label<', $b->getLabelElement()->toHtml());
+    }
 }
