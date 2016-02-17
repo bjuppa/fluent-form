@@ -19,7 +19,6 @@ namespace FewAgency\FluentForm\FormInput;
 // DatetimeLocalInputElement
 // EmailInputElement
 // SearchInputElement
-// TelInputElement
 // UrlInputElement
 // ColorInputElement
 // RangeInputElement

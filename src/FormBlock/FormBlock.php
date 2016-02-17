@@ -41,7 +41,6 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
 
     /* TODO: implement these methods on FormBlock:
     ->withLabel(text)
-    ->getFormBlockContainer()
     ->getAlignmentClasses(column number, bool with_offset=false)
     ->followedBy…Block()
     ->disabled(true)
@@ -70,6 +69,5 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
             $this->withHtmlElementName('div');
         }
     }
-
 
 }

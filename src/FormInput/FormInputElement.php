@@ -15,7 +15,6 @@ abstract class FormInputElement extends FluentHtml implements FormElementContrac
     private $input_name;
 
     /* TODO: define these methods on FormInputElement
-->getFormBlockContainer()
 ->getValue()
 protected ->getValueFromAncestor()
 ->withValue(value) - perhaps in an interface?
