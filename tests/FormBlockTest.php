@@ -28,4 +28,11 @@ class FormBlockTest extends PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf('FewAgency\FluentForm\FormLabel\LabelElement', $b->getLabelElement());
     }
+
+    public function testWithInputAttribute()
+    {
+        $input = $this->getTestBlock()->withInputAttribute('autocorrect', 'off')->getInputElement();
+
+        $this->assertContains('autocorrect="off"', $input->toHtml());
+    }
 }

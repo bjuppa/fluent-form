@@ -2,7 +2,7 @@
 namespace FewAgency\FluentForm\FormBlock;
 
 use FewAgency\FluentForm\FormInput\FormInputElement;
-use FewAgency\FluentForm\FormInput\TextInputElement;
+use Illuminate\Contracts\Support\Arrayable;
 use FewAgency\FluentHtml\FluentHtmlElement;
 
 class InputBlock extends FormBlock
@@ -58,9 +58,17 @@ class InputBlock extends FormBlock
         return $this->input_element;
     }
 
-    /* TODO: implement these methods on InputBlock:
-    ->withInputAttribute(attributes)
-    */
+    /**
+     * @param string|callable|array|Arrayable $attributes Attribute name as string, can also be an array of names and values, or a callable returning such an array.
+     * @param string|bool|callable|array|Arrayable $value to set, only used if $attributes is a string
+     * @return $this
+     */
+    public function withInputAttribute($attributes, $value = true)
+    {
+        $this->getInputElement()->withAttribute($attributes, $value);
+
+        return $this;
+    }
 
     /**
      * Set this element's parent element.
