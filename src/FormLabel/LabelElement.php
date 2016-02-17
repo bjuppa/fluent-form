@@ -2,16 +2,11 @@
 namespace FewAgency\FluentForm\FormLabel;
 
 use FewAgency\FluentForm\FormInput\FormInputElement;
-use FewAgency\FluentForm\Support\FormElement;
-use FewAgency\FluentForm\Support\FormElementContract;
-use FewAgency\FluentHtml\FluentHtml;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Arrayable;
 
-class LabelElement extends FluentHtml implements FormElementContract
+class LabelElement extends FormLabel
 {
-    use FormElement;
-
     /**
      * @var FormInputElement referenced by the label
      */
@@ -24,7 +19,6 @@ class LabelElement extends FluentHtml implements FormElementContract
     public function __construct($label_contents = null)
     {
         parent::__construct('label', $label_contents);
-        $this->onlyDisplayedIfHasContent();
     }
 
     /**

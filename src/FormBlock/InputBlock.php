@@ -1,6 +1,7 @@
 <?php
 namespace FewAgency\FluentForm\FormBlock;
 
+use FewAgency\FluentForm\FormInput\FormInputElement;
 use FewAgency\FluentForm\FormInput\TextInputElement;
 use FewAgency\FluentHtml\FluentHtmlElement;
 
@@ -17,6 +18,11 @@ class InputBlock extends FormBlock
     private $input_name;
 
     /**
+     * @var FormInputElement
+     */
+    private $input_element;
+
+    /**
      * InputBlock constructor.
      * @param string $name of input
      * @param string $type of input or fully qualified classname
@@ -27,6 +33,34 @@ class InputBlock extends FormBlock
         $this->input_type = $type;
         parent::__construct();
     }
+
+    /**
+     * Set the input element of the block.
+     * @param FormInputElement $input_element
+     * @return FormBlock
+     */
+    public function withInputElement(FormInputElement $input_element)
+    {
+        $this->input_element = $input_element;
+        $this->withLabelElement($this->createInstanceOf('FormLabel\LabelElement'));
+        $this->getLabelElement()->forInput($this->input_element);
+        $this->withContent($this->input_element);
+
+        return $this;
+    }
+
+    /**
+     * Get the input element of the block.
+     * @return FormInputElement
+     */
+    public function getInputElement()
+    {
+        return $this->input_element;
+    }
+
+    /* TODO: implement these methods on InputBlock:
+    ->withInputAttribute(attributes)
+    */
 
     /**
      * Set this element's parent element.

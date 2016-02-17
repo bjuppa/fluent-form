@@ -1,8 +1,7 @@
 <?php
 namespace FewAgency\FluentForm\FormBlock;
 
-use FewAgency\FluentForm\FormInput\FormInputElement;
-use FewAgency\FluentForm\FormLabel\LabelElement;
+use FewAgency\FluentForm\FormLabel\FormLabel;
 use FewAgency\FluentHtml\FluentHtml;
 use FewAgency\FluentForm\Support\FormElementContract;
 use FewAgency\FluentForm\Support\FormElement;
@@ -14,41 +13,13 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
     use FormElement;
 
     /**
-     * @var LabelElement
+     * @var FormLabel
      */
-    private $label_element; //TODO: could this label element be a legend for a fieldset?
-
-    /**
-     * @var FormInputElement
-     */
-    private $input_element; //TODO: should we move input-related stuff to extension InputBlock
-
-    /**
-     * Get the input element of the block.
-     * @return FormInputElement
-     */
-    public function getInputElement()
-    {
-        return $this->input_element;
-    }
-
-    /**
-     * Set the input element of the block.
-     * @param FormInputElement $input_element
-     * @return $this
-     */
-    public function withInputElement(FormInputElement $input_element)
-    {
-        $this->input_element = $input_element;
-        $this->withContent($this->input_element);
-        $this->getLabelElement()->forInput($this->input_element);
-
-        return $this;
-    }
+    private $label_element;
 
     /**
      * Get the label element of the block.
-     * @return LabelElement
+     * @return FormLabel
      */
     public function getLabelElement()
     {
@@ -57,10 +28,10 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
 
     /**
      * Set the label element of the block.
-     * @param LabelElement $label_element
+     * @param FormLabel $label_element
      * @return $this
      */
-    public function withLabelElement(LabelElement $label_element)
+    public function withLabelElement(FormLabel $label_element)
     {
         $this->label_element = $label_element;
         $this->withContent($this->label_element);
@@ -85,7 +56,6 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
     ->getColumnElement(column number)
     ->getScreenReaderOnlyClass()
     ->hideLabel()
-    ->withInputAttribute(attributes)
      */
 
     /**
@@ -98,9 +68,6 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
         parent::setParent($parent);
         if (!$this->hasHtmlElementName()) {
             $this->withHtmlElementName('div');
-        }
-        if (!$this->getLabelElement()) {
-            $this->withLabelElement($this->createInstanceOf('FormLabel\LabelElement'));
         }
     }
 
