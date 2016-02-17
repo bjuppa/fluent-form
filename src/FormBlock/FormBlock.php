@@ -53,9 +53,19 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
         return $this;
     }
 
-    /* TODO: implement these methods on FormBlock:
-    ->followedBy…Block()
 
+    /**
+     * Put an input block after this block
+     * @param $name
+     * @param string $type
+     * @return InputBlock
+     */
+    public function followedByInputBlock($name, $type='text')
+    {
+        return $this->getFormBlockContainer()->containingInputBlock($name, $type);
+    }
+
+    /* TODO: implement these methods on FormBlock:
     ->getColumnElement(column number)
     ->getAlignmentClasses(column number, bool with_offset=false)
 
@@ -73,6 +83,8 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
 
     ->getScreenReaderOnlyClass()
     ->hideLabel()
+
+    ->followedBy…Block()
      */
 
     /**

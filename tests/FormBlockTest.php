@@ -50,4 +50,11 @@ class FormBlockTest extends PHPUnit_Framework_TestCase
 
         $this->assertContains('>custom label<', $b->getLabelElement()->toHtml());
     }
+
+    public function testFollowedByInputBlock() {
+        $b = $this->getTestBlock()->followedByInputBlock('follow');
+
+        $this->assertContains('<input name="test" ', (string)$b);
+        $this->assertContains('<input name="follow" ', (string)$b);
+    }
 }
