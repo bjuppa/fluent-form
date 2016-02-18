@@ -20,6 +20,11 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
     private $label_element;
 
     /**
+     * @var FluentHtmlElement
+     */
+    private $description_element;
+
+    /**
      * @var bool|callable indicating if the block's inputs are disabled
      */
     private $disabled = false;
@@ -83,6 +88,44 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
     {
         $this->label_element = $label_element;
         $this->withContent($this->label_element);
+
+        return $this;
+    }
+
+    /**
+     * Set description content.
+     * @param string|Htmlable|callable|array|Arrayable $html_contents,...
+     * @return $this|FluentHtmlElement can be method-chained to modify the current element
+     */
+    public function withDescription($html_contents)
+    {
+        $this->getDescriptionElement()->withContent(func_get_args());
+
+        return $this;
+    }
+
+    /**
+     * Get the description element of the block.
+     * @return FluentHtmlElement
+     */
+    public function getDescriptionElement()
+    {
+        if (!$this->description_element) {
+            $this->withDescriptionElement($this->createFluentHtmlElement('div')->onlyDisplayedIfHasContent());
+        }
+
+        return $this->description_element;
+    }
+
+    /**
+     * Set the description element of the block.
+     * @param FluentHtmlElement $description_element
+     * @return $this|FluentHtmlElement can be method-chained to modify the current element
+     */
+    public function withDescriptionElement(FluentHtmlElement $description_element)
+    {
+        $this->description_element = $description_element;
+        $this->withContent($this->description_element);
 
         return $this;
     }
@@ -163,10 +206,6 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
     }
 
     /* TODO: implement these methods on FormBlock:
-
-    ->getDescriptionElement()
-    ->withDescription(text)
-
     ->withError(messages)
     ->withWarning(messages)
     ->withSuccess(true)

@@ -84,4 +84,19 @@ class FormBlockTest extends PHPUnit_Framework_TestCase
         $this->assertContains('<div class="required">', (string)$b);
         $this->assertContains('<input name="test" type="text" required ', (string)$b);
     }
+
+    public function testWithDescription()
+    {
+        $b = $this->getTestBlock()->withDescription('custom description');
+
+        $this->assertContains('<input name="test" type="text" aria-describedby="test8-desc"', (string)$b);
+        $this->assertContains('<div id="test8-desc">custom description</div>', (string)$b);
+    }
+
+    public function testWithEmptyDescription()
+    {
+        $b = $this->getTestBlock()->withDescription('');
+
+        $this->assertNotContains('aria-describedby', (string)$b);
+    }
 }
