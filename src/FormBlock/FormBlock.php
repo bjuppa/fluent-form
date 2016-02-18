@@ -49,11 +49,7 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
             }
         ]);
         $this->withAttribute('disabled', function (FormBlock $form_block) {
-            if ($form_block->getHtmlElementName() == 'fieldset') {
-                return $form_block->isDisabled();
-            }
-
-            return null;
+            return $form_block->isDisabled() and $form_block->getHtmlElementName() == 'fieldset';
         });
     }
 
