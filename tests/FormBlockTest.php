@@ -76,4 +76,12 @@ class FormBlockTest extends PHPUnit_Framework_TestCase
 
         $this->assertContains('<input name="test" type="text" readonly ', (string)$b);
     }
+
+    public function testRequired()
+    {
+        $b = $this->getTestBlock()->required();
+
+        $this->assertContains('<div class="required">', (string)$b);
+        $this->assertContains('<input name="test" type="text" required ', (string)$b);
+    }
 }

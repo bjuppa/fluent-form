@@ -30,6 +30,11 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
     private $readonly = false;
 
     /**
+     * @var bool|callable indicating if the block's inputs are required
+     */
+    private $required = false;
+
+    /**
      * @param string|callable $html_element_name
      */
     public function __construct($html_element_name = 'div')
@@ -38,6 +43,9 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
         $this->withClass([
             'disabled' => function (FormBlock $form_block) {
                 return $form_block->isDisabled();
+            },
+            'required' => function (FormBlock $form_block) {
+                return $form_block->isRequired();
             }
         ]);
         $this->withAttribute('disabled', function (FormBlock $form_block) {
@@ -130,15 +138,35 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
 
     /**
      * Check if the block is readonly
-     * @return bool true if the block is considered readonly
+     * @return bool true if the block's items is considered readonly
      */
     public function isReadonly()
     {
         return (bool)$this->evaluate($this->readonly);
     }
 
+    /**
+     * Make the input(s) in the block required
+     * @param bool|callable $required
+     * @return $this
+     */
+    public function required($required = true)
+    {
+        $this->required = $required;
+
+        return $this;
+    }
+
+    /**
+     * Check if the block is required
+     * @return bool true if the block is considered required
+     */
+    public function isRequired()
+    {
+        return (bool)$this->evaluate($this->required);
+    }
+
     /* TODO: implement these methods on FormBlock:
-    ->required(true)
 
     ->getDescriptionElement()
     ->withDescription(text)

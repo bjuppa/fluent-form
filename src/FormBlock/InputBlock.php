@@ -97,6 +97,8 @@ class InputBlock extends FormBlock
                 return $this->isDisabled();
             })->readonly(function () {
                 return $this->isReadonly();
+            })->required(function () {
+                return $this->isRequired();
             });
             $this->withInputElement($input_element);
         }

@@ -94,4 +94,16 @@ abstract class InputElement extends FormInputElement
 
         return $this;
     }
+
+    /**
+     * Make this input required
+     * @param bool|callable $required
+     * @return $this
+     */
+    public function required($required = true)
+    {
+        $this->withAttribute('required', $required);
+
+        return $this;
+    }
 }
