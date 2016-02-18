@@ -82,4 +82,16 @@ abstract class InputElement extends FormInputElement
 
         return $this;
     }
+
+    /**
+     * Make this input readonly
+     * @param bool|callable $readonly
+     * @return $this
+     */
+    public function readonly($readonly = true)
+    {
+        $this->withAttribute('readonly', $readonly);
+
+        return $this;
+    }
 }

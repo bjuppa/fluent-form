@@ -25,6 +25,11 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
     private $disabled = false;
 
     /**
+     * @var bool|callable indicating if the block's inputs are readonly
+     */
+    private $readonly = false;
+
+    /**
      * @param string|callable $html_element_name
      */
     public function __construct($html_element_name = 'div')
@@ -39,6 +44,7 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
             if ($form_block->getHtmlElementName() == 'fieldset') {
                 return $form_block->isDisabled();
             }
+
             return null;
         });
     }
@@ -102,6 +108,7 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
     }
 
     /**
+     * Check if the block is disabled
      * @return bool true if the block is considered disabled
      */
     public function isDisabled()
@@ -109,8 +116,28 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
         return (bool)$this->evaluate($this->disabled);
     }
 
+    /**
+     * Make the input(s) in the block readonly
+     * @param bool|callable $readonly
+     * @return $this
+     */
+    public function readonly($readonly = true)
+    {
+        $this->readonly = $readonly;
+
+        return $this;
+    }
+
+    /**
+     * Check if the block is readonly
+     * @return bool true if the block is considered readonly
+     */
+    public function isReadonly()
+    {
+        return (bool)$this->evaluate($this->readonly);
+    }
+
     /* TODO: implement these methods on FormBlock:
-    ->readonly(true)
     ->required(true)
 
     ->getDescriptionElement()

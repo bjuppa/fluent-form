@@ -69,4 +69,11 @@ class FormBlockTest extends PHPUnit_Framework_TestCase
         $b->withHtmlElementName('fieldset');
         $this->assertContains('<fieldset class="disabled" disabled>', (string)$b);
     }
+
+    public function testReadonly()
+    {
+        $b = $this->getTestBlock()->readonly();
+
+        $this->assertContains('<input name="test" type="text" readonly ', (string)$b);
+    }
 }
