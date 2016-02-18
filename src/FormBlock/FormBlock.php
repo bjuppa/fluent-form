@@ -30,6 +30,11 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
     private $disabled = false;
 
     /**
+     * @var string css class name to put on disabled form block
+     */
+    private $disabled_class = 'disabled';
+
+    /**
      * @var bool|callable indicating if the block's inputs are readonly
      */
     private $readonly = false;
@@ -40,16 +45,21 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
     private $required = false;
 
     /**
+     * @var string css class name to put on required form block
+     */
+    private $required_class = 'required';
+
+    /**
      * @param string|callable $html_element_name
      */
     public function __construct($html_element_name = 'div')
     {
         parent::__construct($html_element_name);
         $this->withClass([
-            'disabled' => function (FormBlock $form_block) {
+            $this->disabled_class => function (FormBlock $form_block) {
                 return $form_block->isDisabled();
             },
-            'required' => function (FormBlock $form_block) {
+            $this->required_class => function (FormBlock $form_block) {
                 return $form_block->isRequired();
             }
         ]);
