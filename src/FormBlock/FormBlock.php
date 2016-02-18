@@ -25,6 +25,24 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
     private $disabled = false;
 
     /**
+     * @param string|callable $html_element_name
+     */
+    public function __construct($html_element_name = 'div')
+    {
+        parent::__construct($html_element_name);
+        $this->withClass([
+            'disabled' => function (FormBlock $form_block) {
+                return $form_block->isDisabled();
+            }
+        ]);
+        $this->withAttribute('disabled', function (FormBlock $form_block) {
+            if ($form_block->getHtmlElementName() == 'fieldset') {
+                return $form_block->isDisabled();
+            }
+        });
+    }
+
+    /**
      * Set label content.
      * @param string|Htmlable|callable|array|Arrayable $html_contents,...
      * @return $this|FluentHtmlElement can be method-chained to modify the current element
@@ -110,23 +128,5 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
 
     ->followedBy…Block()
      */
-
-    /**
-     * Set this element's parent element.
-     *
-     * @param FluentHtmlElement|null $parent
-     */
-    protected function setParent(FluentHtmlElement $parent = null)
-    {
-        parent::setParent($parent);
-        if (!$this->hasHtmlElementName()) {
-            $this->withHtmlElementName('div');
-        }
-        $this->withClass([
-            'disabled' => function (FormBlock $form_block) {
-                return $form_block->isDisabled();
-            }
-        ]);
-    }
 
 }
