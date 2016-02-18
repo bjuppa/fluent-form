@@ -69,7 +69,7 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
     }
 
     /**
-     * Set label content.
+     * Add label content.
      * @param string|Htmlable|callable|array|Arrayable $html_contents,...
      * @return $this|FluentHtmlElement can be method-chained to modify the current element
      */
@@ -103,7 +103,7 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
     }
 
     /**
-     * Set description content.
+     * Add description content.
      * @param string|Htmlable|callable|array|Arrayable $html_contents,...
      * @return $this|FluentHtmlElement can be method-chained to modify the current element
      */
@@ -121,6 +121,7 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
     public function getDescriptionElement()
     {
         if (!$this->description_element) {
+            //TODO: create instance of FormDescription\FormDescription instead of this general div
             $this->withDescriptionElement($this->createFluentHtmlElement('div')->onlyDisplayedIfHasContent());
         }
 
