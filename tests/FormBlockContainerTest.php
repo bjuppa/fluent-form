@@ -1,5 +1,6 @@
 <?php
 
+use FewAgency\FluentForm\FormBlockContainer\FieldsetElement;
 use FewAgency\FluentHtml\Testing\ComparesFluentHtml;
 use FewAgency\FluentForm\FluentForm;
 
@@ -62,8 +63,15 @@ class FormBlockContainerTest extends PHPUnit_Framework_TestCase
         $this->assertNull($c->getValue('a.c'));
     }
 
-    public function testValuesFromParentContainer()
+    public function testGetValueFromAncestor()
     {
-        //TODO: implement test with multi-level of form block containers, i.e. a fieldset
+        $form = FluentForm::create();
+        $fieldset = FieldsetElement::create();
+        $form->withContent($fieldset);
+
+        $form->withValues(['a' => 'A']);
+        $fieldset->withValues(['b' => 'B']);
+
+        $this->assertEquals('A', $fieldset->getValue('a'));
     }
 }

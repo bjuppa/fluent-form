@@ -10,7 +10,8 @@ trait FormElement
      * Get the form element for the element
      * @return FluentForm|null
      */
-    public function getForm() {
+    public function getForm()
+    {
         return $this->getAncestorInstanceOf('FewAgency\FluentForm\FluentForm');
     }
 
@@ -18,7 +19,8 @@ trait FormElement
      * Get the the block container element if this element is part of one.
      * @return FormBlockContainer|null
      */
-    public function getFormBlockContainer() {
+    public function getFormBlockContainer()
+    {
         return $this->getAncestorInstanceOf('FewAgency\FluentForm\FormBlockContainer\FormBlockContainer');
     }
 
@@ -27,8 +29,12 @@ trait FormElement
      * @param string $key in dot-notation
      * @return string|null
      */
-    protected function getValueFromAncestor($key) {
-        //TODO: get the value from higher up in form.
+    protected function getValueFromAncestor($key)
+    {
+        if ($ancestor = $this->getFormBlockContainer()) {
+            return $ancestor->getValue($key);
+        }
+
         return null;
     }
 }

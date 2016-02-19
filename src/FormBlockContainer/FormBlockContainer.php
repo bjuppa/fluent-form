@@ -119,9 +119,7 @@ abstract class FormBlockContainer extends FluentHtml implements FormElementContr
             }
         }
 
-        //TODO: call on parent container
-
-        return null;
+        return $this->getValueFromAncestor($key);
     }
 
     /**
