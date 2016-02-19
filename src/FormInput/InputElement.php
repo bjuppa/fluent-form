@@ -64,7 +64,7 @@ abstract class InputElement extends FormInputElement
     public function getValue()
     {
         $value = $this->evaluate($this->input_value);
-        if (is_null($value)) {
+        if (!isset($value)) {
             $value = $this->getValueFromAncestor($this->getName());
         }
 
