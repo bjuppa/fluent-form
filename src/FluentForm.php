@@ -24,7 +24,7 @@ class FluentForm extends FormBlockContainer
 
     /**
      * Static builder for convenience.
-     * @return static
+     * @return FluentForm
      */
     public static function create()
     {
