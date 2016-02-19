@@ -69,9 +69,10 @@ class FormBlockContainerTest extends PHPUnit_Framework_TestCase
         $fieldset = FieldsetElement::create();
         $form->withContent($fieldset);
 
-        $form->withValues(['a' => 'A']);
-        $fieldset->withValues(['b' => 'B']);
+        $form->withValues(['a' => 'formA', 'b' => 'formB']);
+        $fieldset->withValues(['b' => 'fieldsetB']);
 
-        $this->assertEquals('A', $fieldset->getValue('a'));
+        $this->assertEquals('formA', $fieldset->getValue('a'));
+        $this->assertEquals('fieldsetB', $fieldset->getValue('b'));
     }
 }

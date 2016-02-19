@@ -35,6 +35,30 @@ class InputBlock extends FormBlock
     }
 
     /**
+     * Set input value.
+     * @param $value string|callable
+     * @return $this
+     */
+    public function withInputValue($value)
+    {
+        $this->getInputElement()->withValue($value);
+
+        return $this;
+    }
+
+    /**
+     * @param string|callable|array|Arrayable $attributes Attribute name as string, can also be an array of names and values, or a callable returning such an array.
+     * @param string|bool|callable|array|Arrayable $value to set, only used if $attributes is a string
+     * @return $this
+     */
+    public function withInputAttribute($attributes, $value = true)
+    {
+        $this->getInputElement()->withAttribute($attributes, $value);
+
+        return $this;
+    }
+
+    /**
      * Set the input element of the block.
      * @param FormInputElement $input_element
      * @return FormBlock
@@ -59,18 +83,6 @@ class InputBlock extends FormBlock
     public function getInputElement()
     {
         return $this->input_element;
-    }
-
-    /**
-     * @param string|callable|array|Arrayable $attributes Attribute name as string, can also be an array of names and values, or a callable returning such an array.
-     * @param string|bool|callable|array|Arrayable $value to set, only used if $attributes is a string
-     * @return $this
-     */
-    public function withInputAttribute($attributes, $value = true)
-    {
-        $this->getInputElement()->withAttribute($attributes, $value);
-
-        return $this;
     }
 
     /**

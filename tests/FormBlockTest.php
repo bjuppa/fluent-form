@@ -99,4 +99,20 @@ class FormBlockTest extends PHPUnit_Framework_TestCase
 
         $this->assertNotContains('aria-describedby', (string)$b);
     }
+
+    public function testValuesFromForm()
+    {
+        $b = $this->getTestBlock();
+        $b->getForm()->withValues(['test' => 'Form Value']);
+
+        $this->assertContains('value="Form Value"', (string)$b);
+    }
+
+    public function testWithInputValue()
+    {
+        $b = $this->getTestBlock()->withInputValue('Input Value');
+        $b->getForm()->withValues(['test' => 'Form Value']);
+
+        $this->assertContains('value="Input Value"', (string)$b);
+    }
 }
