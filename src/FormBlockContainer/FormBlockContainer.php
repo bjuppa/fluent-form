@@ -1,6 +1,7 @@
 <?php
 namespace FewAgency\FluentForm\FormBlockContainer;
 
+use ArrayAccess;
 use FewAgency\FluentHtml\FluentHtml;
 use FewAgency\FluentForm\Support\FormElementContract;
 use FewAgency\FluentForm\Support\FormElement;
@@ -97,7 +98,7 @@ abstract class FormBlockContainer extends FluentHtml implements FormElementContr
 
     /**
      * Set a value container.
-     * @param array|object|Arrayable $map anything that can be treated as a key-value repository
+     * @param array|object|Arrayable $map key-value implementation
      */
     public function withValues($map)
     {
@@ -106,20 +107,45 @@ abstract class FormBlockContainer extends FluentHtml implements FormElementContr
 
     /**
      * Get a set input value or selected option.
-     * @param string $key
+     * @param string $key in dot-notation
      * @return mixed|null
      */
     public function getValue($key)
     {
-        foreach ($this->value_maps as $values) {
-            if (is_array($values) and isset($values[$key])) {
-                $value = $values[$key];
-            }
+        foreach ($this->value_maps as $map) {
+            $value = $this->getValueFromMap(explode('.', $key), $map);
             if (isset($value)) {
                 return $value;
             }
         }
+
         //TODO: call on parent container
+
         return null;
+    }
+
+    /**
+     * Get a value from a key value map.
+     * @param array $key_parts containing one string for each level
+     * @param array|object|ArrayAccess|Arrayable $map key-value implementation
+     * @return mixed|null
+     */
+    protected static function getValueFromMap($key_parts, $map)
+    {
+        $original_key_parts = $key_parts;
+        $key = array_shift($key_parts);
+        $value = null;
+        if (is_object($map) and isset($map->$key)) {
+            $value = $map->$key;
+        } elseif ((is_array($map) or $map instanceof ArrayAccess) and isset($map[$key])) {
+            $value = $map[$key];
+        } elseif ($map instanceof Arrayable) {
+            return self::getValueFromMap($original_key_parts, $map->toArray());
+        }
+        if (count($key_parts)) {
+            return self::getValueFromMap($key_parts, $value);
+        }
+
+        return $value;
     }
 }
