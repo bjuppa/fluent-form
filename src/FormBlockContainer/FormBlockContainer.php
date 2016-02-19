@@ -5,6 +5,9 @@ use FewAgency\FluentHtml\FluentHtml;
 use FewAgency\FluentForm\Support\FormElementContract;
 use FewAgency\FluentForm\Support\FormElement;
 use FewAgency\FluentForm\FormBlock\InputBlock;
+use Illuminate\Support\Collection;
+use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Contracts\Support\Arrayable;
 
 abstract class FormBlockContainer extends FluentHtml implements FormElementContract
 {
@@ -15,6 +18,23 @@ abstract class FormBlockContainer extends FluentHtml implements FormElementContr
     protected $alignment_classes_default = [1 => 'half-width float-left align-right', 2 => 'half-width', 3 => ''];
     protected $alignment_offset_classes;
     protected $alignment_offset_classes_default = [2 => 'half-width half-margin-left', 3 => ''];
+
+    /**
+     * The values and selected options for inputs in this form.
+     * @var Collection of arrays, objects or other key-value implementations, in order of preference
+     */
+    private $value_maps;
+
+    /**
+     * @param string|callable|null $html_element_name
+     * @param string|Htmlable|array|Arrayable $tag_contents
+     * @param array|Arrayable $tag_attributes
+     */
+    public function __construct($html_element_name, $tag_contents, $tag_attributes)
+    {
+        parent::__construct($html_element_name, $tag_contents, $tag_attributes);
+        $this->value_maps = new Collection();
+    }
 
 
     /**
@@ -31,6 +51,13 @@ abstract class FormBlockContainer extends FluentHtml implements FormElementContr
     }
 
     /* TODO: implement these methods on FormBlockContainer
+->withValues(object or array)
+->withValues(overriding values)
+->getValue(key) in dot notation
+
+->withErrors(messages)
+->withWarnings(messages)
+
 ->with…Block(name, type)
 ->with…Blocks(array of input names and types)
 ->containing…Block(name)->withLabel(text)->followedBy…Block()
@@ -39,13 +66,6 @@ abstract class FormBlockContainer extends FluentHtml implements FormElementContr
 ->getAlignmentClasses(column number, bool with_offset=false)
 ->align(true)
 ->isAligned()
-
-->withValues(object or array)
-->withValues(overriding values)
-->getValue(name)
-
-->withErrors(messages)
-->withWarnings(messages)
      */
 
     /**
@@ -73,5 +93,33 @@ abstract class FormBlockContainer extends FluentHtml implements FormElementContr
         $this->withContent($block);
 
         return $block;
+    }
+
+    /**
+     * Set a value container.
+     * @param array|object|Arrayable $map anything that can be treated as a key-value repository
+     */
+    public function withValues($map)
+    {
+        $this->value_maps->prepend($map);
+    }
+
+    /**
+     * Get a set input value or selected option.
+     * @param string $key
+     * @return mixed|null
+     */
+    public function getValue($key)
+    {
+        foreach ($this->value_maps as $values) {
+            if (is_array($values) and isset($values[$key])) {
+                $value = $values[$key];
+            }
+            if (isset($value)) {
+                return $value;
+            }
+        }
+        //TODO: call on parent container
+        return null;
     }
 }
