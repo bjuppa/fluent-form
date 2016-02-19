@@ -7,18 +7,26 @@ class FluentFormTest extends PHPUnit_Framework_TestCase
 {
     use ComparesFluentHtml;
 
+    /**
+     * @return FluentForm
+     */
+    protected function getTestForm()
+    {
+        return FluentForm::create();
+    }
+
     public function testCreate()
     {
-        $f = FluentForm::create();
+        $f = $this->getTestForm();
         $this->assertHtmlEquals('<form method="POST"></form>', $f);
     }
 
     public function testWithToken()
     {
-        $f = FluentForm::create()->withToken('ABC');
+        $f = $this->getTestForm()->withToken('ABC');
         $this->assertHtmlEquals('<form method="POST"><input name="_token" type="hidden" value="ABC"></form>', $f);
 
-        $f = FluentForm::create()->withToken('ABC', 'overriden_name');
+        $f = $this->getTestForm()->withToken('ABC', 'overriden_name');
         $this->assertHtmlEquals(
             '<form method="POST"> <input name="overriden_name" type="hidden" value="ABC"> </form>',
             $f);
@@ -26,10 +34,10 @@ class FluentFormTest extends PHPUnit_Framework_TestCase
 
     public function testWithMethod()
     {
-        $f = FluentForm::create()->withMethod('DELETE');
+        $f = $this->getTestForm()->withMethod('DELETE');
         $this->assertHtmlEquals('<form method="POST"><input name="_method" type="hidden" value="DELETE"></form>', $f);
 
-        $f = FluentForm::create()->withMethod('put', 'overriden_name');
+        $f = $this->getTestForm()->withMethod('put', 'overriden_name');
         $this->assertHtmlEquals(
             '<form method="POST"> <input name="overriden_name" type="hidden" value="put"> </form>',
             $f);
@@ -37,14 +45,14 @@ class FluentFormTest extends PHPUnit_Framework_TestCase
 
     public function testWithInputBlock()
     {
-        $f = FluentForm::create()->withInputBlock('test');
+        $f = $this->getTestForm()->withInputBlock('test');
         $this->assertHtmlContentEquals('<div> <label for="test">Test</label> <input name="test" type="text" id="test"> </div>',
             $f);
     }
 
     public function testContainingInputBlock()
     {
-        $block = FluentForm::create()->containingInputBlock('test');
+        $block = $this->getTestForm()->containingInputBlock('test');
 
         $this->assertInstanceOf('FewAgency\FluentForm\FormBlock\InputBlock', $block);
         $this->assertContains('<input', (string)$block);
@@ -53,7 +61,7 @@ class FluentFormTest extends PHPUnit_Framework_TestCase
 
     public function testInputNameDotNotation()
     {
-        $f = FluentForm::create()->withInputBlock('test.test');
+        $f = $this->getTestForm()->withInputBlock('test.test');
         $this->assertHtmlContentEquals(
             '<div> <label for="test.test">Test Test</label> <input name="test[test]" type="text" id="test.test"> </div>',
             $f);
@@ -61,7 +69,7 @@ class FluentFormTest extends PHPUnit_Framework_TestCase
 
     public function testWithTelInput()
     {
-        $f = FluentForm::create()->withInputBlock('phone', 'tel');
+        $f = $this->getTestForm()->withInputBlock('phone', 'tel');
 
         $this->assertContains('type="tel"', (string)$f);
         $this->assertContains('autocorrect="off"', (string)$f);
@@ -70,7 +78,7 @@ class FluentFormTest extends PHPUnit_Framework_TestCase
 
     public function testWithEmailInput()
     {
-        $f = FluentForm::create()->withInputBlock('mail', 'email');
+        $f = $this->getTestForm()->withInputBlock('mail', 'email');
 
         $this->assertContains('type="email"', (string)$f);
         $this->assertContains('autocapitalize="off"', (string)$f);
