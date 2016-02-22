@@ -1,9 +1,24 @@
 <?php
 namespace FewAgency\FluentForm\FormInput;
 
+use FewAgency\FluentForm\Support\FormInputReadonlyElement;
+use FewAgency\FluentForm\Support\FormInputSingleValueElement;
 
 class TextareaElement extends FormInputElement
 {
-    //TODO: use traits for common input functionality for TextareaElement (e.g. shared with InputElement)
-    //TODO: constructor should set default content to the getValue() for the input name
+    use FormInputSingleValueElement, FormInputReadonlyElement;
+
+    /**
+     * TextareaElement constructor.
+     * @param callable|string $name of input
+     */
+    public function __construct($name)
+    {
+        parent::__construct('textarea');
+        $this->withName($name);
+        $this->withDefaultContent(function (TextareaElement $input) {
+            return $input->getValue();
+        });
+    }
+
 }

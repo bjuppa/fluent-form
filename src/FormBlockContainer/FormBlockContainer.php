@@ -57,7 +57,6 @@ abstract class FormBlockContainer extends FluentHtml implements FormElementContr
 
 ->with…Block(name, type)
 ->with…Blocks(array of input names and types)
-->containing…Block(name)->withLabel(text)->followedBy…Block()
 
 ->withAlignmentClasses(col 1, col 2, col 3, offset 2, offset 3=null)
 ->getAlignmentClasses(column number, bool with_offset=false)

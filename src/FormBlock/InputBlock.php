@@ -95,17 +95,23 @@ class InputBlock extends FormBlock
         parent::setParent($parent);
         if (!$this->getInputElement()) {
             try {
-                //Look for a type class
+                //Look for a type Input class
                 $classname = 'FormInput\\' . ucfirst($this->input_type) . 'InputElement';
                 $input_element = $this->createInstanceOf($classname, [$this->input_name]);
             } catch (\Exception $e) {
                 try {
-                    //Look for a full classname
-                    $input_element = $this->createInstanceOf($this->input_type, [$this->input_name]);
+                    //Look for a type class
+                    $classname = 'FormInput\\' . ucfirst($this->input_type) . 'Element';
+                    $input_element = $this->createInstanceOf($classname, [$this->input_name]);
                 } catch (\Exception $e) {
-                    //Fallback to an input with type attribute set
-                    $input_element = $this->createInstanceOf('FormInput\\TextInputElement',
-                        [$this->input_name, $this->input_type]);
+                    try {
+                        //Look for a full classname
+                        $input_element = $this->createInstanceOf($this->input_type, [$this->input_name]);
+                    } catch (\Exception $e) {
+                        //Fallback to an input with type attribute set
+                        $input_element = $this->createInstanceOf('FormInput\\TextInputElement',
+                            [$this->input_name, $this->input_type]);
+                    }
                 }
             }
             $input_element->disabled(function () {
