@@ -8,11 +8,17 @@ use FewAgency\FluentForm\Support\FormElement;
 use FewAgency\FluentHtml\FluentHtmlElement;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Support\Collection;
 
 
 abstract class FormBlock extends FluentHtml implements FormElementContract
 {
     use FormElement;
+
+    /**
+     * @var array of elements for alignment within the block, i.e. label holder, input holder, description holder
+     */
+    private $alignment_elements = [];
 
     /**
      * @var FormLabel
@@ -50,21 +56,41 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
     private $required_class = 'required';
 
     /**
+     * The errors and for this input block.
+     * @var Collection of error messages
+     */
+    private $errors;
+
+    /**
      * @param string|callable $html_element_name
      */
     public function __construct($html_element_name = 'div')
     {
         parent::__construct($html_element_name);
+        $this->errors = new Collection();
+        $this->alignment_elements = [
+            $this->createFluentHtmlElement()->withContent(function () {
+                return $this->getLabelElement();
+            }),
+            $this->createFluentHtmlElement(),
+            $this->createFluentHtmlElement()->withContent(function () {
+                return $this->getDescriptionElement();
+            }),
+        ];
+        $this->withContent($this->alignment_elements);
+        $this->getDescriptionElement()->withContent(function () {
+            return $this->generateErrorListElement();
+        });
         $this->withClass([
-            $this->disabled_class => function (FormBlock $form_block) {
-                return $form_block->isDisabled();
+            $this->disabled_class => function () {
+                return $this->isDisabled();
             },
-            $this->required_class => function (FormBlock $form_block) {
-                return $form_block->isRequired();
+            $this->required_class => function () {
+                return $this->isRequired();
             }
         ]);
-        $this->withAttribute('disabled', function (FormBlock $form_block) {
-            return $form_block->isDisabled() and $form_block->getHtmlElementName() == 'fieldset';
+        $this->withAttribute('disabled', function () {
+            return $this->isDisabled() and $this->getHtmlElementName() == 'fieldset';
         });
     }
 
@@ -97,7 +123,6 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
     public function withLabelElement(FormLabel $label_element)
     {
         $this->label_element = $label_element;
-        $this->withContent($this->label_element);
 
         return $this;
     }
@@ -122,25 +147,11 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
     {
         if (!$this->description_element) {
             //TODO: create instance of FormDescription\FormDescription instead of this general div
-            $this->withDescriptionElement($this->createFluentHtmlElement('div')->onlyDisplayedIfHasContent());
+            $this->description_element = $this->createFluentHtmlElement('div')->onlyDisplayedIfHasContent();
         }
 
         return $this->description_element;
     }
-
-    /**
-     * Set the description element of the block.
-     * @param FluentHtmlElement $description_element
-     * @return $this|FluentHtmlElement can be method-chained to modify the current element
-     */
-    public function withDescriptionElement(FluentHtmlElement $description_element)
-    {
-        $this->description_element = $description_element;
-        $this->withContent($this->description_element);
-
-        return $this;
-    }
-
 
     /**
      * Put an input block after this block
@@ -187,7 +198,7 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
     }
 
     /**
-     * Check if the block is readonly
+     * Check if the block is readonly.
      * @return bool true if the block's items is considered readonly
      */
     public function isReadonly()
@@ -196,7 +207,7 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
     }
 
     /**
-     * Make the input(s) in the block required
+     * Make the input in the block required.
      * @param bool|callable $required
      * @return $this
      */
@@ -208,7 +219,7 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
     }
 
     /**
-     * Check if the block is required
+     * Check if the block is required.
      * @return bool true if the block is considered required
      */
     public function isRequired()
@@ -216,8 +227,48 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
         return (bool)$this->evaluate($this->required);
     }
 
+    /**
+     * Add error message(s) to this block.
+     * @param string|array|Arrayable $messages
+     * @return $this
+     */
+    public function withError($messages)
+    {
+        $this->errors = $this->errors->merge($messages);
+
+        return $this;
+    }
+
+    /**
+     * Get all combined error messages for this block.
+     * @return array
+     */
+    protected function getErrorMessages()
+    {
+        //TODO: merge containers' error messages
+        return $this->errors->toArray();
+    }
+
+    /**
+     * Generate a html list of error messages for this block.
+     * @return FluentHtmlElement
+     */
+    protected function generateErrorListElement()
+    {
+        return $this->createFluentHtmlElement('ul')->onlyDisplayedIfHasContent()
+            ->withContentWrappedIn($this->getErrorMessages(), 'li');
+    }
+
+    /**
+     * @param $number 1: label, 2: input, or 3: description
+     * @return FluentHtmlElement
+     */
+    protected function getAlignmentElement($number)
+    {
+        return $this->alignment_elements[$number - 1];
+    }
+
     /* TODO: implement these methods on FormBlock:
-    ->withError(messages)
     ->withWarning(messages)
     ->withSuccess(true)
     ->withFeedback(html)
@@ -225,7 +276,6 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
     ->getScreenReaderOnlyClass()
     ->hideLabel()
 
-    ->getColumnElement(column number)
     ->getAlignmentClasses(column number, bool with_offset=false)
 
     ->followedBy…Block()

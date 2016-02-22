@@ -21,7 +21,7 @@ abstract class FormBlockContainer extends FluentHtml implements FormElementContr
     protected $alignment_offset_classes_default = [2 => 'half-width half-margin-left', 3 => ''];
 
     /**
-     * The values and selected options for inputs in this form.
+     * The values and selected options for inputs in this level of the form.
      * @var Collection of arrays, objects or other key-value implementations, in order of preference
      */
     private $value_maps;

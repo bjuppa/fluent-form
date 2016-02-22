@@ -25,7 +25,7 @@ class InputTest extends PHPUnit_Framework_TestCase
         $input->disabled();
 
         $this->assertTrue($input->isDisabled());
-        $this->assertContains(' disabled ', (string)$input);
+        $this->assertContains(' disabled', (string)$input);
     }
 
     function testRequired()
@@ -37,6 +37,6 @@ class InputTest extends PHPUnit_Framework_TestCase
         $input->required();
 
         $this->assertTrue($input->isRequired());
-        $this->assertContains(' required ', (string)$input);
+        $this->assertContains(' required', (string)$input);
     }
 }
