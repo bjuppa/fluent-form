@@ -91,4 +91,46 @@ abstract class FormInputElement extends FluentHtml implements FormElementContrac
         return parent::getId($desired_id ?: $this->getName());
     }
 
+    /**
+     * Make this input disabled
+     * @param bool|callable $disabled
+     * @return InputElement
+     */
+    public function disabled($disabled = true)
+    {
+        $this->withAttribute('disabled', $disabled);
+
+        return $this;
+    }
+
+    /**
+     * Check if input is disabled.
+     * @return bool true if input is disabled
+     */
+    public function isDisabled()
+    {
+        return (bool)$this->getAttribute('disabled');
+    }
+
+    /**
+     * Make this input required
+     * @param bool|callable $required
+     * @return InputElement
+     */
+    public function required($required = true)
+    {
+        $this->withAttribute('required', $required);
+
+        return $this;
+    }
+
+    /**
+     * Check if input is required.
+     * @return bool true if input is required
+     */
+    public function isRequired()
+    {
+        return (bool)$this->getAttribute('required');
+    }
+
 }

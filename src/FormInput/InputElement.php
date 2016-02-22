@@ -23,12 +23,12 @@ namespace FewAgency\FluentForm\FormInput;
 // ColorInputElement
 // RangeInputElement
 
+use FewAgency\FluentForm\Support\FormInputReadonlyElement;
+use FewAgency\FluentForm\Support\FormInputSingleValueElement;
+
 abstract class InputElement extends FormInputElement
 {
-    /**
-     * @var string|callable
-     */
-    private $input_value;
+    use FormInputSingleValueElement, FormInputReadonlyElement;
 
     /**
      * InputElement constructor.
@@ -44,66 +44,5 @@ abstract class InputElement extends FormInputElement
             return $input->getValue();
         });
     }
-
-    /**
-     * Set input value.
-     * @param string|callable|null $value
-     * @return $this
-     */
-    public function withValue($value)
-    {
-        $this->input_value = $value;
-
-        return $this;
-    }
-
-    /**
-     * Get input value.
-     * @return string|null
-     */
-    public function getValue()
-    {
-        $value = $this->evaluate($this->input_value);
-        if (!isset($value)) {
-            $value = $this->getValueFromAncestor($this->getName());
-        }
-
-        return $value;
-    }
-
-    /**
-     * Make this input disabled
-     * @param bool|callable $disabled
-     * @return $this
-     */
-    public function disabled($disabled = true)
-    {
-        $this->withAttribute('disabled', $disabled);
-
-        return $this;
-    }
-
-    /**
-     * Make this input readonly
-     * @param bool|callable $readonly
-     * @return $this
-     */
-    public function readonly($readonly = true)
-    {
-        $this->withAttribute('readonly', $readonly);
-
-        return $this;
-    }
-
-    /**
-     * Make this input required
-     * @param bool|callable $required
-     * @return $this
-     */
-    public function required($required = true)
-    {
-        $this->withAttribute('required', $required);
-
-        return $this;
-    }
+    
 }
