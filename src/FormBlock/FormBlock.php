@@ -56,6 +56,21 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
     private $required_class = 'required';
 
     /**
+     * @var string css class name to put on form block with error
+     */
+    private $error_class = 'has-error';
+
+    /**
+     * @var string css class name to put on form block with warning
+     */
+    private $warning_class = 'has-warning';
+
+    /**
+     * @var string css class name to put on form block with success
+     */
+    private $success_class = 'has-success';
+
+    /**
      * The errors and for this input block.
      * @var Collection of error messages
      */
@@ -87,6 +102,9 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
             },
             $this->required_class => function () {
                 return $this->isRequired();
+            },
+            function () {
+                return $this->getStateClass();
             }
         ]);
         $this->withAttribute('disabled', function () {
@@ -246,7 +264,17 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
     protected function getErrorMessages()
     {
         //TODO: merge containers' error messages
+        //TODO: trim and then filter out empty messages
         return $this->errors->toArray();
+    }
+
+    /**
+     * Find out if this form block has any errors.
+     * @return bool
+     */
+    public function hasError()
+    {
+        return (bool)count($this->getErrorMessages());
     }
 
     /**
@@ -266,6 +294,19 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
     protected function getAlignmentElement($number)
     {
         return $this->alignment_elements[$number - 1];
+    }
+
+    /**
+     * Get the css class representing the state of this block.
+     * @return null|string
+     */
+    protected function getStateClass()
+    {
+        if ($this->hasError()) {
+            return $this->error_class;
+        } else {
+            return null;
+        }
     }
 
     /* TODO: implement these methods on FormBlock:

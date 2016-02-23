@@ -123,7 +123,7 @@ class FormBlockTest extends PHPUnit_Framework_TestCase
         $b->withError('Message A');
 
         $this->assertContains('<li>Message A</li>', (string)$b);
-        $this->assertContains('class="has-error"', (string)$b);
+        $this->assertContains('<div class="has-error">', (string)$b);
         $this->assertContains('aria-invalid="true"', (string)$b);
     }
 }

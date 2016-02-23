@@ -16,6 +16,11 @@ abstract class FormInputElement extends FluentHtml implements FormElementContrac
     private $input_name;
 
     /**
+     * @var bool|callable
+     */
+    private $invalid = false;
+
+    /**
      * Set the name of the input element.
      * @param string|callable $name of input
      * @return $this
@@ -92,7 +97,7 @@ abstract class FormInputElement extends FluentHtml implements FormElementContrac
     }
 
     /**
-     * Make this input disabled
+     * Make this input disabled.
      * @param bool|callable $disabled
      * @return InputElement
      */
@@ -113,7 +118,7 @@ abstract class FormInputElement extends FluentHtml implements FormElementContrac
     }
 
     /**
-     * Make this input required
+     * Make this input required.
      * @param bool|callable $required
      * @return InputElement
      */
@@ -133,4 +138,27 @@ abstract class FormInputElement extends FluentHtml implements FormElementContrac
         return (bool)$this->getAttribute('required');
     }
 
+    /**
+     * Make this input invalid.
+     * @param bool|callable $invalid
+     * @return InputElement
+     */
+    public function invalid($invalid = true)
+    {
+        $this->invalid = $invalid;
+        $this->withAttribute('aria-invalid', function () {
+            return $this->isInvalid() ? 'true' : null;
+        });
+
+        return $this;
+    }
+
+    /**
+     * Check if input is invalid.
+     * @return bool true if input is invalid
+     */
+    public function isInvalid()
+    {
+        return (bool)$this->evaluate($this->invalid);
+    }
 }

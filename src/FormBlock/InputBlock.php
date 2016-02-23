@@ -71,6 +71,9 @@ class InputBlock extends FormBlock
         $this->getInputElement()->withAttribute('aria-describedby', function (FormInputElement $input_element) {
             return $this->getDescriptionElement()->hasContent() ? $this->getDescriptionElement()->getId($input_element->getId() . '-desc') : null;
         });
+        $this->getInputElement()->invalid(function () {
+            return $this->hasError();
+        });
         $this->getAlignmentElement(2)->withContent($this->getInputElement());
 
         return $this;
