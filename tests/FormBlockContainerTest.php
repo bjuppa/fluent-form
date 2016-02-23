@@ -75,4 +75,35 @@ class FormBlockContainerTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('formA', $fieldset->getValue('a'));
         $this->assertEquals('fieldsetB', $fieldset->getValue('b'));
     }
+
+    public function testWithErrors()
+    {
+        $c = FluentForm::create();
+
+        $c->withErrors(['test' => ['Message A', 'Message B']]);
+
+        $this->assertEquals(['Message A', 'Message B'], $c->getErrors('test'));
+        $this->assertEquals([], $c->getErrors('name'));
+    }
+
+    public function testWithSingleError()
+    {
+        $c = FluentForm::create();
+
+        $c->withErrors(['test' => 'Message A']);
+
+        $this->assertEquals(['Message A'], $c->getErrors('test'));
+    }
+
+    public function testWithErrorFromAncestor()
+    {
+        $form = FluentForm::create();
+        $fieldset = FieldsetElement::create();
+        $form->withContent($fieldset);
+
+        $form->withErrors(['test' => ['Message Form']]);
+        $fieldset->withErrors(['test' => ['Message Fieldset']]);
+
+        $this->assertEquals(['Message Fieldset', 'Message Form'], $fieldset->getErrors('test'));
+    }
 }

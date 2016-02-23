@@ -37,4 +37,18 @@ trait FormElement
 
         return null;
     }
+
+    /**
+     * Get error messages set higher up in the form structure.
+     * @param string $key in dot-notation
+     * @return array
+     */
+    protected function getErrorsFromAncestor($key)
+    {
+        if ($ancestor = $this->getFormBlockContainer()) {
+            return $ancestor->getErrors($key);
+        }
+
+        return [];
+    }
 }

@@ -259,13 +259,17 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
 
     /**
      * Get all combined error messages for this block.
+     * @param string|null $key to get error messages from ancestor
      * @return array
      */
-    protected function getErrorMessages()
+    protected function getErrorMessages($key = null)
     {
-        //TODO: merge containers' error messages
-        //TODO: trim and then filter out empty messages
-        return $this->errors->toArray();
+        return $this->errors->merge($this->getErrorsFromAncestor($key))->transform(function ($message) {
+            return trim($message);
+        })->filter(function ($message) {
+            //Filter out empty strings and booleans
+            return isset($message) and !is_bool($message) and '' !== $message;
+        })->unique()->toArray();
     }
 
     /**

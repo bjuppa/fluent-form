@@ -6,9 +6,11 @@ use FewAgency\FluentHtml\FluentHtml;
 use FewAgency\FluentForm\Support\FormElementContract;
 use FewAgency\FluentForm\Support\FormElement;
 use FewAgency\FluentForm\FormBlock\InputBlock;
+use Illuminate\Contracts\Support\MessageProvider;
 use Illuminate\Support\Collection;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Support\MessageBag;
 
 abstract class FormBlockContainer extends FluentHtml implements FormElementContract
 {
@@ -27,6 +29,12 @@ abstract class FormBlockContainer extends FluentHtml implements FormElementContr
     private $value_maps;
 
     /**
+     * Error messages for this level of the form.
+     * @var MessageBag
+     */
+    private $error_messages;
+
+    /**
      * @param string|callable|null $html_element_name
      * @param string|Htmlable|array|Arrayable $tag_contents
      * @param array|Arrayable $tag_attributes
@@ -35,6 +43,7 @@ abstract class FormBlockContainer extends FluentHtml implements FormElementContr
     {
         parent::__construct($html_element_name, $tag_contents, $tag_attributes);
         $this->value_maps = new Collection();
+        $this->error_messages = new MessageBag();
     }
 
 
@@ -52,7 +61,6 @@ abstract class FormBlockContainer extends FluentHtml implements FormElementContr
     }
 
     /* TODO: implement these methods on FormBlockContainer
-->withErrors(messages)
 ->withWarnings(messages)
 
 ->with…Block(name, type)
@@ -101,7 +109,7 @@ abstract class FormBlockContainer extends FluentHtml implements FormElementContr
     }
 
     /**
-     * Get a set input value or selected option.
+     * Get an input value or selected option.
      * @param string $key in dot-notation
      * @return mixed|null
      */
@@ -140,5 +148,29 @@ abstract class FormBlockContainer extends FluentHtml implements FormElementContr
         }
 
         return $value;
+    }
+
+    /**
+     * Merge a new array of messages into the error messages.
+     *
+     * @param  MessageProvider|array $messages keyed by fieldname
+     * @return $this
+     */
+    public function withErrors($messages)
+    {
+        $this->error_messages->merge($messages);
+
+        return $this;
+    }
+
+    /**
+     * Get the error messages for a field.
+     *
+     * @param string $key
+     * @return array of message strings
+     */
+    public function getErrors($key)
+    {
+        return array_merge($this->error_messages->get($key), $this->getErrorsFromAncestor($key));
     }
 }

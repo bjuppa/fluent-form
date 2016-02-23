@@ -89,6 +89,16 @@ class InputBlock extends FormBlock
     }
 
     /**
+     * Get all combined error messages for this block.
+     * @return array
+     */
+    protected function getErrorMessages()
+    {
+        return parent::getErrorMessages($this->input_name);
+    }
+
+
+    /**
      * Set this element's parent element.
      *
      * @param FluentHtmlElement|null $parent
