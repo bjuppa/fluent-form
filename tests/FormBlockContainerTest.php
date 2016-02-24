@@ -66,7 +66,7 @@ class FormBlockContainerTest extends PHPUnit_Framework_TestCase
     public function testGetValueFromAncestor()
     {
         $form = FluentForm::create();
-        $fieldset = FieldsetElement::create();
+        $fieldset = new FieldsetElement();
         $form->withContent($fieldset);
 
         $form->withValues(['a' => 'formA', 'b' => 'formB']);
@@ -98,7 +98,7 @@ class FormBlockContainerTest extends PHPUnit_Framework_TestCase
     public function testWithErrorFromAncestor()
     {
         $form = FluentForm::create();
-        $fieldset = FieldsetElement::create();
+        $fieldset = new FieldsetElement();
         $form->withContent($fieldset);
 
         $form->withErrors(['test' => ['Message Form']]);

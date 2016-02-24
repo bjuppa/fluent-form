@@ -2,17 +2,16 @@
 namespace FewAgency\FluentForm\FormBlockContainer;
 
 use ArrayAccess;
-use FewAgency\FluentHtml\FluentHtml;
+use FewAgency\FluentHtml\FluentHtmlElement;
 use FewAgency\FluentForm\Support\FormElementContract;
 use FewAgency\FluentForm\Support\FormElement;
 use FewAgency\FluentForm\FormBlock\InputBlock;
 use Illuminate\Contracts\Support\MessageProvider;
 use Illuminate\Support\Collection;
-use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\MessageBag;
 
-abstract class FormBlockContainer extends FluentHtml implements FormElementContract
+abstract class FormBlockContainer extends FluentHtmlElement implements FormElementContract
 {
     use FormElement;
 
@@ -34,14 +33,9 @@ abstract class FormBlockContainer extends FluentHtml implements FormElementContr
      */
     private $error_messages;
 
-    /**
-     * @param string|callable|null $html_element_name
-     * @param string|Htmlable|array|Arrayable $tag_contents
-     * @param array|Arrayable $tag_attributes
-     */
-    public function __construct($html_element_name, $tag_contents, $tag_attributes)
+    public function __construct()
     {
-        parent::__construct($html_element_name, $tag_contents, $tag_attributes);
+        parent::__construct();
         $this->value_maps = new Collection();
         $this->error_messages = new MessageBag();
     }
