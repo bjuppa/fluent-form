@@ -95,12 +95,15 @@ abstract class FormBlockContainer extends FluentHtmlElement implements FormEleme
     }
 
     /**
-     * Set a value container.
+     * Set a value container for populating inputs.
      * @param array|object|Arrayable $map key-value implementation
+     * @return $this
      */
     public function withValues($map)
     {
         $this->value_maps->prepend($map);
+
+        return $this;
     }
 
     /**
