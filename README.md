@@ -4,6 +4,14 @@ An extension to [fluent-html](https://github.com/fewagency/fluent-html) for buil
 ## Installation & configuration
 > composer require fewagency/fluent-form
 
+### Optional facades
+You may add [Laravel facades](http://laravel.com/docs/facades) in the `aliases` array of your project's
+`config/app.php` configuration file:
+
+```php
+'FluentForm'  => FewAgency\FluentForm\Facades\FluentForm::class,
+```
+
 ## Authors
 I, Björn Nilsved, work at the largest communication agency in southern Sweden.
 We call ourselves [FEW](http://fewagency.se) (oh, the irony).
