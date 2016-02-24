@@ -1,4 +1,4 @@
-<?php namespace FewAgency\FluentHtml\Facades;
+<?php namespace FewAgency\FluentForm\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
