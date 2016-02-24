@@ -12,14 +12,13 @@ class FluentForm extends FormBlockContainer
      */
     public function __construct()
     {
-        $html_element_name = 'form';
-        $tag_contents = null;
-        $tag_attributes = [
+        parent::__construct();
+        $this->withHtmlElementName('form');
+        $this->withAttribute([
             'method' => function (FluentForm $form) {
                 return $form->hasMethodGet() ? $form->form_method : 'POST';
             }
-        ];
-        parent::__construct($html_element_name, $tag_contents, $tag_attributes);
+        ]);
     }
 
     /**
