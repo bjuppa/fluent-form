@@ -71,8 +71,12 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
     private $success_class = 'has-success';
 
     /**
-     * The errors and for this input block.
-     * @var Collection of error messages
+     * @var string representing name or key for the main input of this block
+     */
+    private $input_name;
+
+    /**
+     * @var Collection of error messages for this input block
      */
     private $errors;
 
@@ -246,6 +250,27 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
     }
 
     /**
+     * Set name of main input for this block.
+     * @param string $name
+     * @return $this
+     */
+    public function withInputName($name)
+    {
+        $this->input_name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get the name of the main input of this block.
+     * @return string
+     */
+    public function getInputName()
+    {
+        return $this->input_name;
+    }
+
+    /**
      * Add error message(s) to this block.
      * @param string|array|Arrayable $messages
      * @return $this
@@ -259,17 +284,17 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
 
     /**
      * Get all combined error messages for this block.
-     * @param string|null $key to get error messages from ancestor
      * @return array
      */
-    protected function getErrorMessages($key = null)
+    protected function getErrorMessages()
     {
-        return $this->errors->merge($this->getErrorsFromAncestor($key))->transform(function ($message) {
-            return trim($message);
-        })->filter(function ($message) {
-            //Filter out empty strings and booleans
-            return isset($message) and !is_bool($message) and '' !== $message;
-        })->unique()->toArray();
+        return $this->errors->merge($this->getErrorsFromAncestor($this->getInputName()))
+            ->transform(function ($message) {
+                return trim($message);
+            })->filter(function ($message) {
+                //Filter out empty strings and booleans
+                return isset($message) and !is_bool($message) and '' !== $message;
+            })->unique()->toArray();
     }
 
     /**
