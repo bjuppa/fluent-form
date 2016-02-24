@@ -2,7 +2,7 @@
 namespace FewAgency\FluentForm\FormInput;
 
 //TODO: subclass these HTML inputs:
-// PasswordInputElement
+// PasswordInputElement - don't set value
 // SubmitInputElement
 // RadioInputElement
 // CheckboxInputElement
@@ -17,7 +17,7 @@ namespace FewAgency\FluentForm\FormInput;
 // TimeInputElement
 // DatetimeInputElement
 // DatetimeLocalInputElement
-// EmailInputElement
+// done: EmailInputElement
 // SearchInputElement
 // UrlInputElement
 // ColorInputElement

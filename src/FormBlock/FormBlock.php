@@ -318,7 +318,7 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
     ->withSuccess(true)
     ->withFeedback(html)
 
-    ->getScreenReaderOnlyClass()
+    ->getScreenReaderOnlyClass() should this go on the form element?
     ->hideLabel()
 
     ->getAlignmentClasses(column number, bool with_offset=false)
