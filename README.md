@@ -1,6 +1,9 @@
 # [Fluent interface](https://en.wikipedia.org/wiki/Fluent_interface) HTML form builder for PHP
 An extension to [fluent-html](https://github.com/fewagency/fluent-html) for building accessible, well-formated, yet customizable HTML forms.
 
+## Installation & configuration
+> composer require fewagency/fluent-form
+
 ## Authors
 I, Björn Nilsved, work at the largest communication agency in southern Sweden.
 We call ourselves [FEW](http://fewagency.se) (oh, the irony).
