@@ -10,6 +10,7 @@ use Illuminate\Contracts\Support\MessageProvider;
 use Illuminate\Support\Collection;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\MessageBag;
+use Illuminate\Support\ViewErrorBag;
 
 abstract class FormBlockContainer extends FluentHtmlElement implements FormElementContract
 {
@@ -156,6 +157,9 @@ abstract class FormBlockContainer extends FluentHtmlElement implements FormEleme
      */
     public function withErrors($messages)
     {
+        if($messages instanceof ViewErrorBag) {
+            $messages = $messages->getMessageBag();
+        }
         $this->error_messages->merge($messages);
 
         return $this;
