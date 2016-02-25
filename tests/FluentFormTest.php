@@ -46,7 +46,7 @@ class FluentFormTest extends PHPUnit_Framework_TestCase
     public function testWithInputBlock()
     {
         $f = $this->getTestForm()->withInputBlock('test');
-        $this->assertHtmlContentEquals('<div> <label for="test">Test</label> <input name="test" type="text" id="test"> </div>',
+        $this->assertHtmlContentEquals('<div class="form-block"> <label for="test">Test</label> <input name="test" type="text" id="test"> </div>',
             $f);
     }
 
@@ -63,7 +63,7 @@ class FluentFormTest extends PHPUnit_Framework_TestCase
     {
         $f = $this->getTestForm()->withInputBlock('test.test');
         $this->assertHtmlContentEquals(
-            '<div> <label for="test.test">Test Test</label> <input name="test[test]" type="text" id="test.test"> </div>',
+            '<div class="form-block"> <label for="test.test">Test Test</label> <input name="test[test]" type="text" id="test.test"> </div>',
             $f);
     }
 

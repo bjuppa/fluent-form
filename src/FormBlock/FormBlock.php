@@ -16,6 +16,11 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
     use FormElement;
 
     /**
+     * @var string css class name to put on all form blocks
+     */
+    private $form_block_class = 'form-block';
+
+    /**
      * @var array of elements for alignment within the block, i.e. label holder, input holder, description holder
      */
     private $alignment_elements = [];
@@ -101,6 +106,7 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
             return $this->generateErrorListElement();
         });
         $this->withClass([
+            $this->form_block_class,
             $this->disabled_class => function () {
                 return $this->isDisabled();
             },
