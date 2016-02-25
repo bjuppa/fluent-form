@@ -91,6 +91,7 @@ class InputBlock extends FormBlock
     protected function setParent(FluentHtmlElement $parent = null)
     {
         parent::setParent($parent);
+        //TODO: set this as afterInsertion callback in constructor
         if (!$this->getInputElement()) {
             try {
                 //Look for a type Input class

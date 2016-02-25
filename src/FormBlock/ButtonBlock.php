@@ -51,6 +51,7 @@ class ButtonBlock extends FormBlock
     protected function setParent(FluentHtmlElement $parent = null)
     {
         parent::setParent($parent);
+        //TODO: set this as afterInsertion callback in constructor
         if (!$this->hasContent()) {
             $this->withButton($this->button_contents, $this->button_type);
         }
