@@ -6,6 +6,8 @@ use FewAgency\FluentHtml\FluentHtmlElement;
 use FewAgency\FluentForm\Support\FormElementContract;
 use FewAgency\FluentForm\Support\FormElement;
 use FewAgency\FluentForm\FormBlock\InputBlock;
+use FewAgency\FluentForm\FormBlock\ButtonBlock;
+use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\MessageProvider;
 use Illuminate\Support\Collection;
 use Illuminate\Contracts\Support\Arrayable;
@@ -68,7 +70,7 @@ abstract class FormBlockContainer extends FluentHtmlElement implements FormEleme
      */
 
     /**
-     * Put an input block on the form
+     * Put an input block on the form.
      * @param string $name
      * @param string $type
      * @return $this|FormBlockContainer
@@ -81,7 +83,7 @@ abstract class FormBlockContainer extends FluentHtmlElement implements FormEleme
     }
 
     /**
-     * Put an input block on the form and return it
+     * Put an input block on the form and return it.
      * @param string $name
      * @param string $type
      * @return InputBlock
@@ -90,6 +92,33 @@ abstract class FormBlockContainer extends FluentHtmlElement implements FormEleme
     {
         //TODO: check for $type.'Block' class first
         $block = $this->createInstanceOf('FormBlock\InputBlock', [$name, $type]);
+        $this->withContent($block);
+
+        return $block;
+    }
+
+    /**
+     * Put a button block on the form.
+     * @param string|Htmlable|array|Arrayable $tag_contents
+     * @param string $type
+     * @return $this|FormBlockContainer
+     */
+    public function withButtonBlock($tag_contents, $type = 'submit')
+    {
+        $this->containingButtonBlock($tag_contents, $type);
+
+        return $this;
+    }
+
+    /**
+     * Put a button block on the form and return it.
+     * @param string|Htmlable|array|Arrayable $tag_contents
+     * @param string $type
+     * @return ButtonBlock
+     */
+    public function containingButtonBlock($tag_contents, $type = 'submit')
+    {
+        $block = $this->createInstanceOf('FormBlock\ButtonBlock', [$tag_contents, $type]);
         $this->withContent($block);
 
         return $block;
@@ -157,7 +186,7 @@ abstract class FormBlockContainer extends FluentHtmlElement implements FormEleme
      */
     public function withErrors($messages)
     {
-        if($messages instanceof ViewErrorBag) {
+        if ($messages instanceof ViewErrorBag) {
             $messages = $messages->getMessageBag();
         }
         $this->error_messages->merge($messages);
