@@ -2,7 +2,6 @@
 namespace FewAgency\FluentForm\FormBlock;
 
 use FewAgency\FluentForm\FormLabel\FormLabel;
-use FewAgency\FluentHtml\FluentHtml;
 use FewAgency\FluentForm\Support\FormElementContract;
 use FewAgency\FluentForm\Support\FormElement;
 use FewAgency\FluentHtml\FluentHtmlElement;
@@ -11,7 +10,7 @@ use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Collection;
 
 
-abstract class FormBlock extends FluentHtml implements FormElementContract
+abstract class FormBlock extends FluentHtmlElement implements FormElementContract
 {
     use FormElement;
 
@@ -85,12 +84,10 @@ abstract class FormBlock extends FluentHtml implements FormElementContract
      */
     private $errors;
 
-    /**
-     * @param string|callable $html_element_name
-     */
-    public function __construct($html_element_name = 'div')
+    public function __construct()
     {
-        parent::__construct($html_element_name);
+        parent::__construct();
+        $this->withHtmlElementName('div');
         $this->errors = new Collection();
         $this->alignment_elements = [
             $this->createFluentHtmlElement()->withContent(function () {

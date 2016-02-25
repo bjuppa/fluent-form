@@ -14,7 +14,8 @@ class TextareaElement extends FormInputElement
      */
     public function __construct($name)
     {
-        parent::__construct('textarea');
+        parent::__construct();
+        $this->withHtmlElementName('textarea');
         $this->withName($name);
         $this->withDefaultContent(function (TextareaElement $input) {
             return $input->getValue();

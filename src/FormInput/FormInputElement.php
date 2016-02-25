@@ -2,11 +2,10 @@
 namespace FewAgency\FluentForm\FormInput;
 
 use FewAgency\FluentForm\Support\FormElement;
-use FewAgency\FluentHtml\FluentHtml;
-use FewAgency\FluentForm\Support\FormElementContract;
 use FewAgency\FluentHtml\FluentHtmlElement;
+use FewAgency\FluentForm\Support\FormElementContract;
 
-abstract class FormInputElement extends FluentHtml implements FormElementContract
+abstract class FormInputElement extends FluentHtmlElement implements FormElementContract
 {
     use FormElement;
 
