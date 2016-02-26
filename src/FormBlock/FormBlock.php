@@ -200,6 +200,17 @@ abstract class FormBlock extends FluentHtmlElement implements FormElementContrac
     }
 
     /**
+     * Put a button block after this block.
+     * @param string|Htmlable|array|Arrayable $tag_contents
+     * @param string $type
+     * @return ButtonBlock
+     */
+    public function followedByButtonBlock($tag_contents, $type = 'submit')
+    {
+        return $this->getFormBlockContainer()->containingButtonBlock($tag_contents, $type);
+    }
+
+    /**
      * Make the input(s) in the block disabled.
      * @param bool|callable $disabled
      * @return $this
