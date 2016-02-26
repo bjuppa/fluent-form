@@ -8,11 +8,6 @@ use FewAgency\FluentHtml\FluentHtmlElement;
 class InputBlock extends FormBlock
 {
     /**
-     * @var string
-     */
-    private $input_type = 'text';
-
-    /**
      * @var FormInputElement
      */
     private $input_element;
@@ -20,32 +15,31 @@ class InputBlock extends FormBlock
     /**
      * InputBlock constructor.
      * @param string $name of input
-     * @param string $type of input or fully qualified classname
+     * @param string $input_type of input or fully qualified classname
      */
-    public function __construct($name, $type = 'text')
+    public function __construct($name, $input_type = 'text')
     {
         $this->withInputName($name);
-        $this->input_type = $type;
         parent::__construct();
-        $this->afterInsertion(function () {
+        $this->afterInsertion(function () use($input_type) {
             if (!$this->getInputElement()) {
                 try {
                     //Look for a type Input class
-                    $classname = 'FormInput\\' . ucfirst($this->input_type) . 'InputElement';
+                    $classname = 'FormInput\\' . ucfirst($input_type) . 'InputElement';
                     $input_element = $this->createInstanceOf($classname, [$this->getInputName()]);
                 } catch (\Exception $e) {
                     try {
                         //Look for a type class
-                        $classname = 'FormInput\\' . ucfirst($this->input_type) . 'Element';
+                        $classname = 'FormInput\\' . ucfirst($input_type) . 'Element';
                         $input_element = $this->createInstanceOf($classname, [$this->getInputName()]);
                     } catch (\Exception $e) {
                         try {
                             //Look for a full classname
-                            $input_element = $this->createInstanceOf($this->input_type, [$this->getInputName()]);
+                            $input_element = $this->createInstanceOf($input_type, [$this->getInputName()]);
                         } catch (\Exception $e) {
                             //Fallback to an input with type attribute set
                             $input_element = $this->createInstanceOf('FormInput\\TextInputElement',
-                                [$this->getInputName(), $this->input_type]);
+                                [$this->getInputName(), $input_type]);
                         }
                     }
                 }
