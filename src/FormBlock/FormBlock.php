@@ -179,7 +179,7 @@ abstract class FormBlock extends FluentHtmlElement implements FormElementContrac
     }
 
     /**
-     * Put an input block after this block
+     * Put an input block after this block.
      * @param $name
      * @param string $type
      * @return InputBlock
@@ -190,7 +190,17 @@ abstract class FormBlock extends FluentHtmlElement implements FormElementContrac
     }
 
     /**
-     * Make the input(s) in the block disabled
+     * Put a password block after this block.
+     * @param string $name
+     * @return InputBlock
+     */
+    public function followedByPasswordBlock($name = 'password')
+    {
+        return $this->getFormBlockContainer()->containingPasswordBlock($name);
+    }
+
+    /**
+     * Make the input(s) in the block disabled.
      * @param bool|callable $disabled
      * @return $this
      */

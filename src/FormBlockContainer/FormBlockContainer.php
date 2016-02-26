@@ -91,10 +91,32 @@ abstract class FormBlockContainer extends FluentHtmlElement implements FormEleme
     public function containingInputBlock($name, $type = 'text')
     {
         //TODO: check for $type.'Block' class first
-        $block = $this->createInstanceOf('FormBlock\InputBlock', [$name, $type]);
+        $block = $this->createInstanceOf('FormBlock\InputBlock', func_get_args());
         $this->withContent($block);
 
         return $block;
+    }
+
+    /**
+     * Put a password block on the form.
+     * @param string $name defaults to 'password'
+     * @return $this
+     */
+    public function withPasswordBlock($name = 'password')
+    {
+        $this->containingPasswordBlock($name);
+
+        return $this;
+    }
+
+    /**
+     * Put a password block on the form and return it.
+     * @param string $name defaults to 'password'
+     * @return InputBlock
+     */
+    public function containingPasswordBlock($name = 'password')
+    {
+        return $this->containingInputBlock($name, 'password');
     }
 
     /**
@@ -118,7 +140,7 @@ abstract class FormBlockContainer extends FluentHtmlElement implements FormEleme
      */
     public function containingButtonBlock($tag_contents, $type = 'submit')
     {
-        $block = $this->createInstanceOf('FormBlock\ButtonBlock', [$tag_contents, $type]);
+        $block = $this->createInstanceOf('FormBlock\ButtonBlock', func_get_args());
         $this->withContent($block);
 
         return $block;
