@@ -12,13 +12,15 @@ class PasswordTest extends PHPUnit_Framework_TestCase
      */
     protected function getTestBlock()
     {
-        return FluentForm::create()->containingInputBlock('test', 'password');
+        return FluentForm::create()->containingPasswordBlock('test');
     }
 
     function testPasswordValue()
     {
         $b = $this->getTestBlock()->withInputValue('A');
 
+        $this->assertContains('name="test"', (string)$b);
+        $this->assertContains('type="password"', (string)$b);
         $this->assertNotContains('value="', (string)$b);
     }
 }
