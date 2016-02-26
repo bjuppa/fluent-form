@@ -27,6 +27,38 @@ class InputBlock extends FormBlock
         $this->withInputName($name);
         $this->input_type = $type;
         parent::__construct();
+        $this->afterInsertion(function () {
+            if (!$this->getInputElement()) {
+                try {
+                    //Look for a type Input class
+                    $classname = 'FormInput\\' . ucfirst($this->input_type) . 'InputElement';
+                    $input_element = $this->createInstanceOf($classname, [$this->getInputName()]);
+                } catch (\Exception $e) {
+                    try {
+                        //Look for a type class
+                        $classname = 'FormInput\\' . ucfirst($this->input_type) . 'Element';
+                        $input_element = $this->createInstanceOf($classname, [$this->getInputName()]);
+                    } catch (\Exception $e) {
+                        try {
+                            //Look for a full classname
+                            $input_element = $this->createInstanceOf($this->input_type, [$this->getInputName()]);
+                        } catch (\Exception $e) {
+                            //Fallback to an input with type attribute set
+                            $input_element = $this->createInstanceOf('FormInput\\TextInputElement',
+                                [$this->getInputName(), $this->input_type]);
+                        }
+                    }
+                }
+                $input_element->disabled(function () {
+                    return $this->isDisabled();
+                })->readonly(function () {
+                    return $this->isReadonly();
+                })->required(function () {
+                    return $this->isRequired();
+                });
+                $this->withInputElement($input_element);
+            }
+        });
     }
 
     /**
@@ -81,47 +113,6 @@ class InputBlock extends FormBlock
     public function getInputElement()
     {
         return $this->input_element;
-    }
-
-    /**
-     * Set this element's parent element.
-     *
-     * @param FluentHtmlElement|null $parent
-     */
-    protected function setParent(FluentHtmlElement $parent = null)
-    {
-        parent::setParent($parent);
-        //TODO: set this as afterInsertion callback in constructor
-        if (!$this->getInputElement()) {
-            try {
-                //Look for a type Input class
-                $classname = 'FormInput\\' . ucfirst($this->input_type) . 'InputElement';
-                $input_element = $this->createInstanceOf($classname, [$this->getInputName()]);
-            } catch (\Exception $e) {
-                try {
-                    //Look for a type class
-                    $classname = 'FormInput\\' . ucfirst($this->input_type) . 'Element';
-                    $input_element = $this->createInstanceOf($classname, [$this->getInputName()]);
-                } catch (\Exception $e) {
-                    try {
-                        //Look for a full classname
-                        $input_element = $this->createInstanceOf($this->input_type, [$this->getInputName()]);
-                    } catch (\Exception $e) {
-                        //Fallback to an input with type attribute set
-                        $input_element = $this->createInstanceOf('FormInput\\TextInputElement',
-                            [$this->getInputName(), $this->input_type]);
-                    }
-                }
-            }
-            $input_element->disabled(function () {
-                return $this->isDisabled();
-            })->readonly(function () {
-                return $this->isReadonly();
-            })->required(function () {
-                return $this->isRequired();
-            });
-            $this->withInputElement($input_element);
-        }
     }
 
 }

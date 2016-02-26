@@ -27,6 +27,11 @@ class ButtonBlock extends FormBlock
         parent::__construct();
         $this->button_contents = $button_contents;
         $this->button_type = $button_type;
+        $this->afterInsertion(function () {
+            if (!$this->hasContent()) {
+                $this->withButton($this->button_contents, $this->button_type);
+            }
+        });
     }
 
     /**
@@ -42,20 +47,5 @@ class ButtonBlock extends FormBlock
 
         return $this;
     }
-
-    /**
-     * Set this element's parent element.
-     *
-     * @param FluentHtmlElement|null $parent
-     */
-    protected function setParent(FluentHtmlElement $parent = null)
-    {
-        parent::setParent($parent);
-        //TODO: set this as afterInsertion callback in constructor
-        if (!$this->hasContent()) {
-            $this->withButton($this->button_contents, $this->button_type);
-        }
-    }
-
 
 }
