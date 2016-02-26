@@ -19,5 +19,8 @@ class ButtonElement extends FormInputElement
         $this->withHtmlElementName('button');
         $this->withContent($tag_contents);
         $this->withAttribute('type', $button_type);
+        $this->withAttribute('value', function (FormInputElement $input) {
+            return $input->getValue();
+        });
     }
 }

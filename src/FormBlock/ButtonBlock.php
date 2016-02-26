@@ -8,6 +8,11 @@ use Illuminate\Contracts\Support\Htmlable;
 class ButtonBlock extends FormBlock
 {
     /**
+     * @var ButtonElement
+     */
+    private $main_button;
+
+    /**
      * @param string|Htmlable|array|Arrayable $button_contents
      * @param string $button_type
      */
@@ -16,10 +21,7 @@ class ButtonBlock extends FormBlock
         parent::__construct();
         $this->afterInsertion(function () use ($button_contents, $button_type) {
             if (!$this->hasContent()) {
-                $button = $this->containingButton($button_contents, $button_type);
-                $button->withName(function () {
-                    return $this->getInputName();
-                });
+                $this->main_button = $this->containingButton($button_contents, $button_type);
             }
         });
     }
@@ -37,8 +39,38 @@ class ButtonBlock extends FormBlock
         return $this;
     }
 
-    //TODO: getMainButtonElement()
-    //TODO: withMainButtonAttribute()
+    /**
+     * Get the first set button element in this block.
+     * @return $this|ButtonElement
+     */
+    public function getMainButtonElement()
+    {
+        return $this->main_button;
+    }
+
+    /**
+     * Set input value.
+     * @param $value string|callable
+     * @return $this
+     */
+    public function withInputValue($value)
+    {
+        $this->getMainButtonElement()->withValue($value);
+
+        return $this;
+    }
+
+    /**
+     * @param string|callable|array|Arrayable $attributes Attribute name as string, can also be an array of names and values, or a callable returning such an array.
+     * @param string|bool|callable|array|Arrayable $value to set, only used if $attributes is a string
+     * @return $this
+     */
+    public function withInputAttribute($attributes, $value = true)
+    {
+        $this->getMainButtonElement()->withAttribute($attributes, $value);
+
+        return $this;
+    }
 
     /**
      * Adda a button to the block and return the new button element.
@@ -49,6 +81,11 @@ class ButtonBlock extends FormBlock
     public function containingButton($tag_contents, $type = "submit")
     {
         $button = $this->createInstanceOf('FormInput\ButtonElement', [$tag_contents, $type]);
+        $button->withName(function () {
+            return $this->getInputName();
+        })->disabled(function () {
+            return $this->isDisabled();
+        });
         $this->getAlignmentElement(2)->withContent($button);
 
         return $button;
