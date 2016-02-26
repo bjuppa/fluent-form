@@ -21,7 +21,7 @@ class InputBlock extends FormBlock
     {
         $this->withInputName($name);
         parent::__construct();
-        $this->afterInsertion(function () use($input_type) {
+        $this->afterInsertion(function () use ($input_type) {
             if (!$this->getInputElement()) {
                 try {
                     //Look for a type Input class
@@ -43,13 +43,6 @@ class InputBlock extends FormBlock
                         }
                     }
                 }
-                $input_element->disabled(function () {
-                    return $this->isDisabled();
-                })->readonly(function () {
-                    return $this->isReadonly();
-                })->required(function () {
-                    return $this->isRequired();
-                });
                 $this->withInputElement($input_element);
             }
         });
@@ -88,12 +81,18 @@ class InputBlock extends FormBlock
     {
         $this->input_element = $input_element;
         $this->withLabelElement($this->createInstanceOf('FormLabel\LabelElement'));
-        $this->getLabelElement()->forInput($this->input_element);
+        $this->getLabelElement()->forInput($this->getInputElement());
         $this->getInputElement()->withAttribute('aria-describedby', function (FormInputElement $input_element) {
             return $this->getDescriptionElement()->hasContent() ? $this->getDescriptionElement()->getId($input_element->getId() . '-desc') : null;
         });
         $this->getInputElement()->invalid(function () {
             return $this->hasError();
+        })->disabled(function () {
+            return $this->isDisabled();
+        })->readonly(function () {
+            return $this->isReadonly();
+        })->required(function () {
+            return $this->isRequired();
         });
         $this->getAlignmentElement(2)->withContent($this->getInputElement());
 
