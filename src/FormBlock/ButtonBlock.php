@@ -16,7 +16,10 @@ class ButtonBlock extends FormBlock
         parent::__construct();
         $this->afterInsertion(function () use ($button_contents, $button_type) {
             if (!$this->hasContent()) {
-                $this->withButton($button_contents, $button_type);
+                $button = $this->containingButton($button_contents, $button_type);
+                $button->withName(function () {
+                    return $this->getInputName();
+                });
             }
         });
     }
@@ -33,6 +36,9 @@ class ButtonBlock extends FormBlock
 
         return $this;
     }
+
+    //TODO: getMainButtonElement()
+    //TODO: withMainButtonAttribute()
 
     /**
      * Adda a button to the block and return the new button element.

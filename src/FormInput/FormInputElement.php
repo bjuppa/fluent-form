@@ -12,7 +12,7 @@ abstract class FormInputElement extends FluentHtmlElement implements FormElement
     /**
      * @var string|callable
      */
-    private $input_name;
+    private $input_name = '';
 
     /**
      * @var bool|callable
@@ -45,7 +45,7 @@ abstract class FormInputElement extends FluentHtmlElement implements FormElement
 
     /**
      * Get the name attribute of the input element
-     * @return string
+     * @return string|null
      */
     public function getNameAttribute()
     {
@@ -54,6 +54,10 @@ abstract class FormInputElement extends FluentHtmlElement implements FormElement
         $name = array_shift($name_parts);
         foreach ($name_parts as $name_part) {
             $name .= "[$name_part]";
+        }
+
+        if (empty($name)) {
+            return null;
         }
 
         //TODO: multiple attribute should add [] to $name

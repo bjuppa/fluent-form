@@ -23,4 +23,11 @@ class ButtonTest extends PHPUnit_Framework_TestCase
     }
 
     //TODO: test setting name and/or value on button block
+    function testButtonName()
+    {
+        $b = $this->getTestBlock();
+        $b->withInputName('test');
+
+        $this->assertContains('name="test"', (string)$b);
+    }
 }
