@@ -21,7 +21,7 @@ class ButtonBlock extends FormBlock
         parent::__construct();
         $this->afterInsertion(function () use ($button_contents, $button_type) {
             if (!$this->hasContent()) {
-                $this->main_button = $this->containingButton($button_contents, $button_type);
+                $this->withButton($button_contents, $button_type);
             }
         });
     }
@@ -37,6 +37,29 @@ class ButtonBlock extends FormBlock
         $this->containingButton($tag_contents, $type);
 
         return $this;
+    }
+
+    /**
+     * Adda a button to the block and return the new button element.
+     * @param string|Htmlable|array|Arrayable $tag_contents
+     * @param string $type
+     * @return ButtonElement
+     */
+    public function containingButton($tag_contents, $type = "submit")
+    {
+        $button = $this->createInstanceOf('FormInput\ButtonElement', [$tag_contents, $type]);
+        $button->withName(function () {
+            return $this->getInputName();
+        })->disabled(function () {
+            return $this->isDisabled();
+        });
+        $this->getAlignmentElement(2)->withContent($button);
+
+        if(empty($this->main_button)) {
+            $this->main_button = $button;
+        }
+
+        return $button;
     }
 
     /**
@@ -70,25 +93,6 @@ class ButtonBlock extends FormBlock
         $this->getMainButtonElement()->withAttribute($attributes, $value);
 
         return $this;
-    }
-
-    /**
-     * Adda a button to the block and return the new button element.
-     * @param string|Htmlable|array|Arrayable $tag_contents
-     * @param string $type
-     * @return ButtonElement
-     */
-    public function containingButton($tag_contents, $type = "submit")
-    {
-        $button = $this->createInstanceOf('FormInput\ButtonElement', [$tag_contents, $type]);
-        $button->withName(function () {
-            return $this->getInputName();
-        })->disabled(function () {
-            return $this->isDisabled();
-        });
-        $this->getAlignmentElement(2)->withContent($button);
-
-        return $button;
     }
 
 }
