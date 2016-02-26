@@ -11,13 +11,13 @@ class ButtonElement extends FormInputElement
 
     /**
      * @param string|Htmlable|array|Arrayable $tag_contents
-     * @param string $type
+     * @param string $button_type
      */
-    public function __construct($tag_contents, $type = "submit")
+    public function __construct($tag_contents, $button_type = "submit")
     {
         parent::__construct();
         $this->withHtmlElementName('button');
         $this->withContent($tag_contents);
-        $this->withAttribute('type', $type);
+        $this->withAttribute('type', $button_type);
     }
 }
