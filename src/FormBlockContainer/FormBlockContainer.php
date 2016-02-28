@@ -30,6 +30,8 @@ abstract class FormBlockContainer extends FluentHtmlElement implements FormEleme
      */
     private $value_maps;
 
+    //TODO: add $label_maps and withLabels() to block container
+
     /**
      * Error messages for this level of the form.
      * @var MessageBag
@@ -90,7 +92,7 @@ abstract class FormBlockContainer extends FluentHtmlElement implements FormEleme
      */
     public function containingInputBlock($name, $type = 'text')
     {
-        //TODO: check for $type.'Block' class first
+        //TODO: check for $type.'Block' class first - do this in a general containingBlock($type, ...) method
         $block = $this->createInstanceOf('FormBlock\InputBlock', func_get_args());
         $this->withContent($block);
 
