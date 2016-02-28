@@ -336,6 +336,7 @@ abstract class FormBlock extends FluentHtmlElement implements FormElementContrac
      */
     protected function generateErrorListElement()
     {
+        //TODO: add error class to error list element
         return $this->createFluentHtmlElement('ul')->onlyDisplayedIfHasContent()
             ->withContentWrappedIn($this->getErrorMessages(), 'li');
     }
