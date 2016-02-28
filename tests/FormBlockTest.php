@@ -64,7 +64,7 @@ class FormBlockTest extends PHPUnit_Framework_TestCase
         $b = $this->getTestBlock()->disabled();
 
         $this->assertContains('<div class="form-block disabled">', (string)$b);
-        $this->assertContains('<input name="test" type="text" disabled ', (string)$b);
+        $this->assertContains('<input name="test" type="text" class="form-control" disabled ', (string)$b);
 
         $b->withHtmlElementName('fieldset');
         $this->assertContains('<fieldset class="form-block disabled" disabled>', (string)$b);
@@ -74,7 +74,7 @@ class FormBlockTest extends PHPUnit_Framework_TestCase
     {
         $b = $this->getTestBlock()->readonly();
 
-        $this->assertContains('<input name="test" type="text" readonly ', (string)$b);
+        $this->assertContains('<input name="test" type="text" class="form-control" readonly ', (string)$b);
     }
 
     public function testRequired()
@@ -82,14 +82,14 @@ class FormBlockTest extends PHPUnit_Framework_TestCase
         $b = $this->getTestBlock()->required();
 
         $this->assertContains('<div class="form-block required">', (string)$b);
-        $this->assertContains('<input name="test" type="text" required ', (string)$b);
+        $this->assertContains('<input name="test" type="text" class="form-control" required ', (string)$b);
     }
 
     public function testWithDescription()
     {
         $b = $this->getTestBlock()->withDescription('custom description');
 
-        $this->assertContains('<input name="test" type="text" aria-describedby="test8-desc"', (string)$b);
+        $this->assertContains('<input name="test" type="text" class="form-control" aria-describedby="test8-desc"', (string)$b);
         $this->assertContains('<div id="test8-desc">custom description</div>', (string)$b);
     }
 

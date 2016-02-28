@@ -13,6 +13,11 @@ class InputBlock extends FormBlock
     private $input_element;
 
     /**
+     * @var string css class name to put on input elements
+     */
+    protected $form_control_class = 'form-control';
+
+    /**
      * InputBlock constructor.
      * @param string $name of input
      * @param string $input_type of input or fully qualified classname
@@ -43,6 +48,7 @@ class InputBlock extends FormBlock
                         }
                     }
                 }
+                $input_element->withClass($this->form_control_class);
                 $this->withInputElement($input_element);
             }
         });
