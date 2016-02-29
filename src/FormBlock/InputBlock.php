@@ -15,7 +15,7 @@ class InputBlock extends FormBlock
     /**
      * @var string css class name to put on input elements
      */
-    protected $form_control_class = 'form-control';
+    protected $form_control_class = 'form-block__control';
 
     /**
      * InputBlock constructor.

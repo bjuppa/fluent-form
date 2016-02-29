@@ -25,9 +25,19 @@ abstract class FormBlock extends FluentHtmlElement implements FormElementContrac
     private $alignment_elements = [];
 
     /**
+     * @var string css class name to put on aligned form blocks
+     */
+    private $aligned_class = 'form-block--aligned';
+
+    /**
      * @var FormLabel
      */
     private $label_element;
+
+    /**
+     * @var string css class name for labels in form blocks
+     */
+    private $form_block_label_class = 'form-block__label';
 
     /**
      * @var FluentHtmlElement
@@ -35,14 +45,29 @@ abstract class FormBlock extends FluentHtmlElement implements FormElementContrac
     private $description_element;
 
     /**
+     * @var string css class name for labels in form blocks
+     */
+    private $form_block_description_class = 'form-block__description';
+
+    /**
+     * @var string css class name for message lists in form blocks
+     */
+    private $form_block_messages_class = 'form-block__messages';
+
+    /**
+     * @var string css class name for error message lists in form blocks
+     */
+    private $form_block_error_messages_class = 'form-block__messages--errors';
+
+    /**
      * @var bool|callable indicating if the block's inputs are disabled
      */
     private $disabled = false;
 
     /**
-     * @var string css class name to put on disabled form block
+     * @var string css class name to put on disabled form blocks
      */
-    private $disabled_class = 'disabled';
+    private $disabled_class = 'form-block--disabled';
 
     /**
      * @var bool|callable indicating if the block's inputs are readonly
@@ -55,24 +80,24 @@ abstract class FormBlock extends FluentHtmlElement implements FormElementContrac
     private $required = false;
 
     /**
-     * @var string css class name to put on required form block
+     * @var string css class name to put on required form blocks
      */
-    private $required_class = 'required';
+    private $required_class = 'form-block--required';
 
     /**
-     * @var string css class name to put on form block with error
+     * @var string css class name to put on form blocks with error
      */
-    private $error_class = 'has-error';
+    private $error_class = 'form-block--has-error';
 
     /**
-     * @var string css class name to put on form block with warning
+     * @var string css class name to put on form blocks with warning
      */
-    private $warning_class = 'has-warning';
+    private $warning_class = 'form-block--has-warning';
 
     /**
-     * @var string css class name to put on form block with success
+     * @var string css class name to put on form blocks with success
      */
-    private $success_class = 'has-success';
+    private $success_class = 'form-block--has-success';
 
     /**
      * @var string representing name or key for the main input of this block
@@ -147,6 +172,7 @@ abstract class FormBlock extends FluentHtmlElement implements FormElementContrac
      */
     public function withLabelElement(FormLabel $label_element)
     {
+        $label_element->withClass($this->form_block_label_class);
         $this->label_element = $label_element;
 
         return $this;
@@ -173,6 +199,7 @@ abstract class FormBlock extends FluentHtmlElement implements FormElementContrac
         if (!$this->description_element) {
             //TODO: create instance of FormDescription\FormDescription instead of this general div
             $this->description_element = $this->createFluentHtmlElement('div')->onlyDisplayedIfHasContent();
+            $this->description_element->withClass($this->form_block_description_class);
         }
 
         return $this->description_element;
@@ -336,8 +363,9 @@ abstract class FormBlock extends FluentHtmlElement implements FormElementContrac
      */
     protected function generateErrorListElement()
     {
-        //TODO: add error class to error list element
         return $this->createFluentHtmlElement('ul')->onlyDisplayedIfHasContent()
+            ->withClass($this->form_block_messages_class)
+            ->withClass($this->form_block_error_messages_class)
             ->withContentWrappedIn($this->getErrorMessages(), 'li');
     }
 
