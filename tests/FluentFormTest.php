@@ -24,7 +24,8 @@ class FluentFormTest extends PHPUnit_Framework_TestCase
     public function testWithToken()
     {
         $f = $this->getTestForm()->withToken('ABC');
-        $this->assertHtmlEquals('<form class="form-block-container" method="POST"> <input name="_token" type="hidden" value="ABC"> </form>', $f);
+        $this->assertHtmlEquals('<form class="form-block-container" method="POST"> <input name="_token" type="hidden" value="ABC"> </form>',
+            $f);
 
         $f = $this->getTestForm()->withToken('ABC', 'overriden_name');
         $this->assertHtmlEquals(
@@ -35,7 +36,8 @@ class FluentFormTest extends PHPUnit_Framework_TestCase
     public function testWithMethod()
     {
         $f = $this->getTestForm()->withMethod('DELETE');
-        $this->assertHtmlEquals('<form class="form-block-container" method="POST"> <input name="_method" type="hidden" value="DELETE"> </form>', $f);
+        $this->assertHtmlEquals('<form class="form-block-container" method="POST"> <input name="_method" type="hidden" value="DELETE"> </form>',
+            $f);
 
         $f = $this->getTestForm()->withMethod('put', 'overriden_name');
         $this->assertHtmlEquals(
@@ -46,7 +48,7 @@ class FluentFormTest extends PHPUnit_Framework_TestCase
     public function testWithInputBlock()
     {
         $f = $this->getTestForm()->withInputBlock('test');
-        $this->assertHtmlContentEquals('<div class="form-block"> <label class="form-block__label" for="test">Test</label> <input name="test" type="text" class="form-block__control" id="test"> </div>',
+        $this->assertHtmlContentEquals('<div class="form-block"> <div><label class="form-block__label" for="test">Test</label></div> <div><input name="test" type="text" class="form-block__control" id="test"></div> </div>',
             $f);
     }
 
@@ -63,7 +65,7 @@ class FluentFormTest extends PHPUnit_Framework_TestCase
     {
         $f = $this->getTestForm()->withInputBlock('test.test');
         $this->assertHtmlContentEquals(
-            '<div class="form-block"> <label class="form-block__label" for="test.test">Test Test</label> <input name="test[test]" type="text" class="form-block__control" id="test.test"> </div>',
+            '<div class="form-block"> <div><label class="form-block__label" for="test.test">Test Test</label></div> <div> <input name="test[test]" type="text" class="form-block__control" id="test.test"> </div> </div>',
             $f);
     }
 

@@ -128,12 +128,13 @@ abstract class FormBlock extends FluentHtmlElement implements FormElementContrac
         parent::__construct();
         $this->withHtmlElementName('div');
         $this->errors = new Collection();
+        $this->warnings = new Collection();
         $this->alignment_elements = [
-            $this->createFluentHtmlElement()->withContent(function () {
+            $this->createFluentHtmlElement('div')->withContent(function () {
                 return $this->getLabelElement();
             }),
-            $this->createFluentHtmlElement(),
-            $this->createFluentHtmlElement()->withContent(function () {
+            $this->createFluentHtmlElement('div'),
+            $this->createFluentHtmlElement('div')->onlyDisplayedIfHasContent()->withContent(function () {
                 return $this->getDescriptionElement();
             }),
         ];
