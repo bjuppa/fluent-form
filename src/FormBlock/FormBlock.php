@@ -410,10 +410,7 @@ abstract class FormBlock extends FluentHtmlElement implements FormElementContrac
     /* TODO: implement these methods on FormBlock:
     ->withWarning(messages)
     ->withSuccess(true)
-    ->withFeedback(html)
-
-    ->getScreenReaderOnlyClass() should this go on the form element?
-    ->hideLabel()
+    ->withFeedback(html) - should this be in twbs-form only?
 
     ->getAlignmentClasses(column number, bool with_offset=false)
 
