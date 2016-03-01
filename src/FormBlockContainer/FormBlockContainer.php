@@ -29,9 +29,6 @@ abstract class FormBlockContainer extends FluentHtmlElement implements FormEleme
     protected $form_block_container_aligned_class = "form-block-container--aligned";
 
     protected $is_aligned;
-    //TODO: add form-block__label-wrapper
-    //TODO: add form-block__control-wrapper
-    //TODO: add form-block__description-wrapper
     protected $alignment_classes;
     protected $alignment_classes_default = [1 => 'half-width float-left align-right', 2 => 'half-width', 3 => ''];
     protected $alignment_offset_classes;
@@ -43,13 +40,19 @@ abstract class FormBlockContainer extends FluentHtmlElement implements FormEleme
      */
     private $value_maps;
 
-    //TODO: add $label_maps and withLabels() to block container
+    //TODO: add $labels and withLabels() to block container
 
     /**
      * Error messages for this level of the form.
      * @var MessageBag
      */
     private $error_messages;
+
+    /**
+     * Warning messages for this level of the form.
+     * @var MessageBag
+     */
+    private $warning_messages;
 
     public function __construct()
     {

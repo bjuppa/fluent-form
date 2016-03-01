@@ -15,19 +15,9 @@ abstract class FormBlock extends FluentHtmlElement implements FormElementContrac
     use FormElement;
 
     /**
-     * @var string css class name to put on all form blocks
+     * @var string representing name or key for the main input of this block
      */
-    private $form_block_class = 'form-block';
-
-    /**
-     * @var array of elements for alignment within the block, i.e. label holder, input holder, description holder
-     */
-    private $alignment_elements = [];
-
-    /**
-     * @var string css class name to put on aligned form blocks
-     */
-    private $aligned_class = 'form-block--aligned';
+    private $input_name;
 
     /**
      * @var FormLabel
@@ -35,14 +25,53 @@ abstract class FormBlock extends FluentHtmlElement implements FormElementContrac
     private $label_element;
 
     /**
-     * @var string css class name for labels in form blocks
-     */
-    private $form_block_label_class = 'form-block__label';
-
-    /**
      * @var FluentHtmlElement
      */
     private $description_element;
+
+    /**
+     * @var array of elements for alignment within the block, i.e. label holder, input holder, description holder
+     */
+    private $alignment_elements = [];
+
+    /**
+     * @var Collection of error messages for this input block
+     */
+    private $errors;
+
+    /**
+     * @var Collection of warning messages for this input block
+     */
+    private $warnings;
+
+    /**
+     * @var bool|callable indicating if the block's inputs are disabled
+     */
+    private $disabled = false;
+
+    /**
+     * @var bool|callable indicating if the block's inputs are readonly
+     */
+    private $readonly = false;
+
+    /**
+     * @var bool|callable indicating if the block's inputs are required
+     */
+    private $required = false;
+
+    /**
+     * @var string css class name to put on all form blocks
+     */
+    private $form_block_class = 'form-block';
+
+    //TODO: add form-block__label-wrapper
+    //TODO: add form-block__control-wrapper
+    //TODO: add form-block__description-wrapper
+
+    /**
+     * @var string css class name for labels in form blocks
+     */
+    private $form_block_label_class = 'form-block__label';
 
     /**
      * @var string css class name for labels in form blocks
@@ -57,57 +86,42 @@ abstract class FormBlock extends FluentHtmlElement implements FormElementContrac
     /**
      * @var string css class name for error message lists in form blocks
      */
-    private $form_block_error_messages_class = 'form-block__messages--errors';
+    private $form_block_error_messages_class = 'form-block__messages--error';
 
     /**
-     * @var bool|callable indicating if the block's inputs are disabled
+     * @var string css class name for warning message lists in form blocks
      */
-    private $disabled = false;
+    private $form_block_warning_messages_class = 'form-block__messages--warning';
+
+    /**
+     * @var string css class name to put on aligned form blocks
+     */
+    private $form_block_aligned_class = 'form-block--aligned';
 
     /**
      * @var string css class name to put on disabled form blocks
      */
-    private $disabled_class = 'form-block--disabled';
-
-    /**
-     * @var bool|callable indicating if the block's inputs are readonly
-     */
-    private $readonly = false;
-
-    /**
-     * @var bool|callable indicating if the block's inputs are required
-     */
-    private $required = false;
+    private $form_block_disabled_class = 'form-block--disabled';
 
     /**
      * @var string css class name to put on required form blocks
      */
-    private $required_class = 'form-block--required';
+    private $form_block_required_class = 'form-block--required';
 
     /**
      * @var string css class name to put on form blocks with error
      */
-    private $error_class = 'form-block--has-error';
+    private $form_block_error_class = 'form-block--error';
 
     /**
      * @var string css class name to put on form blocks with warning
      */
-    private $warning_class = 'form-block--has-warning';
+    private $form_block_warning_class = 'form-block--warning';
 
     /**
      * @var string css class name to put on form blocks with success
      */
-    private $success_class = 'form-block--has-success';
-
-    /**
-     * @var string representing name or key for the main input of this block
-     */
-    private $input_name;
-
-    /**
-     * @var Collection of error messages for this input block
-     */
-    private $errors;
+    private $form_block_success_class = 'form-block--success';
 
     public function __construct()
     {
@@ -129,10 +143,10 @@ abstract class FormBlock extends FluentHtmlElement implements FormElementContrac
         });
         $this->withClass([
             $this->form_block_class,
-            $this->disabled_class => function () {
+            $this->form_block_disabled_class => function () {
                 return $this->isDisabled();
             },
-            $this->required_class => function () {
+            $this->form_block_required_class => function () {
                 return $this->isRequired();
             },
             function () {
@@ -197,7 +211,6 @@ abstract class FormBlock extends FluentHtmlElement implements FormElementContrac
     public function getDescriptionElement()
     {
         if (!$this->description_element) {
-            //TODO: create instance of FormDescription\FormDescription instead of this general div
             $this->description_element = $this->createFluentHtmlElement('div')->onlyDisplayedIfHasContent();
             $this->description_element->withClass($this->form_block_description_class);
         }
@@ -385,7 +398,7 @@ abstract class FormBlock extends FluentHtmlElement implements FormElementContrac
     protected function getStateClass()
     {
         if ($this->hasError()) {
-            return $this->error_class;
+            return $this->form_block_error_class;
         } else {
             return null;
         }
