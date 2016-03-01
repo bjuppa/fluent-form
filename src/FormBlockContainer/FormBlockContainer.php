@@ -86,6 +86,9 @@ abstract class FormBlockContainer extends FluentHtmlElement implements FormEleme
 ->getAlignmentClasses(column number, bool with_offset=false)
 ->align(true)
 ->isAligned()
+
+->inline(true) - make form-block and block-align elements into <span>
+->isInline()
      */
 
     /**
