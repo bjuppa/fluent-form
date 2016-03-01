@@ -20,7 +20,7 @@ class ButtonBlock extends FormBlock
     {
         parent::__construct();
         $this->afterInsertion(function () use ($button_contents, $button_type) {
-            if (!$this->hasContent()) {
+            if (!$this->getAlignmentElement(2)->hasContent()) {
                 $this->withButton($button_contents, $button_type);
             }
         });
@@ -55,7 +55,7 @@ class ButtonBlock extends FormBlock
         });
         $this->getAlignmentElement(2)->withContent($button);
 
-        if(empty($this->main_button)) {
+        if (empty($this->main_button)) {
             $this->main_button = $button;
         }
 
