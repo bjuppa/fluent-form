@@ -30,7 +30,7 @@ abstract class FormBlock extends FluentHtmlElement implements FormElementContrac
     private $description_element;
 
     /**
-     * @var array of elements for alignment within the block, i.e. label holder, input holder, description holder
+     * @var array of elements for alignment within the block, e.g. label holder, input holder, description holder
      */
     private $alignment_elements = [];
 
@@ -63,10 +63,6 @@ abstract class FormBlock extends FluentHtmlElement implements FormElementContrac
      * @var string css class name to put on all form blocks
      */
     private $form_block_class = 'form-block';
-
-    //TODO: add form-block__label-wrapper
-    //TODO: add form-block__control-wrapper
-    //TODO: add form-block__description-wrapper
 
     /**
      * @var string css class name for labels in form blocks
@@ -130,13 +126,19 @@ abstract class FormBlock extends FluentHtmlElement implements FormElementContrac
         $this->errors = new Collection();
         $this->warnings = new Collection();
         $this->alignment_elements = [
-            $this->createFluentHtmlElement('div')->withContent(function () {
-                return $this->getLabelElement();
-            }),
+            //label holder
+            $this->createFluentHtmlElement('div')
+                ->withContent(function () {
+                    return $this->getLabelElement();
+                }),
+            //input holder
             $this->createFluentHtmlElement('div'),
-            $this->createFluentHtmlElement('div')->onlyDisplayedIfHasContent()->withContent(function () {
-                return $this->getDescriptionElement();
-            }),
+            //description holder
+            $this->createFluentHtmlElement('div')
+                ->onlyDisplayedIfHasContent()
+                ->withContent(function () {
+                    return $this->getDescriptionElement();
+                }),
         ];
         $this->withContent($this->alignment_elements);
         $this->getDescriptionElement()->withContent(function () {
