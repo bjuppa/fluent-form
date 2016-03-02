@@ -27,12 +27,26 @@ trait FormElement
     /**
      * Get input values set higher up in the form structure.
      * @param string $key in dot-notation
-     * @return string|null
+     * @return mixed|null
      */
     protected function getValueFromAncestor($key)
     {
         if ($ancestor = $this->getFormBlockContainer()) {
             return $ancestor->getValue($key);
+        }
+
+        return null;
+    }
+
+    /**
+     * Get labels set higher up in the form structure.
+     * @param string $key in dot-notation
+     * @return mixed|null
+     */
+    protected function getLabelFromAncestor($key)
+    {
+        if ($ancestor = $this->getFormBlockContainer()) {
+            return $ancestor->getLabel($key);
         }
 
         return null;

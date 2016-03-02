@@ -34,7 +34,7 @@ class LabelElement extends FormLabel
         });
 
         $this->withDefaultContent(function () use ($input) {
-            return $input->getHumanName();
+            return $input->getLabel();
         });
 
         return $this;

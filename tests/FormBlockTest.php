@@ -46,9 +46,19 @@ class FormBlockTest extends PHPUnit_Framework_TestCase
 
     public function testWithLabel()
     {
-        $b = $this->getTestBlock()->withLabel('custom label');
+        $b = $this->getTestBlock();
+        $b->getForm()->withLabels(['test' => 'Form Label']);
+        $b->withLabel('custom label');
 
-        $this->assertContains('>custom label<', $b->getLabelElement()->toHtml());
+        $this->assertContains('>custom label</label>', (string)$b);
+    }
+
+    public function testLabelsFromForm()
+    {
+        $b = $this->getTestBlock();
+        $b->getForm()->withLabels(['test' => 'Form Label']);
+
+        $this->assertContains('>Form Label</label>', (string)$b);
     }
 
     public function testFollowedByInputBlock()
@@ -89,8 +99,10 @@ class FormBlockTest extends PHPUnit_Framework_TestCase
     {
         $b = $this->getTestBlock()->withDescription('custom description');
 
-        $this->assertContains('<input name="test" type="text" class="form-block__control" aria-describedby="test8-desc"', (string)$b);
-        $this->assertContains('<div class="form-block__description" id="test8-desc">custom description</div>', (string)$b);
+        $this->assertContains('<input name="test" type="text" class="form-block__control" aria-describedby="test9-desc"',
+            (string)$b);
+        $this->assertContains('<div class="form-block__description" id="test9-desc">custom description</div>',
+            (string)$b);
     }
 
     public function testWithEmptyDescription()

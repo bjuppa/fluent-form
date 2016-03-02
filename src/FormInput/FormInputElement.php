@@ -21,7 +21,7 @@ abstract class FormInputElement extends FluentHtmlElement implements FormElement
 
     /**
      * Set the name of the input element.
-     * @param string|callable $name of input
+     * @param string|callable $name of input in dot-notation
      * @return $this
      */
     public function withName($name)
@@ -36,11 +36,11 @@ abstract class FormInputElement extends FluentHtmlElement implements FormElement
 
     /**
      * Get the name of the input element.
-     * @return string
+     * @return string in dot-notation
      */
     public function getName()
     {
-        return $this->evaluate($this->input_name);
+        return implode('.', (array)$this->evaluate($this->input_name));
     }
 
     /**
@@ -72,6 +72,15 @@ abstract class FormInputElement extends FluentHtmlElement implements FormElement
     public function getHumanName()
     {
         return ucwords(str_replace(['.', '_'], ' ', $this->getName()));
+    }
+
+    /**
+     * Get a label for this input element.
+     * @return string|mixed
+     */
+    public function getLabel()
+    {
+        return $this->getLabelFromAncestor($this->getName()) ?: $this->getHumanName();
     }
 
     /**

@@ -40,7 +40,11 @@ abstract class FormBlockContainer extends FluentHtmlElement implements FormEleme
      */
     private $value_maps;
 
-    //TODO: add $labels and withLabels() to block container
+    /**
+     * The labels for inputs in this level of the form.
+     * @var Collection of labels keyed by input name
+     */
+    private $labels;
 
     /**
      * Error messages for this level of the form.
@@ -58,6 +62,7 @@ abstract class FormBlockContainer extends FluentHtmlElement implements FormEleme
     {
         parent::__construct();
         $this->value_maps = new Collection();
+        $this->labels = new Collection();
         $this->error_messages = new MessageBag();
         $this->warning_messages = new MessageBag();
         $this->withClass($this->form_block_container_class);
@@ -220,6 +225,29 @@ abstract class FormBlockContainer extends FluentHtmlElement implements FormEleme
         }
 
         return $value;
+    }
+
+    /**
+     * Merge in a new array of labels.
+     *
+     * @param  array|Arrayable $labels keyed by fieldname in dot-notation
+     * @return $this
+     */
+    public function withLabels($labels)
+    {
+        $this->labels = $this->labels->merge($labels);
+
+        return $this;
+    }
+
+    /**
+     * Get a label from a key.
+     * @param string $key in dot-notation
+     * @return mixed|null
+     */
+    public function getLabel($key)
+    {
+        return $this->labels->get($key, $this->getLabelFromAncestor($key));
     }
 
     /**

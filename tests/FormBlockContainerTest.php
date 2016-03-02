@@ -106,4 +106,20 @@ class FormBlockContainerTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(['Message Fieldset', 'Message Form'], $fieldset->getErrors('test'));
     }
+
+    public function testWithLabels()
+    {
+        $form = FluentForm::create();
+        $fieldset = new FieldsetElement();
+        $form->withContent($fieldset);
+
+        $form->withLabels(['test' => 'Form Label']);
+
+        $this->assertEquals('Form Label', $fieldset->getLabel('test'));
+
+        $fieldset->withLabels(['test' => 'Fieldset Label']);
+
+        $this->assertEquals('Fieldset Label', $fieldset->getLabel('test'));
+    }
+
 }
