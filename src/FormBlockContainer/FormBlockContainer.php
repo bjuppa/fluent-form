@@ -16,7 +16,9 @@ use Illuminate\Support\ViewErrorBag;
 
 abstract class FormBlockContainer extends FluentHtmlElement implements FormElementContract
 {
-    use FormElement;
+    use FormElement {
+        FormElement::isInline as isAncestorInline;
+    }
 
     /**
      * @var string css classname to put on block containers
@@ -27,6 +29,11 @@ abstract class FormBlockContainer extends FluentHtmlElement implements FormEleme
      * @var string css classname to put on aligned block containers
      */
     protected $form_block_container_aligned_class = "form-block-container--aligned";
+
+    /**
+     * @var string css classname to put on inline block containers
+     */
+    protected $form_block_container_inline_class = "form-block-container--inline";
 
     protected $is_aligned;
     protected $alignment_classes;
@@ -58,6 +65,11 @@ abstract class FormBlockContainer extends FluentHtmlElement implements FormEleme
      */
     private $warning_messages;
 
+    /**
+     * @var bool|callable|null indicating if the block container's content is inline
+     */
+    private $is_inline;
+
     public function __construct()
     {
         parent::__construct();
@@ -66,6 +78,9 @@ abstract class FormBlockContainer extends FluentHtmlElement implements FormEleme
         $this->error_messages = new MessageBag();
         $this->warning_messages = new MessageBag();
         $this->withClass($this->form_block_container_class);
+        $this->withClass(function () {
+            return $this->isInline() ? $this->form_block_container_inline_class : null;
+        });
     }
 
 
@@ -92,8 +107,6 @@ abstract class FormBlockContainer extends FluentHtmlElement implements FormEleme
 ->align(true)
 ->isAligned()
 
-->inline(true) - make form-block and block-align elements into <span>
-->isInline()
      */
 
     /**
@@ -302,5 +315,31 @@ abstract class FormBlockContainer extends FluentHtmlElement implements FormEleme
     public function getWarnings($key)
     {
         return array_merge($this->warning_messages->get($key), $this->getWarningsFromAncestor($key));
+    }
+
+    /**
+     * Make contents in this form block container display inline.
+     * @param bool|callable $inline
+     * @return $this
+     */
+    public function inline($inline = true)
+    {
+        $this->is_inline = $inline;
+
+        return $this;
+    }
+
+    /**
+     * Check if the contents of this container are set to display inline.
+     * @return bool
+     */
+    public function isInline()
+    {
+        $inline = $this->evaluate($this->is_inline);
+        if (!isset($inline)) {
+            $inline = $this->isAncestorInline();
+        }
+
+        return (bool)$inline;
     }
 }

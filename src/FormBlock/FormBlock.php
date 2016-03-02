@@ -47,17 +47,20 @@ abstract class FormBlock extends FluentHtmlElement implements FormElementContrac
     /**
      * @var bool|callable indicating if the block's inputs are disabled
      */
-    private $disabled = false;
+    private $is_disabled = false;
+    //TODO: set collection of disabled input names on the block container level
 
     /**
      * @var bool|callable indicating if the block's inputs are readonly
      */
-    private $readonly = false;
+    private $is_readonly = false;
+    //TODO: set collection of readonly input names on the block container level
 
     /**
      * @var bool|callable indicating if the block's inputs are required
      */
-    private $required = false;
+    private $is_required = false;
+    //TODO: set collection of required input names on the block container level
 
     /**
      * @var string css class name to put on all form blocks
@@ -122,19 +125,27 @@ abstract class FormBlock extends FluentHtmlElement implements FormElementContrac
     public function __construct()
     {
         parent::__construct();
-        $this->withHtmlElementName('div');
+        $this->withHtmlElementName(function () {
+            return $this->isInline() ? 'span' : 'div';
+        });
         $this->errors = new Collection();
         $this->warnings = new Collection();
         $this->alignment_elements = [
             //label holder
-            $this->createFluentHtmlElement('div')
+            $this->createFluentHtmlElement(function () {
+                return $this->isInline() ? 'span' : 'div';
+            })
                 ->withContent(function () {
                     return $this->getLabelElement();
                 }),
             //input holder
-            $this->createFluentHtmlElement('div'),
+            $this->createFluentHtmlElement(function () {
+                return $this->isInline() ? 'span' : 'div';
+            }),
             //description holder
-            $this->createFluentHtmlElement('div')
+            $this->createFluentHtmlElement(function () {
+                return $this->isInline() ? 'span' : 'div';
+            })
                 ->onlyDisplayedIfHasContent()
                 ->withContent(function () {
                     return $this->getDescriptionElement();
@@ -264,7 +275,7 @@ abstract class FormBlock extends FluentHtmlElement implements FormElementContrac
      */
     public function disabled($disabled = true)
     {
-        $this->disabled = $disabled;
+        $this->is_disabled = $disabled;
 
         return $this;
     }
@@ -275,7 +286,7 @@ abstract class FormBlock extends FluentHtmlElement implements FormElementContrac
      */
     public function isDisabled()
     {
-        return (bool)$this->evaluate($this->disabled);
+        return (bool)$this->evaluate($this->is_disabled);
     }
 
     /**
@@ -285,7 +296,7 @@ abstract class FormBlock extends FluentHtmlElement implements FormElementContrac
      */
     public function readonly($readonly = true)
     {
-        $this->readonly = $readonly;
+        $this->is_readonly = $readonly;
 
         return $this;
     }
@@ -296,7 +307,7 @@ abstract class FormBlock extends FluentHtmlElement implements FormElementContrac
      */
     public function isReadonly()
     {
-        return (bool)$this->evaluate($this->readonly);
+        return (bool)$this->evaluate($this->is_readonly);
     }
 
     /**
@@ -306,7 +317,7 @@ abstract class FormBlock extends FluentHtmlElement implements FormElementContrac
      */
     public function required($required = true)
     {
-        $this->required = $required;
+        $this->is_required = $required;
 
         return $this;
     }
@@ -317,7 +328,7 @@ abstract class FormBlock extends FluentHtmlElement implements FormElementContrac
      */
     public function isRequired()
     {
-        return (bool)$this->evaluate($this->required);
+        return (bool)$this->evaluate($this->is_required);
     }
 
     /**

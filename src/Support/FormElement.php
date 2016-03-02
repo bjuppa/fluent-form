@@ -79,4 +79,17 @@ trait FormElement
 
         return [];
     }
+
+    /**
+     * Find out if this element is placed in an inline context.
+     * @return bool
+     */
+    public function isInline()
+    {
+        if ($ancestor = $this->getFormBlockContainer()) {
+            return $ancestor->isInline();
+        }
+
+        return false;
+    }
 }

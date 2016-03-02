@@ -99,9 +99,9 @@ class FormBlockTest extends PHPUnit_Framework_TestCase
     {
         $b = $this->getTestBlock()->withDescription('custom description');
 
-        $this->assertContains('<input name="test" type="text" class="form-block__control" aria-describedby="test9-desc"',
+        $this->assertContains('<input name="test" type="text" class="form-block__control" aria-describedby="test10-desc"',
             (string)$b);
-        $this->assertContains('<div class="form-block__description" id="test9-desc">custom description</div>',
+        $this->assertContains('<div class="form-block__description" id="test10-desc">custom description</div>',
             (string)$b);
     }
 
