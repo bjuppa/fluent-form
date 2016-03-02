@@ -45,6 +45,12 @@ abstract class FormBlock extends FluentHtmlElement implements FormElementContrac
     private $warnings;
 
     /**
+     * @var bool|callable indicating if the block has success state
+     */
+    private $has_success;
+    //TODO: set collection of success input names on the block container level
+
+    /**
      * @var bool|callable indicating if the block's inputs are disabled
      */
     private $is_disabled;
@@ -449,6 +455,28 @@ abstract class FormBlock extends FluentHtmlElement implements FormElementContrac
     }
 
     /**
+     * Set success state on the input block.
+     * @param bool|callable $has_success
+     * @return $this
+     */
+    public function withSuccess($has_success = true)
+    {
+        $this->has_success = $has_success;
+
+        return $this;
+    }
+
+    /**
+     * Find out if this form block is in the success state.
+     * @return bool
+     */
+    public function hasSuccess()
+    {
+        return (bool)$this->evaluate($this->has_success);
+    }
+
+    /**
+     * Get the holder/wrapper elements for parts of this form block.
      * @param $number 1: label, 2: input, or 3: description
      * @return FluentHtmlElement
      */
@@ -467,13 +495,14 @@ abstract class FormBlock extends FluentHtmlElement implements FormElementContrac
             return $this->form_block_error_class;
         } elseif ($this->hasWarning()) {
             return $this->form_block_warning_class;
+        } elseif ($this->hasSuccess()) {
+            return $this->form_block_success_class;
         } else {
             return null;
         }
     }
 
     /* TODO: implement these methods on FormBlock:
-    ->withSuccess(true)
     ->withFeedback(html) - should this be in twbs-form only?
 
     ->getAlignmentClasses(column number, bool with_offset=false)
