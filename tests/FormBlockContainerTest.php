@@ -1,6 +1,5 @@
 <?php
 
-use FewAgency\FluentForm\FormBlockContainer\FieldsetElement;
 use FewAgency\FluentHtml\Testing\ComparesFluentHtml;
 use FewAgency\FluentForm\FluentForm;
 
@@ -66,8 +65,7 @@ class FormBlockContainerTest extends PHPUnit_Framework_TestCase
     public function testGetValueFromAncestor()
     {
         $form = FluentForm::create();
-        $fieldset = new FieldsetElement();
-        $form->withContent($fieldset);
+        $fieldset = $form->containingFieldset();
 
         $form->withValues(['a' => 'formA', 'b' => 'formB']);
         $fieldset->withValues(['b' => 'fieldsetB']);
@@ -98,8 +96,7 @@ class FormBlockContainerTest extends PHPUnit_Framework_TestCase
     public function testWithErrorFromAncestor()
     {
         $form = FluentForm::create();
-        $fieldset = new FieldsetElement();
-        $form->withContent($fieldset);
+        $fieldset = $form->containingFieldset();
 
         $form->withErrors(['test' => ['Message Form']]);
         $fieldset->withErrors(['test' => ['Message Fieldset']]);
@@ -110,8 +107,7 @@ class FormBlockContainerTest extends PHPUnit_Framework_TestCase
     public function testWithLabels()
     {
         $form = FluentForm::create();
-        $fieldset = new FieldsetElement();
-        $form->withContent($fieldset);
+        $fieldset = $form->containingFieldset();
 
         $form->withLabels(['test' => 'Form Label']);
 

@@ -187,6 +187,18 @@ abstract class FormBlockContainer extends FluentHtmlElement implements FormEleme
     }
 
     /**
+     * Put a new fieldset form block container in this container and return it.
+     * @return FieldsetElement
+     */
+    public function containingFieldset()
+    {
+        $fieldset = $this->createInstanceOf('FieldsetElement');
+        $this->withContent($fieldset);
+
+        return $fieldset;
+    }
+
+    /**
      * Set a value container for populating inputs.
      * @param array|object|Arrayable $map key-value implementation
      * @return $this
