@@ -59,6 +59,7 @@ abstract class FormBlockContainer extends FluentHtmlElement implements FormEleme
         parent::__construct();
         $this->value_maps = new Collection();
         $this->error_messages = new MessageBag();
+        $this->warning_messages = new MessageBag();
         $this->withClass($this->form_block_container_class);
     }
 
@@ -77,7 +78,6 @@ abstract class FormBlockContainer extends FluentHtmlElement implements FormEleme
     }
 
     /* TODO: implement these methods on FormBlockContainer
-->withWarnings(messages)
 
 ->with…Block(name, type)
 ->with…Blocks(array of input names and types)
@@ -247,5 +247,32 @@ abstract class FormBlockContainer extends FluentHtmlElement implements FormEleme
     public function getErrors($key)
     {
         return array_merge($this->error_messages->get($key), $this->getErrorsFromAncestor($key));
+    }
+
+    /**
+     * Merge a new array of messages into the warning messages.
+     *
+     * @param  MessageProvider|array $messages keyed by fieldname
+     * @return $this
+     */
+    public function withWarnings($messages)
+    {
+        if ($messages instanceof ViewErrorBag) {
+            $messages = $messages->getMessageBag();
+        }
+        $this->warning_messages->merge($messages);
+
+        return $this;
+    }
+
+    /**
+     * Get the warning messages for a field.
+     *
+     * @param string $key
+     * @return array of message strings
+     */
+    public function getWarnings($key)
+    {
+        return array_merge($this->warning_messages->get($key), $this->getWarningsFromAncestor($key));
     }
 }

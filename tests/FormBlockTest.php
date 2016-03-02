@@ -135,4 +135,24 @@ class FormBlockTest extends PHPUnit_Framework_TestCase
         $this->assertContains('<div class="form-block form-block--error">', (string)$b);
         $this->assertContains('aria-invalid="true"', (string)$b);
     }
+
+    public function testWarningsFromForm()
+    {
+        $b = $this->getTestBlock();
+        $b->getForm()->withWarnings(['test' => 'Form Warning']);
+
+        $this->assertContains('<li>Form Warning</li>', (string)$b);
+    }
+
+    public function testWithWarnings()
+    {
+        $b = $this->getTestBlock();
+
+        $b->withWarning('Message A');
+
+        $this->assertContains('<li>Message A</li>', (string)$b);
+        $this->assertContains('<ul class="form-block__messages form-block__messages--warning">', (string)$b);
+        $this->assertContains('<div class="form-block form-block--warning">', (string)$b);
+        $this->assertNotContains('aria-invalid="true"', (string)$b);
+    }
 }

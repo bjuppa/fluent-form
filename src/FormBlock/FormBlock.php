@@ -141,9 +141,13 @@ abstract class FormBlock extends FluentHtmlElement implements FormElementContrac
                 }),
         ];
         $this->withContent($this->alignment_elements);
-        $this->getDescriptionElement()->withContent(function () {
-            return $this->generateErrorListElement();
-        });
+        $this->getDescriptionElement()
+            ->withContent(function () {
+                return $this->generateErrorListElement();
+            })
+            ->withContent(function () {
+                return $this->generateWarningListElement();
+            });
         $this->withClass([
             $this->form_block_class,
             $this->form_block_disabled_class => function () {
@@ -386,6 +390,54 @@ abstract class FormBlock extends FluentHtmlElement implements FormElementContrac
     }
 
     /**
+     * Add warning message(s) to this block.
+     * @param string|array|Arrayable $messages
+     * @return $this
+     */
+    public function withWarning($messages)
+    {
+        $this->warnings = $this->warnings->merge($messages);
+
+        return $this;
+    }
+
+    /**
+     * Get all combined warning messages for this block.
+     * @return array
+     */
+    protected function getWarningMessages()
+    {
+        return $this->warnings->merge($this->getWarningsFromAncestor($this->getInputName()))
+            ->transform(function ($message) {
+                return trim($message);
+            })->filter(function ($message) {
+                //Filter out empty strings and booleans
+                return isset($message) and !is_bool($message) and '' !== $message;
+            })->unique()->toArray();
+    }
+
+    /**
+     * Find out if this form block has any warnings.
+     * @return bool
+     */
+    public function hasWarning()
+    {
+        return (bool)count($this->getWarningMessages());
+    }
+
+    /**
+     * Generate a html list of warning messages for this block.
+     * @return FluentHtmlElement
+     */
+    protected function generateWarningListElement()
+    {
+        return $this->createFluentHtmlElement('ul')->onlyDisplayedIfHasContent()
+            ->withClass($this->form_block_messages_class)
+            ->withClass($this->form_block_warning_messages_class)
+            ->withContentWrappedIn($this->getWarningMessages(), 'li');
+    }
+
+    /**
      * @param $number 1: label, 2: input, or 3: description
      * @return FluentHtmlElement
      */
@@ -402,13 +454,14 @@ abstract class FormBlock extends FluentHtmlElement implements FormElementContrac
     {
         if ($this->hasError()) {
             return $this->form_block_error_class;
+        } elseif ($this->hasWarning()) {
+            return $this->form_block_warning_class;
         } else {
             return null;
         }
     }
 
     /* TODO: implement these methods on FormBlock:
-    ->withWarning(messages)
     ->withSuccess(true)
     ->withFeedback(html) - should this be in twbs-form only?
 

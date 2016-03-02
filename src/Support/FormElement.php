@@ -51,4 +51,18 @@ trait FormElement
 
         return [];
     }
+
+    /**
+     * Get warning messages set higher up in the form structure.
+     * @param string $key in dot-notation
+     * @return array
+     */
+    protected function getWarningsFromAncestor($key)
+    {
+        if ($ancestor = $this->getFormBlockContainer()) {
+            return $ancestor->getWarnings($key);
+        }
+
+        return [];
+    }
 }
