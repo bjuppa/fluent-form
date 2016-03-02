@@ -21,7 +21,6 @@ class FieldsetElement extends FormBlockContainer
         $this->withContent($this->legend_element);
     }
 
-
     /**
      * Add legend content.
      * @param string|Htmlable|callable|array|Arrayable $html_contents,...
@@ -42,6 +41,4 @@ class FieldsetElement extends FormBlockContainer
     {
         return $this->legend_element;
     }
-
-    //TODO: add description element on fieldset, with aria-describedby pointing to it
 }
