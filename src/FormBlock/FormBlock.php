@@ -47,19 +47,19 @@ abstract class FormBlock extends FluentHtmlElement implements FormElementContrac
     /**
      * @var bool|callable indicating if the block's inputs are disabled
      */
-    private $is_disabled = false;
+    private $is_disabled;
     //TODO: set collection of disabled input names on the block container level
 
     /**
      * @var bool|callable indicating if the block's inputs are readonly
      */
-    private $is_readonly = false;
+    private $is_readonly;
     //TODO: set collection of readonly input names on the block container level
 
     /**
      * @var bool|callable indicating if the block's inputs are required
      */
-    private $is_required = false;
+    private $is_required;
     //TODO: set collection of required input names on the block container level
 
     /**
