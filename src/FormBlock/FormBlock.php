@@ -148,14 +148,11 @@ abstract class FormBlock extends FluentHtmlElement implements FormElementContrac
             $this->createFluentHtmlElement(function () {
                 return $this->isInline() ? 'span' : 'div';
             }),
-            //description holder
-            $this->createFluentHtmlElement(function () {
-                return $this->isInline() ? 'span' : 'div';
-            })
-                ->onlyDisplayedIfHasContent()
-                ->withContent(function () {
-                    return $this->getDescriptionElement();
-                }),
+            //description
+            function () {
+                //TODO: don't echo the description element in the form block if told so - e.g. if inline form
+                return $this->getDescriptionElement();
+            },
         ];
         $this->withContent($this->alignment_elements);
         $this->getDescriptionElement()
@@ -242,6 +239,9 @@ abstract class FormBlock extends FluentHtmlElement implements FormElementContrac
         return $this->description_element;
     }
 
+    //TODO: create a general followedByBlock($type, ...) method that generates a block through the container and inserts them after themselves
+    //TODO: all followedBy...Block() methods should call followedByBlock()
+
     /**
      * Put an input block after this block.
      * @param $name
@@ -273,6 +273,8 @@ abstract class FormBlock extends FluentHtmlElement implements FormElementContrac
     {
         return $this->getFormBlockContainer()->containingButtonBlock($tag_contents, $type);
     }
+
+    //TODO: create followedByFieldset() on FormBlock
 
     /**
      * Make the input(s) in the block disabled.

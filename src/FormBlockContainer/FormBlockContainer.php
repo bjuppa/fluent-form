@@ -130,12 +130,16 @@ abstract class FormBlockContainer extends FluentHtmlElement implements FormEleme
      */
     public function containingInputBlock($name, $type = 'text')
     {
-        //TODO: check for $type.'Block' class first - do this in a general containingBlock($type, ...) method
+        //TODO: check for $type.'Block' class first - do this through general createBlock($type, ...) & containingBlock($type, ...) methods
+        //TODO: createBlock() should pluck the description element of the new block if it's not supposed to print in the block. Even display description in parent container if that one is set to collect descriptions.
         $block = $this->createInstanceOf('FormBlock\InputBlock', func_get_args());
         $this->withContent($block);
 
         return $block;
     }
+
+    //TODO: don't do with...Block methods at all - let user call $form->containing...Block()->followedBy...Block() etc
+    //TODO: all containing...Block methods should call containingBlock()
 
     /**
      * Put a password block on the form.
