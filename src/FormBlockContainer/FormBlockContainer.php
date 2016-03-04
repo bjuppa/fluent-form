@@ -99,9 +99,6 @@ abstract class FormBlockContainer extends FluentHtmlElement implements FormEleme
 
     /* TODO: implement these methods on FormBlockContainer
 
-->with…Block(name, type)
-->with…Blocks(array of input names and types)
-
 ->withAlignmentClasses(col 1, col 2, col 3, offset 2, offset 3=null)
 ->getAlignmentClasses(column number, bool with_offset=false)
 ->align(true)
