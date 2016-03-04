@@ -2,6 +2,7 @@
 namespace FewAgency\FluentForm\FormBlockContainer;
 
 use ArrayAccess;
+use FewAgency\FluentForm\FormBlock\FormBlock;
 use FewAgency\FluentHtml\FluentHtmlElement;
 use FewAgency\FluentForm\Support\FormElementContract;
 use FewAgency\FluentForm\Support\FormElement;
@@ -35,6 +36,7 @@ abstract class FormBlockContainer extends FluentHtmlElement implements FormEleme
      */
     protected $form_block_container_inline_class = "form-block-container--inline";
 
+    //TODO: clean up alignment classes!
     protected $is_aligned;
     protected $alignment_classes;
     protected $alignment_classes_default = [1 => 'half-width float-left align-right', 2 => 'half-width', 3 => ''];
@@ -66,6 +68,18 @@ abstract class FormBlockContainer extends FluentHtmlElement implements FormEleme
     private $warning_messages;
 
     /**
+     * FormBlock elements in this container.
+     * @var Collection
+     */
+    private $form_block_elements;
+
+    /**
+     * FormBlockContainer element in this container.
+     * @var Collection
+     */
+    private $form_block_container_elements;
+
+    /**
      * @var bool|callable|null indicating if the block container's content is inline
      */
     private $is_inline;
@@ -75,11 +89,22 @@ abstract class FormBlockContainer extends FluentHtmlElement implements FormEleme
         parent::__construct();
         $this->value_maps = new Collection();
         $this->labels = new Collection();
+        $this->form_block_elements = new Collection();
+        $this->form_block_container_elements = new Collection();
         $this->error_messages = new MessageBag();
         $this->warning_messages = new MessageBag();
         $this->withClass($this->form_block_container_class);
         $this->withClass(function () {
             return $this->isInline() ? $this->form_block_container_inline_class : null;
+        });
+        $this->withContent(function () {
+            //This prints blocks' description elements at top of the container under certain conditions
+            if ($this->isInline()) {
+                $container = $this->getFormBlockContainer();
+                if (empty($container) or !$container->isInline()) {
+                    return $this->pullSubBlocksDescriptionElements();
+                }
+            }
         });
     }
 
@@ -128,9 +153,9 @@ abstract class FormBlockContainer extends FluentHtmlElement implements FormEleme
     public function containingInputBlock($name, $type = 'text')
     {
         //TODO: check for $type.'Block' class first - do this through general createBlock($type, ...) & containingBlock($type, ...) methods
-        //TODO: createBlock() should pluck the description element of the new block if it's not supposed to print in the block. Even display description in parent container if that one is set to collect descriptions.
         $block = $this->createInstanceOf('FormBlock\InputBlock', func_get_args());
         $this->withContent($block);
+        $this->form_block_elements->push($block);
 
         return $block;
     }
@@ -195,6 +220,7 @@ abstract class FormBlockContainer extends FluentHtmlElement implements FormEleme
     {
         $fieldset = $this->createInstanceOf('FieldsetElement');
         $this->withContent($fieldset);
+        $this->form_block_container_elements->push($fieldset);
 
         return $fieldset;
     }
@@ -354,5 +380,18 @@ abstract class FormBlockContainer extends FluentHtmlElement implements FormEleme
         }
 
         return (bool)$inline;
+    }
+
+    /**
+     * Pull all contained form-blocks' descriptions for display outside their blocks.
+     * @return Collection
+     */
+    protected function pullSubBlocksDescriptionElements()
+    {
+        return $this->form_block_elements->map(function (FormBlock $block) {
+            return $block->pullDescriptionElement();
+        })->merge($this->form_block_container_elements->map(function (FormBlockContainer $container) {
+            return $container->pullSubBlocksDescriptionElements();
+        }));
     }
 }

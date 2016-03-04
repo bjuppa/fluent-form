@@ -31,6 +31,11 @@ abstract class FormBlock extends FluentHtmlElement implements FormElementContrac
     private $description_element;
 
     /**
+     * @var bool true if the description element of this block has been pulled out for display elsewehere
+     */
+    private $is_description_element_pulled = false;
+
+    /**
      * @var array of elements for alignment within the block, e.g. label holder, input holder, description holder
      */
     private $alignment_elements = [];
@@ -151,8 +156,7 @@ abstract class FormBlock extends FluentHtmlElement implements FormElementContrac
             }),
             //description
             function () {
-                //TODO: don't echo the description element in the form block if told so - e.g. if inline form
-                return $this->getDescriptionElement();
+                return $this->isDescriptionPulled() ? null : $this->getDescriptionElement();
             },
         ];
         $this->withContent($this->alignment_elements);
@@ -237,6 +241,26 @@ abstract class FormBlock extends FluentHtmlElement implements FormElementContrac
         }
 
         return $this->description_element;
+    }
+
+    /**
+     * Pull the description out of this form block to place it somewhere else.
+     * @return DescriptionElement
+     */
+    public function pullDescriptionElement()
+    {
+        $this->is_description_element_pulled = true;
+
+        return $this->getDescriptionElement();
+    }
+
+    /**
+     * Check if the description element has been placed outside this form-block
+     * @return bool
+     */
+    public function isDescriptionPulled()
+    {
+        return $this->is_description_element_pulled;
     }
 
     //TODO: create a general followedByBlock($type, ...) method that generates a block through the container and inserts them after themselves
