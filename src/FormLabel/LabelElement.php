@@ -14,11 +14,12 @@ class LabelElement extends FormLabel
 
     /**
      * LabelElement constructor.
-     * @param string|Htmlable|array|Arrayable|null $label_contents
+     * @param string|Htmlable|array|Arrayable|null $html_contents
      */
-    public function __construct($label_contents = null)
+    public function __construct($html_contents = null)
     {
-        parent::__construct('label', $label_contents);
+        parent::__construct($html_contents);
+        $this->withHtmlElementName('label');
     }
 
     /**
@@ -29,10 +30,7 @@ class LabelElement extends FormLabel
     public function forInput(FormInputElement $input)
     {
         $this->for_input_element = $input;
-        $this->withAttribute('for', function (LabelElement $label) {
-            return $label->getInputElement()->getId();
-        });
-
+        $this->withAttribute('for', $this->getInputElement()->getId());
         $this->withDefaultContent(function () use ($input) {
             return $input->getLabel();
         });

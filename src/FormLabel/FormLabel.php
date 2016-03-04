@@ -1,24 +1,24 @@
 <?php
 namespace FewAgency\FluentForm\FormLabel;
 
-use FewAgency\FluentHtml\FluentHtml;
+use FewAgency\FluentHtml\FluentHtmlElement;
 use FewAgency\FluentForm\Support\FormElement;
 use FewAgency\FluentForm\Support\FormElementContract;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Arrayable;
 
-abstract class FormLabel extends FluentHtml implements FormElementContract
+abstract class FormLabel extends FluentHtmlElement implements FormElementContract
 {
     use FormElement;
 
     /**
      * FormLabel constructor.
-     * @param string $html_element_name
-     * @param string|Htmlable|array|Arrayable|null $label_contents
+     * @param string|Htmlable|array|Arrayable|null $html_contents
      */
-    public function __construct($html_element_name, $label_contents = null)
+    public function __construct($html_contents = null)
     {
-        parent::__construct($html_element_name, $label_contents);
+        parent::__construct();
         $this->onlyDisplayedIfHasContent();
+        $this->withContent($html_contents);
     }
 }

@@ -8,10 +8,11 @@ class LegendElement extends FormLabel
 {
     /**
      * LegendElement constructor.
-     * @param string|Htmlable|array|Arrayable|null $label_contents
+     * @param string|Htmlable|array|Arrayable|null $legend_contents
      */
-    public function __construct($label_contents = null)
+    public function __construct($legend_contents = null)
     {
-        parent::__construct('legend', $label_contents);
+        parent::__construct($legend_contents);
+        $this->withHtmlElementName('legend');
     }
 }

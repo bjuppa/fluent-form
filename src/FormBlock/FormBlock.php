@@ -1,6 +1,7 @@
 <?php
 namespace FewAgency\FluentForm\FormBlock;
 
+use FewAgency\FluentForm\FormLabel\DescriptionElement;
 use FewAgency\FluentForm\FormLabel\FormLabel;
 use FewAgency\FluentForm\Support\FormElementContract;
 use FewAgency\FluentForm\Support\FormElement;
@@ -155,13 +156,6 @@ abstract class FormBlock extends FluentHtmlElement implements FormElementContrac
             },
         ];
         $this->withContent($this->alignment_elements);
-        $this->getDescriptionElement()
-            ->withContent(function () {
-                return $this->generateErrorListElement();
-            })
-            ->withContent(function () {
-                return $this->generateWarningListElement();
-            });
         $this->withClass([
             $this->form_block_class,
             $this->form_block_disabled_class => function () {
@@ -205,7 +199,7 @@ abstract class FormBlock extends FluentHtmlElement implements FormElementContrac
      * @param FormLabel $label_element
      * @return $this|FluentHtmlElement can be method-chained to modify the current element
      */
-    public function withLabelElement(FormLabel $label_element)
+    protected function withLabelElement(FormLabel $label_element)
     {
         $label_element->withClass($this->form_block_label_class);
         $this->label_element = $label_element;
@@ -227,13 +221,19 @@ abstract class FormBlock extends FluentHtmlElement implements FormElementContrac
 
     /**
      * Get the description element of the block.
-     * @return FluentHtmlElement
+     * @return DescriptionElement
      */
     public function getDescriptionElement()
     {
         if (!$this->description_element) {
-            $this->description_element = $this->createFluentHtmlElement('div')->onlyDisplayedIfHasContent();
-            $this->description_element->withClass($this->form_block_description_class);
+            $this->description_element = $this->createInstanceOf('FormLabel\DescriptionElement')
+                ->withClass($this->form_block_description_class)
+                ->withContent(function () {
+                    return $this->generateErrorListElement();
+                })
+                ->withContent(function () {
+                    return $this->generateWarningListElement();
+                });
         }
 
         return $this->description_element;

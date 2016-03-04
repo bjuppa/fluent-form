@@ -88,9 +88,7 @@ class InputBlock extends FormBlock
         $this->input_element = $input_element;
         $this->withLabelElement($this->createInstanceOf('FormLabel\LabelElement'));
         $this->getLabelElement()->forInput($this->getInputElement());
-        $this->getInputElement()->withAttribute('aria-describedby', function (FormInputElement $input_element) {
-            return $this->getDescriptionElement()->hasContent() ? $this->getDescriptionElement()->getId($input_element->getId() . '-desc') : null;
-        });
+        $this->getDescriptionElement()->forElement($input_element);
         $this->getInputElement()->invalid(function () {
             return $this->hasError();
         })->disabled(function () {

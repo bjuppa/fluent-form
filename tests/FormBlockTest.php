@@ -74,7 +74,7 @@ class FormBlockTest extends PHPUnit_Framework_TestCase
         $b = $this->getTestBlock()->disabled();
 
         $this->assertContains('<div class="form-block form-block--disabled">', (string)$b);
-        $this->assertContains('<input name="test" type="text" class="form-block__control" disabled ', (string)$b);
+        $this->assertContains('<input name="test" type="text" class="form-block__control" id="test13" disabled', (string)$b);
 
         $b->withHtmlElementName('fieldset');
         $this->assertContains('<fieldset class="form-block form-block--disabled" disabled>', (string)$b);
@@ -84,7 +84,7 @@ class FormBlockTest extends PHPUnit_Framework_TestCase
     {
         $b = $this->getTestBlock()->readonly();
 
-        $this->assertContains('<input name="test" type="text" class="form-block__control" readonly ', (string)$b);
+        $this->assertContains('<input name="test" type="text" class="form-block__control" id="test14" readonly', (string)$b);
     }
 
     public function testRequired()
@@ -92,16 +92,16 @@ class FormBlockTest extends PHPUnit_Framework_TestCase
         $b = $this->getTestBlock()->required();
 
         $this->assertContains('<div class="form-block form-block--required">', (string)$b);
-        $this->assertContains('<input name="test" type="text" class="form-block__control" required ', (string)$b);
+        $this->assertContains('<input name="test" type="text" class="form-block__control" id="test15" required', (string)$b);
     }
 
     public function testWithDescription()
     {
         $b = $this->getTestBlock()->withDescription('custom description');
 
-        $this->assertContains('<input name="test" type="text" class="form-block__control" aria-describedby="test11-desc"',
+        $this->assertContains('<input name="test" type="text" class="form-block__control" id="test16" aria-describedby="test16-desc"',
             (string)$b);
-        $this->assertContains('<div class="form-block__description" id="test11-desc">custom description</div>',
+        $this->assertContains('<div class="form-block__description" id="test16-desc">custom description</div>',
             (string)$b);
     }
 
