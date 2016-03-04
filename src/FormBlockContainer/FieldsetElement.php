@@ -17,8 +17,9 @@ class FieldsetElement extends FormBlockContainer
     {
         parent::__construct();
         $this->withHtmlElementName('fieldset');
-        $this->legend_element = $this->createFluentHtmlElement('legend')->onlyDisplayedIfHasContent();
-        $this->withContent($this->legend_element);
+        $this->withContent(function () {
+            return $this->getLegendElement();
+        });
     }
 
     /**
@@ -39,6 +40,10 @@ class FieldsetElement extends FormBlockContainer
      */
     private function getLegendElement()
     {
+        if (!$this->legend_element) {
+            $this->legend_element = $this->createInstanceOf('FormLabel\LegendElement');
+        }
+
         return $this->legend_element;
     }
 }
