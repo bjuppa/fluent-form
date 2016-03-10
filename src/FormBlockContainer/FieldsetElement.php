@@ -17,7 +17,7 @@ class FieldsetElement extends AbstractFormBlockContainer
     {
         parent::__construct();
         $this->withHtmlElementName('fieldset');
-        $this->withContent(function () {
+        $this->withPrependedContent(function () {
             return $this->getLegendElement();
         });
     }
