@@ -7,7 +7,6 @@ use Illuminate\Contracts\Support\Arrayable;
 class LegendElement extends AbstractLabel
 {
     /**
-     * LegendElement constructor.
      * @param string|Htmlable|array|Arrayable|null $legend_contents
      */
     public function __construct($legend_contents = null)

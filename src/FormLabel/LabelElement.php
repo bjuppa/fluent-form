@@ -13,7 +13,6 @@ class LabelElement extends AbstractLabel
     private $for_input_element;
 
     /**
-     * LabelElement constructor.
      * @param string|Htmlable|array|Arrayable|null $html_contents
      */
     public function __construct($html_contents = null)

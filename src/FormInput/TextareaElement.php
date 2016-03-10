@@ -9,7 +9,6 @@ class TextareaElement extends AbstractFormControl
     use SingleValueInputTrait, ReadonlyInputTrait;
 
     /**
-     * TextareaElement constructor.
      * @param callable|string $name of input
      */
     public function __construct($name)

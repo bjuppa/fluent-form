@@ -12,7 +12,6 @@ abstract class AbstractLabel extends FluentHtmlElement implements FormElementCon
     use FormElementTrait;
 
     /**
-     * AbstractLabel constructor.
      * @param string|Htmlable|array|Arrayable|null $html_contents
      */
     public function __construct($html_contents = null)

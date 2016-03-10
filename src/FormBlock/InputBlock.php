@@ -18,7 +18,6 @@ class InputBlock extends AbstractControlBlock
     protected $form_control_class = 'form-block__control';
 
     /**
-     * InputBlock constructor.
      * @param string $name of input
      * @param string $input_type of input or fully qualified classname
      */

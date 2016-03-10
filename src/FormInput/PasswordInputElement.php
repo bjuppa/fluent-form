@@ -4,7 +4,6 @@ namespace FewAgency\FluentForm\FormInput;
 class PasswordInputElement extends AbstractInput
 {
     /**
-     * InputElement constructor.
      * @param callable|string $name of input
      * @param string $input_type of input, defaults to password
      */

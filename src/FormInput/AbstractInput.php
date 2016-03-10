@@ -31,7 +31,6 @@ abstract class AbstractInput extends AbstractFormControl
     use SingleValueInputTrait, ReadonlyInputTrait;
 
     /**
-     * InputElement constructor.
      * @param callable|string $name of input
      * @param string $input_type of input, defaults to text
      */

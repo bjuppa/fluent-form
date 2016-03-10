@@ -4,7 +4,6 @@ namespace FewAgency\FluentForm\FormInput;
 class HiddenInputElement extends AbstractInput
 {
     /**
-     * InputElement constructor.
      * @param callable|string $name
      * @param string|callable $value
      */
