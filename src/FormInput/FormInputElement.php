@@ -1,13 +1,13 @@
 <?php
 namespace FewAgency\FluentForm\FormInput;
 
-use FewAgency\FluentForm\Support\FormElement;
+use FewAgency\FluentForm\Support\FormElementTrait;
 use FewAgency\FluentHtml\FluentHtmlElement;
 use FewAgency\FluentForm\Support\FormElementContract;
 
 abstract class FormInputElement extends FluentHtmlElement implements FormElementContract
 {
-    use FormElement;
+    use FormElementTrait;
 
     /**
      * @var string|callable

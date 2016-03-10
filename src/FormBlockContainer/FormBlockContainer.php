@@ -5,7 +5,7 @@ use ArrayAccess;
 use FewAgency\FluentForm\FormBlock\FormBlock;
 use FewAgency\FluentHtml\FluentHtmlElement;
 use FewAgency\FluentForm\Support\FormElementContract;
-use FewAgency\FluentForm\Support\FormElement;
+use FewAgency\FluentForm\Support\FormElementTrait;
 use FewAgency\FluentForm\FormBlock\InputBlock;
 use FewAgency\FluentForm\FormBlock\ButtonBlock;
 use Illuminate\Contracts\Support\Htmlable;
@@ -17,8 +17,8 @@ use Illuminate\Support\ViewErrorBag;
 
 abstract class FormBlockContainer extends FluentHtmlElement implements FormElementContract
 {
-    use FormElement {
-        FormElement::isInline as isAncestorInline;
+    use FormElementTrait {
+        FormElementTrait::isInline as isAncestorInline;
     }
 
     /**

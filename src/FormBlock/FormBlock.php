@@ -4,7 +4,7 @@ namespace FewAgency\FluentForm\FormBlock;
 use FewAgency\FluentForm\FormLabel\DescriptionElement;
 use FewAgency\FluentForm\FormLabel\FormLabel;
 use FewAgency\FluentForm\Support\FormElementContract;
-use FewAgency\FluentForm\Support\FormElement;
+use FewAgency\FluentForm\Support\FormElementTrait;
 use FewAgency\FluentHtml\FluentHtmlElement;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Htmlable;
@@ -13,7 +13,7 @@ use Illuminate\Support\Collection;
 
 abstract class FormBlock extends FluentHtmlElement implements FormElementContract
 {
-    use FormElement;
+    use FormElementTrait;
 
     /**
      * @var string representing name or key for the main input of this block

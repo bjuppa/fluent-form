@@ -4,7 +4,7 @@ namespace FewAgency\FluentForm\Support;
 use FewAgency\FluentForm\FluentForm;
 use FewAgency\FluentForm\FormBlockContainer\FormBlockContainer;
 
-trait FormElement
+trait FormElementTrait
 {
     /**
      * Get the form element for the element
