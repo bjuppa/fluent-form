@@ -1,5 +1,5 @@
 <?php
-namespace FewAgency\FluentForm\FormLabel;
+namespace FewAgency\FluentForm;
 
 use FewAgency\FluentHtml\FluentHtmlElement;
 use FewAgency\FluentForm\Support\FormElementTrait;

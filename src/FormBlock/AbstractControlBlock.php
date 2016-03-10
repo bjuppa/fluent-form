@@ -2,7 +2,7 @@
 namespace FewAgency\FluentForm\FormBlock;
 
 use FewAgency\FluentForm\DescriptionElement;
-use FewAgency\FluentForm\FormLabel\AbstractLabel;
+use FewAgency\FluentForm\AbstractLabel;
 use FewAgency\FluentForm\Support\FormElementContract;
 use FewAgency\FluentForm\Support\FormElementTrait;
 use FewAgency\FluentHtml\FluentHtmlElement;

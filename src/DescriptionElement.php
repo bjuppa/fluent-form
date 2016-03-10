@@ -1,7 +1,6 @@
 <?php
 namespace FewAgency\FluentForm;
 
-use FewAgency\FluentForm\FormLabel\AbstractLabel;
 use FewAgency\FluentHtml\FluentHtmlElement;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Arrayable;
