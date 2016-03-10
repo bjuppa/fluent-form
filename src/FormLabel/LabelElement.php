@@ -1,14 +1,14 @@
 <?php
 namespace FewAgency\FluentForm\FormLabel;
 
-use FewAgency\FluentForm\FormInput\FormInputElement;
+use FewAgency\FluentForm\FormInput\AbstractFormControl;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Arrayable;
 
 class LabelElement extends AbstractLabel
 {
     /**
-     * @var FormInputElement referenced by the label
+     * @var AbstractFormControl referenced by the label
      */
     private $for_input_element;
 
@@ -24,10 +24,10 @@ class LabelElement extends AbstractLabel
 
     /**
      * Set the referenced input for this label.
-     * @param FormInputElement $input that label should reference
+     * @param AbstractFormControl $input that label should reference
      * @return $this
      */
-    public function forInput(FormInputElement $input)
+    public function forInput(AbstractFormControl $input)
     {
         $this->for_input_element = $input;
         $this->withAttribute('for', $this->getInputElement()->getId());
@@ -40,7 +40,7 @@ class LabelElement extends AbstractLabel
 
     /**
      * Get referenced input element.
-     * @return FormInputElement the input element related to this label
+     * @return AbstractFormControl the input element related to this label
      */
     public function getInputElement()
     {

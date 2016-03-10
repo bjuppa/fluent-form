@@ -5,7 +5,7 @@ use FewAgency\FluentForm\Support\FormElementTrait;
 use FewAgency\FluentHtml\FluentHtmlElement;
 use FewAgency\FluentForm\Support\FormElementContract;
 
-abstract class FormInputElement extends FluentHtmlElement implements FormElementContract
+abstract class AbstractFormControl extends FluentHtmlElement implements FormElementContract
 {
     use FormElementTrait;
 
@@ -27,7 +27,7 @@ abstract class FormInputElement extends FluentHtmlElement implements FormElement
     public function withName($name)
     {
         $this->input_name = $name;
-        $this->withAttribute('name', function (FormInputElement $input) {
+        $this->withAttribute('name', function (AbstractFormControl $input) {
             return $input->getNameAttribute();
         });
 

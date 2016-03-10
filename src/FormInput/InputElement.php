@@ -26,7 +26,7 @@ namespace FewAgency\FluentForm\FormInput;
 use FewAgency\FluentForm\Support\ReadonlyInputTrait;
 use FewAgency\FluentForm\Support\SingleValueInputTrait;
 
-abstract class InputElement extends FormInputElement
+abstract class InputElement extends AbstractFormControl
 {
     use SingleValueInputTrait, ReadonlyInputTrait;
 
@@ -41,7 +41,7 @@ abstract class InputElement extends FormInputElement
         $this->withHtmlElementName('input');
         $this->withName($name);
         $this->withAttribute('type', $input_type);
-        $this->withAttribute('value', function (FormInputElement $input) {
+        $this->withAttribute('value', function (AbstractFormControl $input) {
             return $input->getValue();
         });
     }

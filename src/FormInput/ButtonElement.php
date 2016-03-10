@@ -5,7 +5,7 @@ use FewAgency\FluentForm\Support\SingleValueInputTrait;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Htmlable;
 
-class ButtonElement extends FormInputElement
+class ButtonElement extends AbstractFormControl
 {
     use SingleValueInputTrait;
 
@@ -19,7 +19,7 @@ class ButtonElement extends FormInputElement
         $this->withHtmlElementName('button');
         $this->withContent($tag_contents);
         $this->withAttribute('type', $button_type);
-        $this->withAttribute('value', function (FormInputElement $input) {
+        $this->withAttribute('value', function (AbstractFormControl $input) {
             return $input->getValue();
         });
     }

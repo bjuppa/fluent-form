@@ -1,14 +1,14 @@
 <?php
 namespace FewAgency\FluentForm\FormBlock;
 
-use FewAgency\FluentForm\FormInput\FormInputElement;
+use FewAgency\FluentForm\FormInput\AbstractFormControl;
 use Illuminate\Contracts\Support\Arrayable;
 use FewAgency\FluentHtml\FluentHtmlElement;
 
 class InputBlock extends FormBlock
 {
     /**
-     * @var FormInputElement
+     * @var AbstractFormControl
      */
     private $input_element;
 
@@ -80,10 +80,10 @@ class InputBlock extends FormBlock
 
     /**
      * Set the input element of the block.
-     * @param FormInputElement $input_element
+     * @param AbstractFormControl $input_element
      * @return FormBlock
      */
-    protected function withInputElement(FormInputElement $input_element)
+    protected function withInputElement(AbstractFormControl $input_element)
     {
         $this->input_element = $input_element;
         $this->withLabelElement($this->createInstanceOf('FormLabel\LabelElement'));
@@ -105,7 +105,7 @@ class InputBlock extends FormBlock
 
     /**
      * Get the input element of the block.
-     * @return FormInputElement
+     * @return AbstractFormControl
      */
     public function getInputElement()
     {

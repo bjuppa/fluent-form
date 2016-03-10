@@ -19,7 +19,7 @@ class FormBlockTest extends PHPUnit_Framework_TestCase
     {
         $b = $this->getTestBlock();
 
-        $this->assertInstanceOf('FewAgency\FluentForm\FormInput\FormInputElement', $b->getInputElement());
+        $this->assertInstanceOf('FewAgency\FluentForm\FormInput\AbstractFormControl', $b->getInputElement());
     }
 
     public function testGetLabelElement()

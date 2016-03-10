@@ -4,7 +4,7 @@ namespace FewAgency\FluentForm\FormInput;
 use FewAgency\FluentForm\Support\ReadonlyInputTrait;
 use FewAgency\FluentForm\Support\SingleValueInputTrait;
 
-class TextareaElement extends FormInputElement
+class TextareaElement extends AbstractFormControl
 {
     use SingleValueInputTrait, ReadonlyInputTrait;
 
