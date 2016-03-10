@@ -3,7 +3,7 @@
 use FewAgency\FluentHtml\Testing\ComparesFluentHtml;
 use FewAgency\FluentForm\FluentForm;
 
-class FormBlockContainerTest extends PHPUnit_Framework_TestCase
+class ControlBlockContainerTest extends PHPUnit_Framework_TestCase
 {
     use ComparesFluentHtml;
 
