@@ -5,7 +5,7 @@ use FewAgency\FluentHtml\FluentHtmlElement;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Arrayable;
 
-class DescriptionElement extends FormLabel
+class DescriptionElement extends AbstractLabel
 {
     /**
      * @var FluentHtmlElement referenced by this description

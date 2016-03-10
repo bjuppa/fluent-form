@@ -2,7 +2,7 @@
 namespace FewAgency\FluentForm\FormBlock;
 
 use FewAgency\FluentForm\FormLabel\DescriptionElement;
-use FewAgency\FluentForm\FormLabel\FormLabel;
+use FewAgency\FluentForm\FormLabel\AbstractLabel;
 use FewAgency\FluentForm\Support\FormElementContract;
 use FewAgency\FluentForm\Support\FormElementTrait;
 use FewAgency\FluentHtml\FluentHtmlElement;
@@ -21,7 +21,7 @@ abstract class FormBlock extends FluentHtmlElement implements FormElementContrac
     private $input_name;
 
     /**
-     * @var FormLabel
+     * @var AbstractLabel
      */
     private $label_element;
 
@@ -191,7 +191,7 @@ abstract class FormBlock extends FluentHtmlElement implements FormElementContrac
 
     /**
      * Get the label element of the block.
-     * @return FormLabel
+     * @return AbstractLabel
      */
     public function getLabelElement()
     {
@@ -200,10 +200,10 @@ abstract class FormBlock extends FluentHtmlElement implements FormElementContrac
 
     /**
      * Set the label element of the block.
-     * @param FormLabel $label_element
+     * @param AbstractLabel $label_element
      * @return $this|FluentHtmlElement can be method-chained to modify the current element
      */
-    protected function withLabelElement(FormLabel $label_element)
+    protected function withLabelElement(AbstractLabel $label_element)
     {
         $label_element->withClass($this->form_block_label_class);
         $this->label_element = $label_element;

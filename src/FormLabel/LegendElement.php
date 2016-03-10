@@ -4,7 +4,7 @@ namespace FewAgency\FluentForm\FormLabel;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Arrayable;
 
-class LegendElement extends FormLabel
+class LegendElement extends AbstractLabel
 {
     /**
      * LegendElement constructor.

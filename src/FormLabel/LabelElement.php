@@ -5,7 +5,7 @@ use FewAgency\FluentForm\FormInput\FormInputElement;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Arrayable;
 
-class LabelElement extends FormLabel
+class LabelElement extends AbstractLabel
 {
     /**
      * @var FormInputElement referenced by the label

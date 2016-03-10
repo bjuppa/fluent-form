@@ -7,12 +7,12 @@ use FewAgency\FluentForm\Support\FormElementContract;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Arrayable;
 
-abstract class FormLabel extends FluentHtmlElement implements FormElementContract
+abstract class AbstractLabel extends FluentHtmlElement implements FormElementContract
 {
     use FormElementTrait;
 
     /**
-     * FormLabel constructor.
+     * AbstractLabel constructor.
      * @param string|Htmlable|array|Arrayable|null $html_contents
      */
     public function __construct($html_contents = null)
