@@ -1,13 +1,13 @@
 <?php
 namespace FewAgency\FluentForm\FormInput;
 
-use FewAgency\FluentForm\Support\FormInputSingleValueElement;
+use FewAgency\FluentForm\Support\SingleValueInputTrait;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Htmlable;
 
 class ButtonElement extends FormInputElement
 {
-    use FormInputSingleValueElement;
+    use SingleValueInputTrait;
 
     /**
      * @param string|Htmlable|array|Arrayable $tag_contents

@@ -2,7 +2,7 @@
 namespace FewAgency\FluentForm\Support;
 
 
-trait FormInputSingleValueElement
+trait SingleValueInputTrait
 {
     /**
      * @var string|callable

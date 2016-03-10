@@ -1,12 +1,12 @@
 <?php
 namespace FewAgency\FluentForm\FormInput;
 
-use FewAgency\FluentForm\Support\FormInputReadonlyElement;
-use FewAgency\FluentForm\Support\FormInputSingleValueElement;
+use FewAgency\FluentForm\Support\ReadonlyInputTrait;
+use FewAgency\FluentForm\Support\SingleValueInputTrait;
 
 class TextareaElement extends FormInputElement
 {
-    use FormInputSingleValueElement, FormInputReadonlyElement;
+    use SingleValueInputTrait, ReadonlyInputTrait;
 
     /**
      * TextareaElement constructor.

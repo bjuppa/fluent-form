@@ -23,12 +23,12 @@ namespace FewAgency\FluentForm\FormInput;
 // ColorInputElement
 // RangeInputElement
 
-use FewAgency\FluentForm\Support\FormInputReadonlyElement;
-use FewAgency\FluentForm\Support\FormInputSingleValueElement;
+use FewAgency\FluentForm\Support\ReadonlyInputTrait;
+use FewAgency\FluentForm\Support\SingleValueInputTrait;
 
 abstract class InputElement extends FormInputElement
 {
-    use FormInputSingleValueElement, FormInputReadonlyElement;
+    use SingleValueInputTrait, ReadonlyInputTrait;
 
     /**
      * InputElement constructor.

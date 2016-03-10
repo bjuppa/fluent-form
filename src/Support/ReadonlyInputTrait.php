@@ -2,7 +2,7 @@
 namespace FewAgency\FluentForm\Support;
 
 
-trait FormInputReadonlyElement
+trait ReadonlyInputTrait
 {
     /**
      * Make this input readonly
