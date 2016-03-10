@@ -4,7 +4,7 @@ use FewAgency\FluentForm\FormBlockContainer\FieldsetElement;
 use FewAgency\FluentHtml\Testing\ComparesFluentHtml;
 use FewAgency\FluentForm\FluentForm;
 
-class FormBlockContainerFieldsetTest extends PHPUnit_Framework_TestCase
+class FieldsetTest extends PHPUnit_Framework_TestCase
 {
     use ComparesFluentHtml;
 
