@@ -6,7 +6,7 @@ use FewAgency\FluentHtml\FluentHtmlElement;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Htmlable;
 
-class FieldsetElement extends AbstractFormBlockContainer
+class FieldsetElement extends AbstractControlBlockContainer
 {
     /**
      * @var FluentHtmlElement

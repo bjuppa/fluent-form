@@ -15,7 +15,7 @@ use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\MessageBag;
 use Illuminate\Support\ViewErrorBag;
 
-abstract class AbstractFormBlockContainer extends FluentHtmlElement implements FormElementContract
+abstract class AbstractControlBlockContainer extends FluentHtmlElement implements FormElementContract
 {
     use FormElementTrait {
         FormElementTrait::isInline as isAncestorInline;
@@ -74,7 +74,7 @@ abstract class AbstractFormBlockContainer extends FluentHtmlElement implements F
     private $form_block_elements;
 
     /**
-     * AbstractFormBlockContainer element in this container.
+     * AbstractControlBlockContainer element in this container.
      * @var Collection
      */
     private $form_block_container_elements;
@@ -122,7 +122,7 @@ abstract class AbstractFormBlockContainer extends FluentHtmlElement implements F
         return $this;
     }
 
-    /* TODO: implement these methods on AbstractFormBlockContainer
+    /* TODO: implement these methods on AbstractControlBlockContainer
 
 ->withAlignmentClasses(col 1, col 2, col 3, offset 2, offset 3=null)
 ->getAlignmentClasses(column number, bool with_offset=false)
@@ -135,7 +135,7 @@ abstract class AbstractFormBlockContainer extends FluentHtmlElement implements F
      * Put an input block on the form.
      * @param string $name
      * @param string $type
-     * @return $this|AbstractFormBlockContainer
+     * @return $this|AbstractControlBlockContainer
      */
     public function withInputBlock($name, $type = 'text')
     {
@@ -189,7 +189,7 @@ abstract class AbstractFormBlockContainer extends FluentHtmlElement implements F
      * Put a button block on the form.
      * @param string|Htmlable|array|Arrayable $tag_contents
      * @param string $type
-     * @return $this|AbstractFormBlockContainer
+     * @return $this|AbstractControlBlockContainer
      */
     public function withButtonBlock($tag_contents, $type = 'submit')
     {
@@ -390,7 +390,7 @@ abstract class AbstractFormBlockContainer extends FluentHtmlElement implements F
     {
         return $this->form_block_elements->map(function (AbstractControlBlock $block) {
             return $block->pullDescriptionElement();
-        })->merge($this->form_block_container_elements->map(function (AbstractFormBlockContainer $container) {
+        })->merge($this->form_block_container_elements->map(function (AbstractControlBlockContainer $container) {
             return $container->pullSubBlocksDescriptionElements();
         }));
     }

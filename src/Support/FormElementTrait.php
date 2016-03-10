@@ -2,7 +2,7 @@
 namespace FewAgency\FluentForm\Support;
 
 use FewAgency\FluentForm\FluentForm;
-use FewAgency\FluentForm\FormBlockContainer\AbstractFormBlockContainer;
+use FewAgency\FluentForm\FormBlockContainer\AbstractControlBlockContainer;
 
 trait FormElementTrait
 {
@@ -17,11 +17,11 @@ trait FormElementTrait
 
     /**
      * Get the the block container element if this element is part of one.
-     * @return AbstractFormBlockContainer|null
+     * @return AbstractControlBlockContainer|null
      */
     public function getFormBlockContainer()
     {
-        return $this->getAncestorInstanceOf('FewAgency\FluentForm\FormBlockContainer\AbstractFormBlockContainer');
+        return $this->getAncestorInstanceOf('FewAgency\FluentForm\FormBlockContainer\AbstractControlBlockContainer');
     }
 
     /**

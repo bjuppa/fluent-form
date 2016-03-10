@@ -1,9 +1,9 @@
 <?php
 namespace FewAgency\FluentForm;
 
-use FewAgency\FluentForm\FormBlockContainer\AbstractFormBlockContainer;
+use FewAgency\FluentForm\FormBlockContainer\AbstractControlBlockContainer;
 
-class FluentForm extends AbstractFormBlockContainer
+class FluentForm extends AbstractControlBlockContainer
 {
     private $form_method = 'POST';
 
@@ -91,7 +91,7 @@ class FluentForm extends AbstractFormBlockContainer
     }
 
     /**
-     * Overrides method in AbstractFormBlockContainer.
+     * Overrides method in AbstractControlBlockContainer.
      * @return $this
      */
     public function getForm()
