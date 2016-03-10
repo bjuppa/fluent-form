@@ -26,7 +26,7 @@ class FormBlockTest extends PHPUnit_Framework_TestCase
     {
         $b = $this->getTestBlock();
 
-        $this->assertInstanceOf('FewAgency\FluentForm\FormLabel\LabelElement', $b->getLabelElement());
+        $this->assertInstanceOf('FewAgency\FluentForm\LabelElement', $b->getLabelElement());
     }
 
     public function testWithInputAttribute()

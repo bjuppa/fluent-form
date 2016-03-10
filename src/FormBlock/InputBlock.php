@@ -85,7 +85,7 @@ class InputBlock extends AbstractControlBlock
     protected function withInputElement(AbstractFormControl $input_element)
     {
         $this->input_element = $input_element;
-        $this->withLabelElement($this->createInstanceOf('FormLabel\LabelElement'));
+        $this->withLabelElement($this->createInstanceOf('LabelElement'));
         $this->getLabelElement()->forInput($this->getInputElement());
         $this->getDescriptionElement()->forElement($input_element);
         $this->getInputElement()->invalid(function () {
