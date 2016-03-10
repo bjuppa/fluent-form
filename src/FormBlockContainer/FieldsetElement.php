@@ -17,7 +17,7 @@ class FieldsetElement extends AbstractFormBlockContainer
     {
         parent::__construct();
         $this->withHtmlElementName('fieldset');
-        $this->withPrependedContent(function () {
+        $this->withContent(function () {
             return $this->getLegendElement();
         });
     }
@@ -46,4 +46,6 @@ class FieldsetElement extends AbstractFormBlockContainer
 
         return $this->legend_element;
     }
+
+    //TODO: disable withPrependedContent and startingWithElement because legend should be first item of fieldset
 }
