@@ -26,7 +26,7 @@ namespace FewAgency\FluentForm\FormInput;
 use FewAgency\FluentForm\Support\ReadonlyInputTrait;
 use FewAgency\FluentForm\Support\SingleValueInputTrait;
 
-abstract class InputElement extends AbstractFormControl
+abstract class AbstractInput extends AbstractFormControl
 {
     use SingleValueInputTrait, ReadonlyInputTrait;
 

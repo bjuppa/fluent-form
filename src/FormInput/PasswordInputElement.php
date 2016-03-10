@@ -1,7 +1,7 @@
 <?php
 namespace FewAgency\FluentForm\FormInput;
 
-class PasswordInputElement extends InputElement
+class PasswordInputElement extends AbstractInput
 {
     /**
      * InputElement constructor.
