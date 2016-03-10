@@ -1,7 +1,7 @@
 <?php
 namespace FewAgency\FluentForm\FormBlock;
 
-use FewAgency\FluentForm\FormLabel\DescriptionElement;
+use FewAgency\FluentForm\DescriptionElement;
 use FewAgency\FluentForm\FormLabel\AbstractLabel;
 use FewAgency\FluentForm\Support\FormElementContract;
 use FewAgency\FluentForm\Support\FormElementTrait;
@@ -230,7 +230,7 @@ abstract class AbstractControlBlock extends FluentHtmlElement implements FormEle
     public function getDescriptionElement()
     {
         if (!$this->description_element) {
-            $this->description_element = $this->createInstanceOf('FormLabel\DescriptionElement')
+            $this->description_element = $this->createInstanceOf('DescriptionElement')
                 ->withClass($this->form_block_description_class)
                 ->withContent(function () {
                     return $this->generateErrorListElement();
