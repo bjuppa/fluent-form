@@ -41,7 +41,7 @@ class FieldsetElement extends AbstractControlBlockContainer
     private function getLegendElement()
     {
         if (!$this->legend_element) {
-            $this->legend_element = $this->createInstanceOf('FormLabel\LegendElement');
+            $this->legend_element = $this->createInstanceOf('LegendElement');
         }
 
         return $this->legend_element;
