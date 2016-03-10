@@ -180,7 +180,7 @@ abstract class AbstractControlBlock extends FluentHtmlElement implements FormEle
     /**
      * Add label content.
      * @param string|Htmlable|callable|array|Arrayable $html_contents,...
-     * @return $this|FluentHtmlElement can be method-chained to modify the current element
+     * @return $this
      */
     public function withLabel($html_contents)
     {
@@ -201,7 +201,7 @@ abstract class AbstractControlBlock extends FluentHtmlElement implements FormEle
     /**
      * Set the label element of the block.
      * @param AbstractLabel $label_element
-     * @return $this|FluentHtmlElement can be method-chained to modify the current element
+     * @return $this
      */
     protected function withLabelElement(AbstractLabel $label_element)
     {
@@ -214,7 +214,7 @@ abstract class AbstractControlBlock extends FluentHtmlElement implements FormEle
     /**
      * Add description content.
      * @param string|Htmlable|callable|array|Arrayable $html_contents,...
-     * @return $this|FluentHtmlElement can be method-chained to modify the current element
+     * @return $this
      */
     public function withDescription($html_contents)
     {

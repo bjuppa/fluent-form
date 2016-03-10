@@ -135,7 +135,7 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
      * Put an input block on the form.
      * @param string $name
      * @param string $type
-     * @return $this|AbstractControlBlockContainer
+     * @return $this
      */
     public function withInputBlock($name, $type = 'text')
     {
@@ -189,7 +189,7 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
      * Put a button block on the form.
      * @param string|Htmlable|array|Arrayable $tag_contents
      * @param string $type
-     * @return $this|AbstractControlBlockContainer
+     * @return $this
      */
     public function withButtonBlock($tag_contents, $type = 'submit')
     {

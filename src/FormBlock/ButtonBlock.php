@@ -64,7 +64,7 @@ class ButtonBlock extends AbstractControlBlock
 
     /**
      * Get the first set button element in this block.
-     * @return $this|ButtonElement
+     * @return ButtonElement
      */
     public function getMainButtonElement()
     {

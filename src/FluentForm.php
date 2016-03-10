@@ -33,7 +33,7 @@ class FluentForm extends AbstractControlBlockContainer
     /**
      * Set action url on form.
      * @param string|callable|false $url to set as form's action
-     * @return $this|FluentForm
+     * @return $this
      */
     public function withAction($url)
     {
@@ -65,7 +65,7 @@ class FluentForm extends AbstractControlBlockContainer
      * Set a hidden CSRF token input on the form.
      * @param $token string|callable
      * @param string $name optional name for the token input
-     * @return $this|FluentForm
+     * @return $this
      */
     public function withToken($token, $name = '_token')
     {
@@ -78,7 +78,7 @@ class FluentForm extends AbstractControlBlockContainer
      * Set a hidden REST method input on the form.
      * @param $method string
      * @param string $name optional name for the method input
-     * @return $this|FluentForm
+     * @return $this
      */
     public function withMethod($method, $name = '_method')
     {

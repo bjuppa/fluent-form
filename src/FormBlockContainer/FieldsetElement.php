@@ -25,7 +25,7 @@ class FieldsetElement extends AbstractControlBlockContainer
     /**
      * Add legend content.
      * @param string|Htmlable|callable|array|Arrayable $html_contents,...
-     * @return $this|FluentHtmlElement can be method-chained to modify the current element
+     * @return $this
      */
     public function withLegend($html_contents)
     {
