@@ -2,7 +2,7 @@
 namespace FewAgency\FluentForm\Support;
 
 use FewAgency\FluentForm\FluentForm;
-use FewAgency\FluentForm\FormBlockContainer\FormBlockContainer;
+use FewAgency\FluentForm\FormBlockContainer\AbstractFormBlockContainer;
 
 /**
  * Contract for all FluentHtml elements that are in forms
@@ -17,7 +17,7 @@ interface FormElementContract
 
     /**
      * Get the the block container element if this element is part of one.
-     * @return FormBlockContainer|null
+     * @return AbstractFormBlockContainer|null
      */
     public function getFormBlockContainer();
 }
