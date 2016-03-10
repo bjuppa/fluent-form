@@ -2,7 +2,7 @@
 namespace FewAgency\FluentForm\FormBlockContainer;
 
 use ArrayAccess;
-use FewAgency\FluentForm\FormBlock\FormBlock;
+use FewAgency\FluentForm\FormBlock\AbstractControlBlock;
 use FewAgency\FluentHtml\FluentHtmlElement;
 use FewAgency\FluentForm\Support\FormElementContract;
 use FewAgency\FluentForm\Support\FormElementTrait;
@@ -68,7 +68,7 @@ abstract class AbstractFormBlockContainer extends FluentHtmlElement implements F
     private $warning_messages;
 
     /**
-     * FormBlock elements in this container.
+     * AbstractControlBlock elements in this container.
      * @var Collection
      */
     private $form_block_elements;
@@ -388,7 +388,7 @@ abstract class AbstractFormBlockContainer extends FluentHtmlElement implements F
      */
     protected function pullSubBlocksDescriptionElements()
     {
-        return $this->form_block_elements->map(function (FormBlock $block) {
+        return $this->form_block_elements->map(function (AbstractControlBlock $block) {
             return $block->pullDescriptionElement();
         })->merge($this->form_block_container_elements->map(function (AbstractFormBlockContainer $container) {
             return $container->pullSubBlocksDescriptionElements();

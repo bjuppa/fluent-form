@@ -5,7 +5,7 @@ use FewAgency\FluentForm\FormInput\AbstractFormControl;
 use Illuminate\Contracts\Support\Arrayable;
 use FewAgency\FluentHtml\FluentHtmlElement;
 
-class InputBlock extends FormBlock
+class InputBlock extends AbstractControlBlock
 {
     /**
      * @var AbstractFormControl
@@ -81,7 +81,7 @@ class InputBlock extends FormBlock
     /**
      * Set the input element of the block.
      * @param AbstractFormControl $input_element
-     * @return FormBlock
+     * @return AbstractControlBlock
      */
     protected function withInputElement(AbstractFormControl $input_element)
     {

@@ -11,7 +11,7 @@ use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Collection;
 
 
-abstract class FormBlock extends FluentHtmlElement implements FormElementContract
+abstract class AbstractControlBlock extends FluentHtmlElement implements FormElementContract
 {
     use FormElementTrait;
 
@@ -298,7 +298,7 @@ abstract class FormBlock extends FluentHtmlElement implements FormElementContrac
         return $this->getFormBlockContainer()->containingButtonBlock($tag_contents, $type);
     }
 
-    //TODO: create followedByFieldset() on FormBlock
+    //TODO: create followedByFieldset() on AbstractControlBlock
 
     /**
      * Make the input(s) in the block disabled.
@@ -528,7 +528,7 @@ abstract class FormBlock extends FluentHtmlElement implements FormElementContrac
         }
     }
 
-    /* TODO: implement these methods on FormBlock:
+    /* TODO: implement these methods on AbstractControlBlock:
     ->withFeedback(html) - should this be in twbs-form only?
 
     ->getAlignmentClasses(column number, bool with_offset=false)

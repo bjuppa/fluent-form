@@ -5,7 +5,7 @@ use FewAgency\FluentForm\FormInput\ButtonElement;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Htmlable;
 
-class ButtonBlock extends FormBlock
+class ButtonBlock extends AbstractControlBlock
 {
     /**
      * @var ButtonElement
