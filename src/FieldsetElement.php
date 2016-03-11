@@ -1,7 +1,8 @@
 <?php
-namespace FewAgency\FluentForm\FormBlockContainer;
+namespace FewAgency\FluentForm;
 
 
+use FewAgency\FluentForm\FormBlockContainer\AbstractControlBlockContainer;
 use FewAgency\FluentHtml\FluentHtmlElement;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Htmlable;

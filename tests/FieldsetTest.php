@@ -1,6 +1,5 @@
 <?php
 
-use FewAgency\FluentForm\FormBlockContainer\FieldsetElement;
 use FewAgency\FluentHtml\Testing\ComparesFluentHtml;
 use FewAgency\FluentForm\FluentForm;
 
