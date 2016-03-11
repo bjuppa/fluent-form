@@ -1,8 +1,6 @@
 <?php
 namespace FewAgency\FluentForm;
 
-use FewAgency\FluentForm\FormBlockContainer\AbstractControlBlockContainer;
-
 class FluentForm extends AbstractControlBlockContainer
 {
     private $form_method = 'POST';

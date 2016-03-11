@@ -40,7 +40,7 @@ class FormBlockTest extends PHPUnit_Framework_TestCase
     {
         $b = $this->getTestBlock();
 
-        $this->assertInstanceOf('FewAgency\FluentForm\FormBlockContainer\AbstractControlBlockContainer',
+        $this->assertInstanceOf('FewAgency\FluentForm\AbstractControlBlockContainer',
             $b->getFormBlockContainer());
     }
 

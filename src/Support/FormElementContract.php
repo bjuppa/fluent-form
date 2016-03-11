@@ -2,7 +2,7 @@
 namespace FewAgency\FluentForm\Support;
 
 use FewAgency\FluentForm\FluentForm;
-use FewAgency\FluentForm\FormBlockContainer\AbstractControlBlockContainer;
+use FewAgency\FluentForm\AbstractControlBlockContainer;
 
 /**
  * Contract for all FluentHtml elements that are in forms
