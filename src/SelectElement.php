@@ -1,7 +1,5 @@
 <?php
-namespace FewAgency\FluentForm\FormInput;
-
-use FewAgency\FluentForm\AbstractFormControl;
+namespace FewAgency\FluentForm;
 
 class SelectElement extends AbstractFormControl
 {
