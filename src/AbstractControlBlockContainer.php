@@ -114,7 +114,7 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
      */
     public function withHiddenInput($name, $value)
     {
-        $this->withContent($this->createInstanceOf('FormInput\HiddenInputElement', [$name, $value]));
+        $this->withContent($this->createInstanceOf('HiddenInputElement', [$name, $value]));
 
         return $this;
     }

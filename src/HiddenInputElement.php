@@ -1,7 +1,5 @@
 <?php
-namespace FewAgency\FluentForm\FormInput;
-
-use FewAgency\FluentForm\AbstractInput;
+namespace FewAgency\FluentForm;
 
 class HiddenInputElement extends AbstractInput
 {

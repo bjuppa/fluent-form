@@ -45,6 +45,8 @@ class FluentFormTest extends PHPUnit_Framework_TestCase
             $f);
     }
 
+    //TODO: test with hidden input in combo with withValues()
+
     public function testWithInputBlock()
     {
         $f = $this->getTestForm()->withInputBlock('test');
