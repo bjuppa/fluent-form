@@ -1,6 +1,7 @@
 <?php
-namespace FewAgency\FluentForm\FormInput;
+namespace FewAgency\FluentForm;
 
+use FewAgency\FluentForm\FormInput\InputElement;
 use FewAgency\FluentForm\Support\FormElementTrait;
 use FewAgency\FluentHtml\FluentHtmlElement;
 use FewAgency\FluentForm\Support\FormElementContract;

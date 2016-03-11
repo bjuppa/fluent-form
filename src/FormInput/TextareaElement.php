@@ -1,6 +1,7 @@
 <?php
 namespace FewAgency\FluentForm\FormInput;
 
+use FewAgency\FluentForm\AbstractFormControl;
 use FewAgency\FluentForm\Support\ReadonlyInputTrait;
 use FewAgency\FluentForm\Support\SingleValueInputTrait;
 

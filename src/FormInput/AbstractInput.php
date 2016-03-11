@@ -23,6 +23,7 @@ namespace FewAgency\FluentForm\FormInput;
 // ColorInputElement
 // RangeInputElement
 
+use FewAgency\FluentForm\AbstractFormControl;
 use FewAgency\FluentForm\Support\ReadonlyInputTrait;
 use FewAgency\FluentForm\Support\SingleValueInputTrait;
 

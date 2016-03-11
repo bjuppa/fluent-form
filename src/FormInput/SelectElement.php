@@ -1,6 +1,8 @@
 <?php
 namespace FewAgency\FluentForm\FormInput;
 
+use FewAgency\FluentForm\AbstractFormControl;
+
 class SelectElement extends AbstractFormControl
 {
     //TODO: use traits for common input functionality for SelectElement
