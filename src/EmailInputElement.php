@@ -1,5 +1,5 @@
 <?php
-namespace FewAgency\FluentForm\FormInput;
+namespace FewAgency\FluentForm;
 
 class EmailInputElement extends TextInputElement
 {

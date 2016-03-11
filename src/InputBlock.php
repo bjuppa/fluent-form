@@ -27,12 +27,12 @@ class InputBlock extends AbstractControlBlock
             if (!$this->getInputElement()) {
                 try {
                     //Look for a type Input class
-                    $classname = 'FormInput\\' . ucfirst($input_type) . 'InputElement';
+                    $classname = ucfirst($input_type) . 'InputElement';
                     $input_element = $this->createInstanceOf($classname, [$this->getInputName()]);
                 } catch (\Exception $e) {
                     try {
                         //Look for a type class
-                        $classname = 'FormInput\\' . ucfirst($input_type) . 'Element';
+                        $classname = ucfirst($input_type) . 'Element';
                         $input_element = $this->createInstanceOf($classname, [$this->getInputName()]);
                     } catch (\Exception $e) {
                         try {
@@ -40,7 +40,7 @@ class InputBlock extends AbstractControlBlock
                             $input_element = $this->createInstanceOf($input_type, [$this->getInputName()]);
                         } catch (\Exception $e) {
                             //Fallback to an input with type attribute set
-                            $input_element = $this->createInstanceOf('FormInput\\TextInputElement',
+                            $input_element = $this->createInstanceOf('TextInputElement',
                                 [$this->getInputName(), $input_type]);
                         }
                     }
