@@ -1,5 +1,5 @@
 <?php
-namespace FewAgency\FluentForm\FormInput;
+namespace FewAgency\FluentForm;
 
 //TODO: subclass these HTML inputs:
 // PasswordInputElement - don't set value
@@ -23,7 +23,6 @@ namespace FewAgency\FluentForm\FormInput;
 // ColorInputElement
 // RangeInputElement
 
-use FewAgency\FluentForm\AbstractFormControl;
 use FewAgency\FluentForm\Support\ReadonlyInputTrait;
 use FewAgency\FluentForm\Support\SingleValueInputTrait;
 
