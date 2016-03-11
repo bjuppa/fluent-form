@@ -1,7 +1,6 @@
 <?php
 namespace FewAgency\FluentForm;
 
-use FewAgency\FluentForm\FormBlock\AbstractControlBlock;
 use FewAgency\FluentForm\FormInput\AbstractFormControl;
 use Illuminate\Contracts\Support\Arrayable;
 

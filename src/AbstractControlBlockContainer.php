@@ -2,7 +2,6 @@
 namespace FewAgency\FluentForm;
 
 use ArrayAccess;
-use FewAgency\FluentForm\FormBlock\AbstractControlBlock;
 use FewAgency\FluentHtml\FluentHtmlElement;
 use FewAgency\FluentForm\Support\FormElementContract;
 use FewAgency\FluentForm\Support\FormElementTrait;
