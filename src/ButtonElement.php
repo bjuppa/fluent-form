@@ -1,7 +1,6 @@
 <?php
-namespace FewAgency\FluentForm\FormInput;
+namespace FewAgency\FluentForm;
 
-use FewAgency\FluentForm\AbstractFormControl;
 use FewAgency\FluentForm\Support\SingleValueInputTrait;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Htmlable;

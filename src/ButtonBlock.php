@@ -1,7 +1,6 @@
 <?php
 namespace FewAgency\FluentForm;
 
-use FewAgency\FluentForm\FormInput\ButtonElement;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Htmlable;
 
@@ -47,7 +46,7 @@ class ButtonBlock extends AbstractControlBlock
      */
     public function containingButton($tag_contents, $type = "submit")
     {
-        $button = $this->createInstanceOf('FormInput\ButtonElement', [$tag_contents, $type]);
+        $button = $this->createInstanceOf('ButtonElement', [$tag_contents, $type]);
         $button->withName(function () {
             return $this->getInputName();
         })->disabled(function () {
