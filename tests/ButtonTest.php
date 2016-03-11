@@ -8,7 +8,7 @@ class ButtonTest extends PHPUnit_Framework_TestCase
     use ComparesFluentHtml;
 
     /**
-     * @return \FewAgency\FluentForm\FormBlock\ButtonBlock
+     * @return \FewAgency\FluentForm\ButtonBlock
      */
     protected function getTestBlock()
     {

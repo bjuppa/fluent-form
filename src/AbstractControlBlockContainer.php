@@ -6,7 +6,6 @@ use FewAgency\FluentForm\FormBlock\AbstractControlBlock;
 use FewAgency\FluentHtml\FluentHtmlElement;
 use FewAgency\FluentForm\Support\FormElementContract;
 use FewAgency\FluentForm\Support\FormElementTrait;
-use FewAgency\FluentForm\FormBlock\ButtonBlock;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\MessageProvider;
 use Illuminate\Support\Collection;
@@ -205,7 +204,7 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
      */
     public function containingButtonBlock($tag_contents, $type = 'submit')
     {
-        $block = $this->createInstanceOf('FormBlock\ButtonBlock', func_get_args());
+        $block = $this->createInstanceOf('ButtonBlock', func_get_args());
         $this->withContent($block);
 
         return $block;

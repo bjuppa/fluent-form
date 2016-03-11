@@ -1,6 +1,7 @@
 <?php
 namespace FewAgency\FluentForm\FormBlock;
 
+use FewAgency\FluentForm\ButtonBlock;
 use FewAgency\FluentForm\DescriptionElement;
 use FewAgency\FluentForm\AbstractLabel;
 use FewAgency\FluentForm\InputBlock;
