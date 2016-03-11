@@ -56,7 +56,7 @@ class FluentFormTest extends PHPUnit_Framework_TestCase
     {
         $block = $this->getTestForm()->containingInputBlock('test');
 
-        $this->assertInstanceOf('FewAgency\FluentForm\FormBlock\InputBlock', $block);
+        $this->assertInstanceOf('FewAgency\FluentForm\InputBlock', $block);
         $this->assertContains('<input name="test" type="text" class="form-block__control"', (string)$block);
         $this->assertContains('<label class="form-block__label"', (string)$block);
     }

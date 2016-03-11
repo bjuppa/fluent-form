@@ -8,7 +8,7 @@ class InputTest extends PHPUnit_Framework_TestCase
     use ComparesFluentHtml;
 
     /**
-     * @return \FewAgency\FluentForm\FormBlock\InputBlock
+     * @return \FewAgency\FluentForm\InputBlock
      */
     protected function getTestBlock()
     {

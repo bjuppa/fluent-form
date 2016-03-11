@@ -6,7 +6,6 @@ use FewAgency\FluentForm\FormBlock\AbstractControlBlock;
 use FewAgency\FluentHtml\FluentHtmlElement;
 use FewAgency\FluentForm\Support\FormElementContract;
 use FewAgency\FluentForm\Support\FormElementTrait;
-use FewAgency\FluentForm\FormBlock\InputBlock;
 use FewAgency\FluentForm\FormBlock\ButtonBlock;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\MessageProvider;
@@ -153,7 +152,7 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
     public function containingInputBlock($name, $type = 'text')
     {
         //TODO: check for $type.'Block' class first - do this through general createBlock($type, ...) & containingBlock($type, ...) methods
-        $block = $this->createInstanceOf('FormBlock\InputBlock', func_get_args());
+        $block = $this->createInstanceOf('InputBlock', func_get_args());
         $this->withContent($block);
         $this->form_block_elements->push($block);
 

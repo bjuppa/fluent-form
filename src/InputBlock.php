@@ -1,9 +1,9 @@
 <?php
-namespace FewAgency\FluentForm\FormBlock;
+namespace FewAgency\FluentForm;
 
+use FewAgency\FluentForm\FormBlock\AbstractControlBlock;
 use FewAgency\FluentForm\FormInput\AbstractFormControl;
 use Illuminate\Contracts\Support\Arrayable;
-use FewAgency\FluentHtml\FluentHtmlElement;
 
 class InputBlock extends AbstractControlBlock
 {
