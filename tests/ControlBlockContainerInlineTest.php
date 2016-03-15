@@ -10,7 +10,7 @@ class ControlBlockContainerInlineTest extends PHPUnit_Framework_TestCase
     public function testInlineForm()
     {
         $form = FluentForm::create()->inline();
-        $form->withInputBlock('test');
+        $form->containingInputBlock('test');
         $form->withErrors(['test' => 'error']);
 
         $this->assertHtmlEquals(
@@ -23,9 +23,9 @@ class ControlBlockContainerInlineTest extends PHPUnit_Framework_TestCase
     {
         $form = FluentForm::create()->inline();
         $form->withErrors(['field' => 'error']);
-        $form->withInputBlock('test');
+        $form->containingInputBlock('test');
         $fieldset = $form->containingFieldset();
-        $fieldset->withInputBlock('field');
+        $fieldset->containingInputBlock('field');
 
         $this->assertContains('<div class="form-block__description" id="field-desc">', (string)$form);
         $this->assertContains('<span', $fieldset->toHtml());

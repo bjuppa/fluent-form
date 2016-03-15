@@ -54,13 +54,6 @@ class FluentFormTest extends PHPUnit_Framework_TestCase
             $f);
     }
 
-    public function testWithInputBlock()
-    {
-        $f = $this->getTestForm()->withInputBlock('test');
-        $this->assertHtmlContentEquals('<div class="form-block"> <div><label class="form-block__label" for="test">Test</label></div> <div> <input name="test" type="text" class="form-block__control" id="test"> </div> </div>',
-            $f);
-    }
-
     public function testContainingInputBlock()
     {
         $block = $this->getTestForm()->containingInputBlock('test');
@@ -72,7 +65,8 @@ class FluentFormTest extends PHPUnit_Framework_TestCase
 
     public function testInputNameDotNotation()
     {
-        $f = $this->getTestForm()->withInputBlock('test.test');
+        $f = $this->getTestForm();
+        $f->containingInputBlock('test.test');
         $this->assertHtmlContentEquals(
             '<div class="form-block"> <div><label class="form-block__label" for="test.test">Test Test</label></div> <div> <input name="test[test]" type="text" class="form-block__control" id="test.test"> </div> </div>',
             $f);
@@ -80,7 +74,8 @@ class FluentFormTest extends PHPUnit_Framework_TestCase
 
     public function testWithTelInput()
     {
-        $f = $this->getTestForm()->withInputBlock('phone', 'tel');
+        $f = $this->getTestForm();
+        $f->containingInputBlock('phone', 'tel');
 
         $this->assertContains('type="tel"', (string)$f);
         $this->assertContains('autocorrect="off"', (string)$f);
@@ -89,7 +84,8 @@ class FluentFormTest extends PHPUnit_Framework_TestCase
 
     public function testWithEmailInput()
     {
-        $f = $this->getTestForm()->withInputBlock('mail', 'email');
+        $f = $this->getTestForm();
+        $f->containingInputBlock('mail', 'email');
 
         $this->assertContains('type="email"', (string)$f);
         $this->assertContains('autocapitalize="off"', (string)$f);

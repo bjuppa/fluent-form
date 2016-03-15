@@ -12,7 +12,7 @@ class FieldsetTest extends PHPUnit_Framework_TestCase
         $form = FluentForm::create();
         $fieldset = $form->containingFieldset();
         $fieldset->withLegend('legend');
-        $fieldset->withInputBlock('test');
+        $fieldset->containingInputBlock('test');
 
         $this->assertContains("<fieldset class=\"form-block-container\">\n<legend>legend</legend>", (string)$form);
     }

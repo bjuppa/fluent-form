@@ -128,18 +128,7 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
 
      */
 
-    /**
-     * Put an input block on the form.
-     * @param string $name
-     * @param string $type
-     * @return $this
-     */
-    public function withInputBlock($name, $type = 'text')
-    {
-        $this->containingInputBlock($name, $type);
 
-        return $this;
-    }
 
     /**
      * Put an input block on the form and return it.
