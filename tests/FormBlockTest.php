@@ -12,7 +12,10 @@ class FormBlockTest extends PHPUnit_Framework_TestCase
      */
     protected function getTestBlock()
     {
-        return FluentForm::create()->containingInputBlock('test');
+        $form = FluentForm::create();
+        $form->idRegistrar(new \FewAgency\FluentHtml\HtmlIdRegistrar());
+
+        return $form->containingInputBlock('test');
     }
 
     public function testGetInputElement()
@@ -74,7 +77,8 @@ class FormBlockTest extends PHPUnit_Framework_TestCase
         $b = $this->getTestBlock()->disabled();
 
         $this->assertContains('<div class="form-block form-block--disabled">', (string)$b);
-        $this->assertContains('<input name="test" type="text" class="form-block__control" id="test13" disabled', (string)$b);
+        $this->assertContains('<input name="test" type="text" class="form-block__control" disabled id="test"',
+            (string)$b);
 
         $b->withHtmlElementName('fieldset');
         $this->assertContains('<fieldset class="form-block form-block--disabled" disabled>', (string)$b);
@@ -84,7 +88,8 @@ class FormBlockTest extends PHPUnit_Framework_TestCase
     {
         $b = $this->getTestBlock()->readonly();
 
-        $this->assertContains('<input name="test" type="text" class="form-block__control" id="test14" readonly', (string)$b);
+        $this->assertContains('<input name="test" type="text" class="form-block__control" readonly id="test"',
+            (string)$b);
     }
 
     public function testRequired()
@@ -92,16 +97,17 @@ class FormBlockTest extends PHPUnit_Framework_TestCase
         $b = $this->getTestBlock()->required();
 
         $this->assertContains('<div class="form-block form-block--required">', (string)$b);
-        $this->assertContains('<input name="test" type="text" class="form-block__control" id="test15" required', (string)$b);
+        $this->assertContains('<input name="test" type="text" class="form-block__control" required id="test"',
+            (string)$b);
     }
 
     public function testWithDescription()
     {
         $b = $this->getTestBlock()->withDescription('custom description');
 
-        $this->assertContains('<input name="test" type="text" class="form-block__control" id="test16" aria-describedby="test16-desc"',
+        $this->assertContains('<input name="test" type="text" aria-describedby="test-desc" class="form-block__control" id="test"',
             (string)$b);
-        $this->assertContains('<div class="form-block__description" id="test16-desc">custom description</div>',
+        $this->assertContains('<div class="form-block__description" id="test-desc">custom description</div>',
             (string)$b);
     }
 

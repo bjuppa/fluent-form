@@ -9,7 +9,7 @@ class LabelElement extends AbstractLabel
     /**
      * @var AbstractFormControl referenced by the label
      */
-    private $for_input_element;
+    private $for_control_element;
 
     /**
      * @param string|Htmlable|array|Arrayable|null $html_contents
@@ -22,15 +22,17 @@ class LabelElement extends AbstractLabel
 
     /**
      * Set the referenced input for this label.
-     * @param AbstractFormControl $input that label should reference
+     * @param AbstractFormControl $control_element that label should reference
      * @return $this
      */
-    public function forInput(AbstractFormControl $input)
+    public function forControl(AbstractFormControl $control_element)
     {
-        $this->for_input_element = $input;
-        $this->withAttribute('for', $this->getInputElement()->getId());
-        $this->withDefaultContent(function () use ($input) {
-            return $input->getLabel();
+        $this->for_control_element = $control_element;
+        $this->withAttribute('for', function () {
+            return $this->getControlElement()->getId();
+        });
+        $this->withDefaultContent(function () use ($control_element) {
+            return $control_element->getLabel();
         });
 
         return $this;
@@ -40,8 +42,8 @@ class LabelElement extends AbstractLabel
      * Get referenced input element.
      * @return AbstractFormControl the input element related to this label
      */
-    public function getInputElement()
+    public function getControlElement()
     {
-        return $this->for_input_element;
+        return $this->for_control_element;
     }
 }

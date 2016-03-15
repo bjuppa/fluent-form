@@ -23,32 +23,8 @@ class InputBlock extends AbstractControlBlock
     {
         $this->withInputName($name);
         parent::__construct();
-        $this->afterInsertion(function () use ($input_type) {
-            if (!$this->getInputElement()) {
-                try {
-                    //Look for a type Input class
-                    $classname = ucfirst($input_type) . 'InputElement';
-                    $input_element = $this->createInstanceOf($classname, [$this->getInputName()]);
-                } catch (\Exception $e) {
-                    try {
-                        //Look for a type class
-                        $classname = ucfirst($input_type) . 'Element';
-                        $input_element = $this->createInstanceOf($classname, [$this->getInputName()]);
-                    } catch (\Exception $e) {
-                        try {
-                            //Look for a full classname
-                            $input_element = $this->createInstanceOf($input_type, [$this->getInputName()]);
-                        } catch (\Exception $e) {
-                            //Fallback to an input with type attribute set
-                            $input_element = $this->createInstanceOf('TextInputElement',
-                                [$this->getInputName(), $input_type]);
-                        }
-                    }
-                }
-                $input_element->withClass($this->form_control_class);
-                $this->withInputElement($input_element);
-            }
-        });
+        $input_element = $this->generateInputElement($input_type);
+        $this->withInputElement($input_element);
     }
 
     /**
@@ -61,6 +37,36 @@ class InputBlock extends AbstractControlBlock
         $this->getInputElement()->withValue($value);
 
         return $this;
+    }
+
+    /**
+     * Generate a new AbstractInput object.
+     * @param string $input_type
+     * @return AbstractInput
+     */
+    protected function generateInputElement($input_type)
+    {
+        try {
+            //Look for a type Input class
+            $classname = ucfirst($input_type) . 'InputElement';
+            $input_element = $this->createInstanceOf($classname, [$this->getInputName()]);
+        } catch (\Exception $e) {
+            try {
+                //Look for a type class
+                $classname = ucfirst($input_type) . 'Element';
+                $input_element = $this->createInstanceOf($classname, [$this->getInputName()]);
+            } catch (\Exception $e) {
+                try {
+                    //Look for a full classname
+                    $input_element = $this->createInstanceOf($input_type, [$this->getInputName()]);
+                } catch (\Exception $e) {
+                    //Fallback to an input with type attribute set
+                    $input_element = $this->createInstanceOf('TextInputElement',
+                        [$this->getInputName(), $input_type]);
+                }
+            }
+        }
+        return $input_element;
     }
 
     /**
@@ -83,18 +89,23 @@ class InputBlock extends AbstractControlBlock
     protected function withInputElement(AbstractFormControl $input_element)
     {
         $this->input_element = $input_element;
+        //Create label
         $this->withLabelElement($this->createInstanceOf('LabelElement'));
-        $this->getLabelElement()->forInput($this->getInputElement());
+        $this->getLabelElement()->forControl($this->getInputElement());
+        //Create description
         $this->getDescriptionElement()->forElement($input_element);
-        $this->getInputElement()->invalid(function () {
-            return $this->hasError();
-        })->disabled(function () {
-            return $this->isDisabled();
-        })->readonly(function () {
-            return $this->isReadonly();
-        })->required(function () {
-            return $this->isRequired();
-        });
+        //Configure input
+        $this->getInputElement()->withClass($this->form_control_class)
+            ->invalid(function () {
+                return $this->hasError();
+            })->disabled(function () {
+                return $this->isDisabled();
+            })->readonly(function () {
+                return $this->isReadonly();
+            })->required(function () {
+                return $this->isRequired();
+            });
+        //Insert input element
         $this->getAlignmentElement(2)->withContent($this->getInputElement());
 
         return $this;

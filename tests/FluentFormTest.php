@@ -12,7 +12,9 @@ class FluentFormTest extends PHPUnit_Framework_TestCase
      */
     protected function getTestForm()
     {
-        return FluentForm::create();
+        $form = FluentForm::create();
+        $form->idRegistrar(new \FewAgency\FluentHtml\HtmlIdRegistrar());
+        return $form;
     }
 
     public function testCreate()
@@ -55,7 +57,7 @@ class FluentFormTest extends PHPUnit_Framework_TestCase
     public function testWithInputBlock()
     {
         $f = $this->getTestForm()->withInputBlock('test');
-        $this->assertHtmlContentEquals('<div class="form-block"> <div><label class="form-block__label" for="test4">Test</label></div> <div> <input name="test" type="text" class="form-block__control" id="test4"> </div> </div>',
+        $this->assertHtmlContentEquals('<div class="form-block"> <div><label class="form-block__label" for="test">Test</label></div> <div> <input name="test" type="text" class="form-block__control" id="test"> </div> </div>',
             $f);
     }
 
@@ -64,7 +66,7 @@ class FluentFormTest extends PHPUnit_Framework_TestCase
         $block = $this->getTestForm()->containingInputBlock('test');
 
         $this->assertInstanceOf('FewAgency\FluentForm\InputBlock', $block);
-        $this->assertContains('<input name="test" type="text" class="form-block__control"', (string)$block);
+        $this->assertContains('<input name="test" type="text" class="form-block__control" id="test"', (string)$block);
         $this->assertContains('<label class="form-block__label"', (string)$block);
     }
 

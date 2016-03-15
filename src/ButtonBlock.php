@@ -18,11 +18,7 @@ class ButtonBlock extends AbstractControlBlock
     public function __construct($button_contents, $button_type = "submit")
     {
         parent::__construct();
-        $this->afterInsertion(function () use ($button_contents, $button_type) {
-            if (!$this->getAlignmentElement(2)->hasContent()) {
-                $this->withButton($button_contents, $button_type);
-            }
-        });
+        $this->containingButton($button_contents, $button_type);
     }
 
     /**

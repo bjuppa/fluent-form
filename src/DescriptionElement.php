@@ -29,9 +29,8 @@ class DescriptionElement extends AbstractLabel
     public function forElement(FluentHtmlElement $element)
     {
         $this->for_element = $element;
-        $description_element_id = $this->getId($element->getId() . '-desc');
-        $element->withAttribute('aria-describedby', function () use ($description_element_id) {
-            return $this->willRenderInHtml() ? $description_element_id : null;
+        $element->withAttribute('aria-describedby', function () {
+            return $this->willRenderInHtml() ? $this->getId() : null;
         });
 
         return $this;
@@ -45,4 +44,29 @@ class DescriptionElement extends AbstractLabel
     {
         return $this->for_element;
     }
+
+    /**
+     * Get the element's id string if set, or generate a new id.
+     * @param null $desired_id
+     * @return string
+     */
+    public function getId($desired_id = null)
+    {
+        return parent::getId($desired_id ?: ($this->getDescribedElement() ? $this->getDescribedElement()->getId() . '-' : '') . 'desc');
+    }
+
+    /**
+     * Render element as html string.
+     *
+     * @return string containing rendered html of this element and all its descendants
+     */
+    public function toHtml()
+    {
+        // Description elements should always print with an id for referencing
+        $this->getId();
+
+        return parent::toHtml();
+    }
+
+
 }
