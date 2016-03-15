@@ -8,7 +8,6 @@ use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Collection;
 
-
 abstract class AbstractControlBlock extends FluentHtmlElement implements FormElementContract
 {
     use FormElementTrait;
@@ -24,7 +23,7 @@ abstract class AbstractControlBlock extends FluentHtmlElement implements FormEle
     private $label_element;
 
     /**
-     * @var FluentHtmlElement
+     * @var DescriptionElement
      */
     private $description_element;
 
@@ -261,7 +260,7 @@ abstract class AbstractControlBlock extends FluentHtmlElement implements FormEle
         return $this->is_description_element_pulled;
     }
 
-    //TODO: create a general followedByBlock($type, ...) method that generates a block through the container and inserts them after themselves
+    //TODO: create a general followedByBlock($type, ...) method that generates a block through the container and inserts after itself using followedBy()
     //TODO: all followedBy...Block() methods should call followedByBlock()
 
     /**
@@ -530,8 +529,6 @@ abstract class AbstractControlBlock extends FluentHtmlElement implements FormEle
     ->withFeedback(html) - should this be in twbs-form only?
 
     ->getAlignmentClasses(column number, bool with_offset=false)
-
-    ->followedBy…Block()
      */
 
 }
