@@ -1,14 +1,13 @@
 <?php
 namespace FewAgency\FluentForm;
 
-use FewAgency\FluentHtml\FluentHtmlElement;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Htmlable;
 
 class FieldsetElement extends AbstractControlBlockContainer
 {
     /**
-     * @var FluentHtmlElement
+     * @var LegendElement
      */
     private $legend_element;
 
@@ -35,11 +34,11 @@ class FieldsetElement extends AbstractControlBlockContainer
 
     /**
      * Get the legend element of this fieldset.
-     * @return FluentHtmlElement
+     * @return LegendElement
      */
     private function getLegendElement()
     {
-        if (!$this->legend_element) {
+        if (empty($this->legend_element)) {
             $this->legend_element = $this->createInstanceOf('LegendElement');
         }
 
