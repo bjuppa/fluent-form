@@ -129,7 +129,6 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
      */
 
 
-
     /**
      * Put an input block on the form and return it.
      * @param string $name
@@ -146,20 +145,7 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
         return $block;
     }
 
-    //TODO: don't do with...Block methods at all - let user call $form->containing...Block()->followedBy...Block() etc
     //TODO: all containing...Block methods should call containingBlock()
-
-    /**
-     * Put a password block on the form.
-     * @param string $name defaults to 'password'
-     * @return $this
-     */
-    public function withPasswordBlock($name = 'password')
-    {
-        $this->containingPasswordBlock($name);
-
-        return $this;
-    }
 
     /**
      * Put a password block on the form and return it.
@@ -169,19 +155,6 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
     public function containingPasswordBlock($name = 'password')
     {
         return $this->containingInputBlock($name, 'password');
-    }
-
-    /**
-     * Put a button block on the form.
-     * @param string|Htmlable|array|Arrayable $tag_contents
-     * @param string $type
-     * @return $this
-     */
-    public function withButtonBlock($tag_contents, $type = 'submit')
-    {
-        $this->containingButtonBlock($tag_contents, $type);
-
-        return $this;
     }
 
     /**
