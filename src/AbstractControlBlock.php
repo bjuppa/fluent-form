@@ -260,39 +260,36 @@ abstract class AbstractControlBlock extends FluentHtmlElement implements FormEle
         return $this->is_description_element_pulled;
     }
 
-    //TODO: create a general followedByBlock($type, ...) method that generates a block through the container and inserts after itself using followedBy()
-    //TODO: all followedBy...Block() methods should call followedByBlock()
-
     /**
-     * Put an input block after this block.
+     * Put an input block after this block and return it.
      * @param $name
      * @param string $type
      * @return InputBlock
      */
     public function followedByInputBlock($name, $type = 'text')
     {
-        return $this->getFormBlockContainer()->containingInputBlock($name, $type);
+        return $this->followedByBlock($type, compact('name'));
     }
 
     /**
-     * Put a password block after this block.
-     * @param string $name
+     * Put a password block after this block and return it.
+     * @param string $name defaults to 'password'
      * @return InputBlock
      */
     public function followedByPasswordBlock($name = 'password')
     {
-        return $this->getFormBlockContainer()->containingPasswordBlock($name);
+        return $this->followedByInputBlock($name, 'password');
     }
 
     /**
-     * Put a button block after this block.
+     * Put a button block after this block and return it.
      * @param string|Htmlable|array|Arrayable $tag_contents
      * @param string $type
      * @return ButtonBlock
      */
     public function followedByButtonBlock($tag_contents, $type = 'submit')
     {
-        return $this->getFormBlockContainer()->containingButtonBlock($tag_contents, $type);
+        return $this->followedByBlock('Button', func_get_args());
     }
 
     //TODO: create followedByFieldset() on AbstractControlBlock
@@ -523,6 +520,17 @@ abstract class AbstractControlBlock extends FluentHtmlElement implements FormEle
         } else {
             return null;
         }
+    }
+
+    /**
+     * Put a new control-block after this block and return it.
+     * @param string $type
+     * @param array $parameters
+     * @return AbstractControlBlock
+     */
+    protected function followedByBlock($type, $parameters = [])
+    {
+        return $this->followedBy($this->getFormBlockContainer()->createControlBlock($type, $parameters));
     }
 
     /* TODO: implement alignment

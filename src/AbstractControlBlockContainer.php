@@ -349,7 +349,7 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
      * @param array $parameters
      * @return AbstractControlBlock
      */
-    protected function createControlBlock($type, $parameters = [])
+    public function createControlBlock($type, $parameters = [])
     {
         try {
             $block = $this->createInstanceOf($type . 'Block', $parameters);
@@ -375,11 +375,8 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
     }
 
     /**
-     * Take a multidimensional array of contents and flattens it.
-     * Also make sure FluentHtmlElement objects are cloned and have their parent set to the current object.
-     *
-     * @param string|Htmlable|FluentHtmlElement|array|Arrayable $html_contents,...
-     * @return Collection of contents that are ok to insert into a FluentHtmlElement element
+     * Overridden to make sure any inserted control blocks are registered with this container
+     * @inheritdoc
      */
     protected function prepareContentsForInsertion($html_contents)
     {
