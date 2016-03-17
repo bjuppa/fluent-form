@@ -72,6 +72,23 @@ class FormBlockTest extends PHPUnit_Framework_TestCase
         $this->assertContains('<input name="follow" ', (string)$b);
     }
 
+    public function testFollowedByChainedInputBlocks()
+    {
+        $b = $this->getTestBlock()->followedByInputBlock('A')->followedByInputBlock('B');
+
+        $this->assertContains('<input name="test" ', (string)$b);
+        $this->assertContains('<input name="A" ', (string)$b);
+        $this->assertContains('<input name="B" ', (string)$b);
+    }
+
+    public function testFollowedByFieldset()
+    {
+        $fieldset = $this->getTestBlock()->followedByFieldset()->containingInputBlock('f');
+
+        $this->assertContains('<fieldset', (string)$fieldset);
+        $this->assertContains('<input name="f"', (string)$fieldset);
+    }
+
     public function testDisabled()
     {
         $b = $this->getTestBlock()->disabled();

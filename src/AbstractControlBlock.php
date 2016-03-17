@@ -292,7 +292,17 @@ abstract class AbstractControlBlock extends FluentHtmlElement implements FormEle
         return $this->followedByBlock('Button', func_get_args());
     }
 
-    //TODO: create followedByFieldset() on AbstractControlBlock
+    /**
+     * Put a new fieldset form block container after this block and return it.
+     * @return FieldsetElement
+     */
+    public function followedByFieldset()
+    {
+        $fieldset = $this->createInstanceOf('FieldsetElement');
+        $this->followedBy($fieldset);
+
+        return $fieldset;
+    }
 
     /**
      * Make the input(s) in the block disabled.
@@ -530,7 +540,10 @@ abstract class AbstractControlBlock extends FluentHtmlElement implements FormEle
      */
     protected function followedByBlock($type, $parameters = [])
     {
-        return $this->followedBy($this->getFormBlockContainer()->createControlBlock($type, $parameters));
+        $block = $this->getFormBlockContainer()->createControlBlock($type, $parameters);
+        $this->followedBy($block);
+
+        return $block;
     }
 
     /* TODO: implement alignment

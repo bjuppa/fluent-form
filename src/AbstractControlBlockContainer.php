@@ -168,7 +168,6 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
     {
         $fieldset = $this->createInstanceOf('FieldsetElement');
         $this->withContent($fieldset);
-        $this->form_block_container_elements->push($fieldset);
 
         return $fieldset;
     }
@@ -375,7 +374,7 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
     }
 
     /**
-     * Overridden to make sure any inserted control blocks are registered with this container
+     * Overridden to make sure any inserted control blocks and sub-containers are registered with this container
      * @inheritdoc
      */
     protected function prepareContentsForInsertion($html_contents)
@@ -383,6 +382,8 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
         return parent::prepareContentsForInsertion($html_contents)->each(function ($item) {
             if ($item instanceof AbstractControlBlock) {
                 $this->form_block_elements->push($item);
+            } elseif ($item instanceof AbstractControlBlockContainer) {
+                $this->form_block_container_elements->push($item);
             }
         });
     }
