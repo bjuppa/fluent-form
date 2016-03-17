@@ -525,8 +525,7 @@ abstract class AbstractControlBlock extends FluentHtmlElement implements FormEle
         }
     }
 
-    /* TODO: implement these methods on AbstractControlBlock:
-    ->withFeedback(html) - should this be in twbs-form only?
+    /* TODO: implement alignment
 
     ->getAlignmentClasses(column number, bool with_offset=false)
      */

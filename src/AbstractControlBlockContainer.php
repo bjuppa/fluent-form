@@ -119,7 +119,7 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
         return $this;
     }
 
-    /* TODO: implement these methods on AbstractControlBlockContainer
+    /* TODO: implement alignment on AbstractControlBlockContainer
 
 ->withAlignmentClasses(col 1, col 2, col 3, offset 2, offset 3=null)
 ->getAlignmentClasses(column number, bool with_offset=false)
@@ -127,7 +127,6 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
 ->isAligned()
 
      */
-
 
     /**
      * Put an input block on the form and return it.
@@ -137,15 +136,8 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
      */
     public function containingInputBlock($name, $type = 'text')
     {
-        //TODO: check for $type.'Block' class first - do this through general createBlock($type, ...) & containingBlock($type, ...) methods
-        $block = $this->createInstanceOf('InputBlock', func_get_args());
-        $this->withContent($block);
-        $this->form_block_elements->push($block);
-
-        return $block;
+        return $this->containingBlock($type, compact('name'));
     }
-
-    //TODO: all containing...Block methods should call containingBlock()
 
     /**
      * Put a password block on the form and return it.
@@ -165,10 +157,7 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
      */
     public function containingButtonBlock($tag_contents, $type = 'submit')
     {
-        $block = $this->createInstanceOf('ButtonBlock', func_get_args());
-        $this->withContent($block);
-
-        return $block;
+        return $this->containingBlock('Button', func_get_args());
     }
 
     /**
@@ -353,4 +342,53 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
             return $container->pullSubBlocksDescriptionElements();
         }));
     }
+
+    /**
+     * Generate a new control-block.
+     * @param string $type
+     * @param array $parameters
+     * @return AbstractControlBlock
+     */
+    protected function createControlBlock($type, $parameters = [])
+    {
+        try {
+            $block = $this->createInstanceOf($type . 'Block', $parameters);
+        } catch (\Exception $e) {
+            $block = $this->createInstanceOf('InputBlock', array_merge($parameters, [$type]));
+        }
+
+        return $block;
+    }
+
+    /**
+     * Put a new control-block on the form and return it.
+     * @param string $type
+     * @param array $parameters
+     * @return AbstractControlBlock
+     */
+    protected function containingBlock($type, $parameters = [])
+    {
+        $block = $this->createControlBlock($type, $parameters);
+        $this->withContent($block);
+
+        return $block;
+    }
+
+    /**
+     * Take a multidimensional array of contents and flattens it.
+     * Also make sure FluentHtmlElement objects are cloned and have their parent set to the current object.
+     *
+     * @param string|Htmlable|FluentHtmlElement|array|Arrayable $html_contents,...
+     * @return Collection of contents that are ok to insert into a FluentHtmlElement element
+     */
+    protected function prepareContentsForInsertion($html_contents)
+    {
+        return parent::prepareContentsForInsertion($html_contents)->each(function ($item) {
+            if ($item instanceof AbstractControlBlock) {
+                $this->form_block_elements->push($item);
+            }
+        });
+    }
+
+
 }
