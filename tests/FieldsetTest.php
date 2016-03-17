@@ -17,6 +17,14 @@ class FieldsetTest extends PHPUnit_Framework_TestCase
         $this->assertContains("<fieldset class=\"form-block-container\">\n<legend>legend</legend>", (string)$form);
     }
 
+    public function testEmptyLegend() {
+        $form = FluentForm::create();
+        $fieldset = $form->containingFieldset();
+        $fieldset->withLegend(false);
+
+        $this->assertNotContains('legend', (string) $fieldset);
+    }
+
     /**
      * @expectedException     Exception
      */

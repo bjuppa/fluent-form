@@ -27,4 +27,13 @@ class LegendTest extends PHPUnit_Framework_TestCase
         $legend->precededByElement('p', 'A');
     }
 
+    /**
+     * @expectedException     Exception
+     */
+    public function testInsertIntoNonFieldset()
+    {
+        $legend = new \FewAgency\FluentForm\LegendElement();
+
+        \FewAgency\FluentHtml\FluentHtml::create('div', $legend);
+    }
 }
