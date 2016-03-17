@@ -283,11 +283,11 @@ abstract class AbstractControlBlock extends FluentHtmlElement implements FormEle
 
     /**
      * Put a button block after this block and return it.
-     * @param string|Htmlable|array|Arrayable $tag_contents
+     * @param string|Htmlable|array|Arrayable $button_contents
      * @param string $type
      * @return ButtonBlock
      */
-    public function followedByButtonBlock($tag_contents, $type = 'submit')
+    public function followedByButtonBlock($button_contents, $type = 'submit')
     {
         return $this->followedByBlock('Button', func_get_args());
     }

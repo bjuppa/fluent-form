@@ -151,11 +151,11 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
 
     /**
      * Put a button block on the form and return it.
-     * @param string|Htmlable|array|Arrayable $tag_contents
+     * @param string|Htmlable|array|Arrayable $button_contents
      * @param string $type
      * @return ButtonBlock
      */
-    public function containingButtonBlock($tag_contents, $type = 'submit')
+    public function containingButtonBlock($button_contents, $type = 'submit')
     {
         return $this->containingBlock('Button', func_get_args());
     }

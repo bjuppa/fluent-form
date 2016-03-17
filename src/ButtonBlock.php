@@ -23,26 +23,26 @@ class ButtonBlock extends AbstractControlBlock
 
     /**
      * Add a button to the block.
-     * @param string|Htmlable|array|Arrayable $tag_contents
+     * @param string|Htmlable|array|Arrayable $button_contents
      * @param string $type
      * @return $this
      */
-    public function withButton($tag_contents, $type = "submit")
+    public function withButton($button_contents, $type = "submit")
     {
-        $this->containingButton($tag_contents, $type);
+        $this->containingButton($button_contents, $type);
 
         return $this;
     }
 
     /**
      * Adda a button to the block and return the new button element.
-     * @param string|Htmlable|array|Arrayable $tag_contents
+     * @param string|Htmlable|array|Arrayable $button_contents
      * @param string $type
      * @return ButtonElement
      */
-    public function containingButton($tag_contents, $type = "submit")
+    public function containingButton($button_contents, $type = "submit")
     {
-        $button = $this->createInstanceOf('ButtonElement', [$tag_contents, $type]);
+        $button = $this->createInstanceOf('ButtonElement', [$button_contents, $type]);
         $button->withName(function () {
             return $this->getInputName();
         })->disabled(function () {
