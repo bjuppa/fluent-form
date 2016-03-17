@@ -45,5 +45,15 @@ class FieldsetElement extends AbstractControlBlockContainer
         return $this->legend_element;
     }
 
-    //TODO: disable withPrependedContent and startingWithElement because legend should be first item of fieldset
+    public function withPrependedContent($html_contents)
+    {
+        throw new \Exception(__FUNCTION__ . ' disabled because <legend> should be kept the first element of <fieldset>');
+    }
+
+    public function startingWithElement($html_element_name, $tag_contents = [], $tag_attributes = [])
+    {
+        throw new \Exception(__FUNCTION__ . ' disabled because <legend> should be kept the first element of <fieldset>');
+    }
+
+
 }
