@@ -104,6 +104,43 @@ class ControlBlockContainerTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(['Message Fieldset', 'Message Form'], $fieldset->getErrors('test'));
     }
 
+    public function testWithSuccess()
+    {
+        $c = FluentForm::create();
+
+        $c->withSuccess(
+            'test',
+            'before',
+            function () {
+                return [
+                    'true' => true,
+                    'false' => false,
+                ];
+            },
+            [
+                'closure.true' => function () {
+                    return true;
+                },
+                'closure.false' => function () {
+                    return false;
+                },
+                'dot' => ['notation' => true],
+                'before' => false,
+                'after' => false,
+            ],
+            'after'
+        );
+
+        $this->assertTrue($c->hasSuccess('true'));
+        $this->assertFalse($c->hasSuccess('before'));
+        $this->assertTrue($c->hasSuccess('true'));
+        $this->assertFalse($c->hasSuccess('false'));
+        $this->assertTrue($c->hasSuccess('closure.true'));
+        $this->assertFalse($c->hasSuccess('closure.false'));
+        $this->assertTrue($c->hasSuccess('dot.notation'));
+        $this->assertTrue($c->hasSuccess('after'));
+    }
+
     public function testWithLabels()
     {
         $form = FluentForm::create();

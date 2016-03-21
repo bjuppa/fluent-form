@@ -47,10 +47,10 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
     private $value_maps;
 
     /**
-     * The labels for inputs in this level of the form.
-     * @var Collection of labels keyed by input name
+     * The labels for controls in this level of the form.
+     * @var Collection of labels keyed by control name
      */
-    private $labels;
+    private $control_labels;
 
     /**
      * Error messages for this level of the form.
@@ -63,6 +63,12 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
      * @var MessageBag
      */
     private $warning_messages;
+
+    /**
+     * Success controls in this level of the form.
+     * @var Collection of arrays, objects or other key-boolean implementations, in order of preference
+     */
+    private $success_controls;
 
     /**
      * AbstractControlBlock elements in this container.
@@ -85,11 +91,12 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
     {
         parent::__construct();
         $this->value_maps = new Collection();
-        $this->labels = new Collection();
+        $this->control_labels = new Collection();
         $this->form_block_elements = new Collection();
         $this->form_block_container_elements = new Collection();
         $this->error_messages = new MessageBag();
         $this->warning_messages = new MessageBag();
+        $this->success_controls = new Collection();
         $this->withClass($this->form_block_container_class);
         $this->withClass(function () {
             return $this->isInline() ? $this->form_block_container_inline_class : null;
@@ -102,6 +109,8 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
                     return $this->pullSubBlocksDescriptionElements();
                 }
             }
+
+            return null;
         });
     }
 
@@ -192,7 +201,7 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
     public function getValue($key)
     {
         foreach ($this->value_maps as $map) {
-            $value = $this->getValueFromMap(explode('.', $key), $map);
+            $value = $this->getValueFromMap($key, $this->evaluate($map));
             if (isset($value)) {
                 return $value;
             }
@@ -202,14 +211,21 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
     }
 
     /**
-     * Get a value from a key value map.
-     * @param array $key_parts containing one string for each level
+     * Get a value from a key-value map.
+     * @param array|string $key string in dot-notation or array containing one string for each level
      * @param array|object|ArrayAccess|Arrayable $map key-value implementation
      * @return mixed|null
      */
-    protected static function getValueFromMap($key_parts, $map)
+    protected static function getValueFromMap($key, $map)
     {
+        $key_parts = is_array($key) ? $key : explode('.', $key);
         $original_key_parts = $key_parts;
+        $key = implode('.', $key_parts);
+        //Check the full key for a match
+        if ((is_array($map) or $map instanceof ArrayAccess) and isset($map[$key])) {
+            return $map[$key];
+        }
+        //Check the first part of the key
         $key = array_shift($key_parts);
         $value = null;
         if (is_object($map) and isset($map->$key)) {
@@ -219,6 +235,7 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
         } elseif ($map instanceof Arrayable) {
             return self::getValueFromMap($original_key_parts, $map->toArray());
         }
+        //Dig deeper if there are key parts left
         if (count($key_parts)) {
             return self::getValueFromMap($key_parts, $value);
         }
@@ -234,7 +251,7 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
      */
     public function withLabels($labels)
     {
-        $this->labels = $this->labels->merge($labels);
+        $this->control_labels = $this->control_labels->merge($labels);
 
         return $this;
     }
@@ -246,7 +263,7 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
      */
     public function getLabel($key)
     {
-        return $this->labels->get($key, $this->getLabelFromAncestor($key));
+        return $this->control_labels->get($key, $this->getLabelFromAncestor($key));
     }
 
     /**
@@ -301,6 +318,48 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
     public function getWarnings($key)
     {
         return array_merge($this->warning_messages->get($key), $this->getWarningsFromAncestor($key));
+    }
+
+    /**
+     * Add fields that have success status.
+     * @param string|callable|array|Arrayable $map,...
+     * @return $this
+     */
+    public function withSuccess($map)
+    {
+        if (func_num_args() < 2 and empty($map)) {
+            return $this;
+        }
+        $string_map = [];
+        foreach (func_get_args() as $map) {
+            if (is_string($map)) {
+                $string_map[$map] = true;
+            } elseif (!empty($map)) {
+                $this->withSuccess($string_map);
+                $string_map = [];
+                $this->success_controls->prepend($map);
+            }
+        }
+        $this->withSuccess($string_map);
+
+        return $this;
+    }
+
+    /**
+     * Find out if a field has success state.
+     * @param string $key
+     * @return bool
+     */
+    public function hasSuccess($key)
+    {
+        foreach ($this->success_controls as $map) {
+            $value = $this->getValueFromMap($key, $this->evaluate($map));
+            if (isset($value)) {
+                return (bool)$value;
+            }
+        }
+
+        return false;
     }
 
     /**
