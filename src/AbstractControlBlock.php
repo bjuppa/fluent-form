@@ -51,7 +51,6 @@ abstract class AbstractControlBlock extends FluentHtmlElement implements FormEle
      * @var bool|callable indicating if the block has success state
      */
     private $has_success;
-    //TODO: set collection of success input names on the block container level
 
     /**
      * @var bool|callable indicating if the block's inputs are disabled
@@ -502,7 +501,12 @@ abstract class AbstractControlBlock extends FluentHtmlElement implements FormEle
      */
     public function hasSuccess()
     {
-        return (bool)$this->evaluate($this->has_success);
+        $success = $this->evaluate($this->has_success);
+        if (!isset($success)) {
+            $success = $this->hasSuccessFromAncestor($this->getInputName());
+        }
+
+        return $success;
     }
 
     /**

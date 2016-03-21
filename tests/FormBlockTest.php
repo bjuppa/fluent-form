@@ -199,4 +199,12 @@ class FormBlockTest extends PHPUnit_Framework_TestCase
 
         $this->assertContains('<div class="form-block form-block--success">', (string)$b);
     }
+
+    public function testSuccessFromForm()
+    {
+        $b = $this->getTestBlock();
+        $b->getForm()->withSuccess('test');
+
+        $this->assertContains('<div class="form-block form-block--success">', (string)$b);
+    }
 }

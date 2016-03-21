@@ -141,6 +141,17 @@ class ControlBlockContainerTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($c->hasSuccess('after'));
     }
 
+    public function testWithSuccessFromAncestor() {
+        $form = FluentForm::create();
+        $fieldset = $form->containingFieldset();
+
+        $form->withSuccess('form');
+        $fieldset->withSuccess('fieldset');
+
+        $this->assertTrue($fieldset->hasSuccess('form'));
+        $this->assertTrue($fieldset->hasSuccess('fieldset'));
+    }
+
     public function testWithLabels()
     {
         $form = FluentForm::create();

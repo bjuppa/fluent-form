@@ -359,7 +359,7 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
             }
         }
 
-        return false;
+        return $this->hasSuccessFromAncestor($key);
     }
 
     /**

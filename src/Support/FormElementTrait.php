@@ -81,6 +81,20 @@ trait FormElementTrait
     }
 
     /**
+     * Get success booleans set higher up in the form structure.
+     * @param string $key in dot-notation
+     * @return bool|null
+     */
+    protected function hasSuccessFromAncestor($key)
+    {
+        if ($ancestor = $this->getFormBlockContainer()) {
+            return $ancestor->hasSuccess($key);
+        }
+
+        return null;
+    }
+
+    /**
      * Find out if this element is placed in an inline context.
      * @return bool
      */
