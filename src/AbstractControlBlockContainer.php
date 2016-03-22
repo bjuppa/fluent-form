@@ -68,7 +68,7 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
      * Success controls in this level of the form.
      * @var Collection of arrays, objects or other key-boolean implementations, in order of preference
      */
-    private $success_controls;
+    private $success_maps;
 
     /**
      * AbstractControlBlock elements in this container.
@@ -96,7 +96,7 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
         $this->form_block_container_elements = new Collection();
         $this->error_messages = new MessageBag();
         $this->warning_messages = new MessageBag();
-        $this->success_controls = new Collection();
+        $this->success_maps = new Collection();
         $this->withClass($this->form_block_container_class);
         $this->withClass(function () {
             return $this->isInline() ? $this->form_block_container_inline_class : null;
@@ -200,14 +200,12 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
      */
     public function getValue($key)
     {
-        foreach ($this->value_maps as $map) {
-            $value = $this->getValueFromMap($key, $this->evaluate($map));
-            if (isset($value)) {
-                return $value;
-            }
+        $value = $this->evaluate($this->value_maps)->pluck($key)->first();
+        if (isset($value)) {
+            return $value;
         }
 
-        return $this->getValueFromAncestor($key);
+        return $this->getValueFromAncestor($key);;
     }
 
     /**
@@ -337,7 +335,7 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
             } elseif (!empty($map)) {
                 $this->withSuccess($string_map);
                 $string_map = [];
-                $this->success_controls->prepend($map);
+                $this->success_maps->prepend($map);
             }
         }
         $this->withSuccess($string_map);
@@ -352,7 +350,7 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
      */
     public function hasSuccess($key)
     {
-        foreach ($this->success_controls as $map) {
+        foreach ($this->success_maps as $map) {
             $value = $this->getValueFromMap($key, $this->evaluate($map));
             if (isset($value)) {
                 return (bool)$value;
