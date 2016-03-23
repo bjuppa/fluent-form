@@ -184,12 +184,12 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
 
     /**
      * Set a value container for populating inputs.
-     * @param array|object|Arrayable $map key-value implementation
+     * @param array|object|Arrayable $map,... key-value implementations
      * @return $this
      */
     public function withValues($map)
     {
-        $this->value_maps->prepend($map);
+        $this->value_maps->prependMaps(func_get_args());
 
         return $this;
     }
@@ -204,39 +204,6 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
         return $this->evaluate($this->value_maps)->firstValue($key, function () use ($key) {
             return $this->getValueFromAncestor($key);
         });
-    }
-
-    /**
-     * Get a value from a key-value map.
-     * @param array|string $key string in dot-notation or array containing one string for each level
-     * @param array|object|ArrayAccess|Arrayable $map key-value implementation
-     * @return mixed|null
-     */
-    protected static function getValueFromMap($key, $map)
-    {
-        $key_parts = is_array($key) ? $key : explode('.', $key);
-        $original_key_parts = $key_parts;
-        $key = implode('.', $key_parts);
-        //Check the full key for a match
-        if ((is_array($map) or $map instanceof ArrayAccess) and isset($map[$key])) {
-            return $map[$key];
-        }
-        //Check the first part of the key
-        $key = array_shift($key_parts);
-        $value = null;
-        if (is_object($map) and isset($map->$key)) {
-            $value = $map->$key;
-        } elseif ((is_array($map) or $map instanceof ArrayAccess) and isset($map[$key])) {
-            $value = $map[$key];
-        } elseif ($map instanceof Arrayable) {
-            return self::getValueFromMap($original_key_parts, $map->toArray());
-        }
-        //Dig deeper if there are key parts left
-        if (count($key_parts)) {
-            return self::getValueFromMap($key_parts, $value);
-        }
-
-        return $value;
     }
 
     /**
@@ -317,26 +284,13 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
     }
 
     /**
-     * Add fields that have success status.
-     * @param string|callable|array|Arrayable $map,...
+     * Add control names that have success status.
+     * @param string|callable|array|Arrayable $map,... key-boolean map(s) or string(s) of success form control names
      * @return $this
      */
     public function withSuccess($map)
     {
-        if (func_num_args() < 2 and empty($map)) {
-            return $this;
-        }
-        $string_map = [];
-        foreach (func_get_args() as $map) {
-            if (is_string($map)) {
-                $string_map[$map] = true;
-            } elseif (!empty($map)) {
-                $this->withSuccess($string_map);
-                $string_map = [];
-                $this->success_maps->prepend($map);
-            }
-        }
-        $this->withSuccess($string_map);
+        $this->success_maps->prependMaps(func_get_args());
 
         return $this;
     }

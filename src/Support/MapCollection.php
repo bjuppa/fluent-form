@@ -46,4 +46,35 @@ class MapCollection extends Collection
 
         return isset($value) ? (bool)$value : $value;
     }
+
+    /**
+     * Add key-value maps into this MapCollection.
+     * If a supplied item is not a map but just a string,
+     * it will be added to the collection in a map of string=>true items.
+     * @param array $maps containing key-value maps or strings
+     * @return $this
+     */
+    public function prependMaps($maps)
+    {
+        $string_map = [];
+        foreach ($maps as $map) {
+            if (is_string($map)) {
+                //Collect any strings into a map of string=>true items for insertion later
+                $string_map[$map] = true;
+            } elseif (!empty($map)) {
+                //Put any collected strings into a map on the collection, before the current map is inserted
+                if (!empty($string_map)) {
+                    $this->prepend($string_map);
+                    $string_map = [];
+                }
+                $this->prepend($map);
+            }
+        }
+        //Put any leftover collected strings into a map on the collection
+        if (!empty($string_map)) {
+            $this->prepend($string_map);
+        }
+
+        return $this;
+    }
 }
