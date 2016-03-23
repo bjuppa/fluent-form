@@ -95,7 +95,7 @@ trait FormElementTrait
     }
 
     /**
-     * Get disabled booleans set higher up in the form structure.
+     * Get disabled-booleans set higher up in the form structure.
      * @param string $key in dot-notation
      * @return bool|null
      */
@@ -103,6 +103,34 @@ trait FormElementTrait
     {
         if ($ancestor = $this->getFormBlockContainer()) {
             return $ancestor->isDisabled($key);
+        }
+
+        return null;
+    }
+
+    /**
+     * Get readonly-booleans set higher up in the form structure.
+     * @param string $key in dot-notation
+     * @return bool|null
+     */
+    protected function isReadonlyFromAncestor($key)
+    {
+        if ($ancestor = $this->getFormBlockContainer()) {
+            return $ancestor->isReadonly($key);
+        }
+
+        return null;
+    }
+
+    /**
+     * Get required-booleans set higher up in the form structure.
+     * @param string $key in dot-notation
+     * @return bool|null
+     */
+    protected function isRequiredFromAncestor($key)
+    {
+        if ($ancestor = $this->getFormBlockContainer()) {
+            return $ancestor->isRequired($key);
         }
 
         return null;

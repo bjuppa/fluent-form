@@ -183,4 +183,33 @@ class ControlBlockContainerTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($fieldset->isDisabled('form'));
     }
 
+    public function testWithReadonly()
+    {
+        $form = FluentForm::create();
+        $fieldset = $form->containingFieldset();
+
+        $form->withReadonly('form');
+
+        $this->assertTrue($fieldset->isReadonly('form'));
+
+        $fieldset->withReadonly(['fieldset' => true, 'form' => false]);
+
+        $this->assertTrue($fieldset->isReadonly('fieldset'));
+        $this->assertFalse($fieldset->isReadonly('form'));
+    }
+
+    public function testWithRequired()
+    {
+        $form = FluentForm::create();
+        $fieldset = $form->containingFieldset();
+
+        $form->withRequired('form');
+
+        $this->assertTrue($fieldset->isRequired('form'));
+
+        $fieldset->withRequired(['fieldset' => true, 'form' => false]);
+
+        $this->assertTrue($fieldset->isRequired('fieldset'));
+        $this->assertFalse($fieldset->isRequired('form'));
+    }
 }

@@ -61,13 +61,11 @@ abstract class AbstractControlBlock extends FluentHtmlElement implements FormEle
      * @var bool|callable indicating if the block's inputs are readonly
      */
     private $is_readonly;
-    //TODO: set collection of readonly input names on the block container level
 
     /**
      * @var bool|callable indicating if the block's inputs are required
      */
     private $is_required;
-    //TODO: set collection of required input names on the block container level
 
     /**
      * @var string css class name to put on all form blocks
@@ -346,7 +344,12 @@ abstract class AbstractControlBlock extends FluentHtmlElement implements FormEle
      */
     public function isReadonly()
     {
-        return (bool)$this->evaluate($this->is_readonly);
+        $readonly = $this->evaluate($this->is_readonly);
+        if (!isset($readonly)) {
+            $readonly = $this->isReadonlyFromAncestor($this->getInputName());
+        }
+
+        return (bool)$readonly;
     }
 
     /**
@@ -367,7 +370,12 @@ abstract class AbstractControlBlock extends FluentHtmlElement implements FormEle
      */
     public function isRequired()
     {
-        return (bool)$this->evaluate($this->is_required);
+        $required = $this->evaluate($this->is_required);
+        if (!isset($required)) {
+            $required = $this->isRequiredFromAncestor($this->getInputName());
+        }
+
+        return (bool)$required;
     }
 
     /**

@@ -77,6 +77,18 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
     private $disabled_maps;
 
     /**
+     * Readonly controls in this level of the form.
+     * @var MapCollection
+     */
+    private $readonly_maps;
+
+    /**
+     * Required controls in this level of the form.
+     * @var MapCollection
+     */
+    private $required_maps;
+
+    /**
      * AbstractControlBlock elements in this container.
      * @var Collection
      */
@@ -104,6 +116,8 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
         $this->warning_messages = new MessageBag();
         $this->success_maps = new MapCollection();
         $this->disabled_maps = new MapCollection();
+        $this->readonly_maps = new MapCollection();
+        $this->required_maps = new MapCollection();
         $this->withClass($this->form_block_container_class);
         $this->withClass(function () {
             return $this->isInline() ? $this->form_block_container_inline_class : null;
@@ -336,6 +350,54 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
     {
         return $this->evaluate($this->disabled_maps)->firstBoolean($key, function () use ($key) {
             return $this->isDisabledFromAncestor($key);
+        });
+    }
+
+    /**
+     * Add control names that are readonly.
+     * @param string|callable|array|Arrayable $map,... key-boolean map(s) or string(s) of readonly form control names
+     * @return $this
+     */
+    public function withReadonly($map)
+    {
+        $this->readonly_maps->prependMaps(func_get_args());
+
+        return $this;
+    }
+
+    /**
+     * Find out if a control is readonly.
+     * @param string $key
+     * @return bool
+     */
+    public function isReadonly($key)
+    {
+        return $this->evaluate($this->readonly_maps)->firstBoolean($key, function () use ($key) {
+            return $this->isReadonlyFromAncestor($key);
+        });
+    }
+
+    /**
+     * Add control names that are required.
+     * @param string|callable|array|Arrayable $map,... key-boolean map(s) or string(s) of required form control names
+     * @return $this
+     */
+    public function withRequired($map)
+    {
+        $this->required_maps->prependMaps(func_get_args());
+
+        return $this;
+    }
+
+    /**
+     * Find out if a control is required.
+     * @param string $key
+     * @return bool
+     */
+    public function isRequired($key)
+    {
+        return $this->evaluate($this->required_maps)->firstBoolean($key, function () use ($key) {
+            return $this->isRequiredFromAncestor($key);
         });
     }
 

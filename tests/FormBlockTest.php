@@ -113,7 +113,16 @@ class FormBlockTest extends PHPUnit_Framework_TestCase
     {
         $b = $this->getTestBlock()->readonly();
 
-        $this->assertContains('<input name="test" type="text" class="form-block__control" readonly id="test"',
+        $this->assertContains('<input name="test" type="text" class="form-block__control" readonly',
+            (string)$b);
+    }
+
+    public function testReadonlyFromForm()
+    {
+        $b = $this->getTestBlock();
+        $b->getForm()->withReadonly('test');
+
+        $this->assertContains('<input name="test" type="text" class="form-block__control" readonly',
             (string)$b);
     }
 
@@ -122,7 +131,17 @@ class FormBlockTest extends PHPUnit_Framework_TestCase
         $b = $this->getTestBlock()->required();
 
         $this->assertContains('<div class="form-block form-block--required">', (string)$b);
-        $this->assertContains('<input name="test" type="text" class="form-block__control" required id="test"',
+        $this->assertContains('<input name="test" type="text" class="form-block__control" required',
+            (string)$b);
+    }
+
+    public function testRequiredFromForm()
+    {
+        $b = $this->getTestBlock();
+        $b->getForm()->withRequired('test');
+
+        $this->assertContains('<div class="form-block form-block--required">', (string)$b);
+        $this->assertContains('<input name="test" type="text" class="form-block__control" required',
             (string)$b);
     }
 
