@@ -49,9 +49,9 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
 
     /**
      * The labels for controls in this level of the form.
-     * @var Collection of labels keyed by control name
+     * @var MapCollection
      */
-    private $control_labels; //TODO: make labels a MapCollection?
+    private $label_maps;
 
     /**
      * Error messages for this level of the form.
@@ -92,7 +92,7 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
     {
         parent::__construct();
         $this->value_maps = new MapCollection();
-        $this->control_labels = new Collection();
+        $this->label_maps = new MapCollection();
         $this->form_block_elements = new Collection();
         $this->form_block_container_elements = new Collection();
         $this->error_messages = new MessageBag();
@@ -207,14 +207,14 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
     }
 
     /**
-     * Merge in a new array of labels.
+     * Add maps of labels, keyed by control name.
      *
-     * @param  array|Arrayable $labels keyed by fieldname in dot-notation
+     * @param  array|Arrayable $map,...
      * @return $this
      */
-    public function withLabels($labels)
+    public function withLabels($map)
     {
-        $this->control_labels = $this->control_labels->merge($labels);
+        $this->label_maps->prependMaps(func_get_args());
 
         return $this;
     }
@@ -226,7 +226,9 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
      */
     public function getLabel($key)
     {
-        return $this->control_labels->get($key, $this->getLabelFromAncestor($key));
+        return $this->evaluate($this->label_maps)->firstValue($key, function () use ($key) {
+            return $this->getLabelFromAncestor($key);
+        });
     }
 
     /**
