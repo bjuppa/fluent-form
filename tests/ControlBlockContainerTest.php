@@ -168,4 +168,19 @@ class ControlBlockContainerTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('Fieldset Label', $fieldset->getLabel('test'));
     }
 
+    public function testWithDisabled()
+    {
+        $form = FluentForm::create();
+        $fieldset = $form->containingFieldset();
+
+        $form->withDisabled('form');
+
+        $this->assertTrue($fieldset->isDisabled('form'));
+
+        $fieldset->withDisabled(['fieldset' => true, 'form' => false]);
+
+        $this->assertTrue($fieldset->isDisabled('fieldset'));
+        $this->assertFalse($fieldset->isDisabled('form'));
+    }
+
 }

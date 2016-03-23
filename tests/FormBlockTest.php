@@ -101,6 +101,14 @@ class FormBlockTest extends PHPUnit_Framework_TestCase
         $this->assertContains('<fieldset class="form-block form-block--disabled" disabled>', (string)$b);
     }
 
+    public function testDisabledFromForm()
+    {
+        $b = $this->getTestBlock();
+        $b->getForm()->withDisabled('test');
+
+        $this->assertContains('<div class="form-block form-block--disabled">', (string)$b);
+    }
+
     public function testReadonly()
     {
         $b = $this->getTestBlock()->readonly();

@@ -95,6 +95,20 @@ trait FormElementTrait
     }
 
     /**
+     * Get disabled booleans set higher up in the form structure.
+     * @param string $key in dot-notation
+     * @return bool|null
+     */
+    protected function isDisabledFromAncestor($key)
+    {
+        if ($ancestor = $this->getFormBlockContainer()) {
+            return $ancestor->isDisabled($key);
+        }
+
+        return null;
+    }
+
+    /**
      * Find out if this element is placed in an inline context.
      * @return bool
      */

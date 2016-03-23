@@ -1,7 +1,6 @@
 <?php
 namespace FewAgency\FluentForm;
 
-use ArrayAccess;
 use FewAgency\FluentForm\Support\MapCollection;
 use FewAgency\FluentHtml\FluentHtmlElement;
 use FewAgency\FluentForm\Support\FormElementContract;
@@ -72,6 +71,12 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
     private $success_maps;
 
     /**
+     * Disabled controls in this level of the form.
+     * @var MapCollection
+     */
+    private $disabled_maps;
+
+    /**
      * AbstractControlBlock elements in this container.
      * @var Collection
      */
@@ -98,6 +103,7 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
         $this->error_messages = new MessageBag();
         $this->warning_messages = new MessageBag();
         $this->success_maps = new MapCollection();
+        $this->disabled_maps = new MapCollection();
         $this->withClass($this->form_block_container_class);
         $this->withClass(function () {
             return $this->isInline() ? $this->form_block_container_inline_class : null;
@@ -298,7 +304,7 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
     }
 
     /**
-     * Find out if a field has success state.
+     * Find out if a control has success state.
      * @param string $key
      * @return bool
      */
@@ -306,6 +312,30 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
     {
         return $this->evaluate($this->success_maps)->firstBoolean($key, function () use ($key) {
             return $this->hasSuccessFromAncestor($key);
+        });
+    }
+
+    /**
+     * Add control names that are disabled.
+     * @param string|callable|array|Arrayable $map,... key-boolean map(s) or string(s) of disabled form control names
+     * @return $this
+     */
+    public function withDisabled($map)
+    {
+        $this->disabled_maps->prependMaps(func_get_args());
+
+        return $this;
+    }
+
+    /**
+     * Find out if a control is disabled.
+     * @param string $key
+     * @return bool
+     */
+    public function isDisabled($key)
+    {
+        return $this->evaluate($this->disabled_maps)->firstBoolean($key, function () use ($key) {
+            return $this->isDisabledFromAncestor($key);
         });
     }
 

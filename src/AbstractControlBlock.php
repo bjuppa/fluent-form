@@ -56,7 +56,6 @@ abstract class AbstractControlBlock extends FluentHtmlElement implements FormEle
      * @var bool|callable indicating if the block's inputs are disabled
      */
     private $is_disabled;
-    //TODO: set collection of disabled input names on the block container level
 
     /**
      * @var bool|callable indicating if the block's inputs are readonly
@@ -321,7 +320,12 @@ abstract class AbstractControlBlock extends FluentHtmlElement implements FormEle
      */
     public function isDisabled()
     {
-        return (bool)$this->evaluate($this->is_disabled);
+        $disabled = $this->evaluate($this->is_disabled);
+        if (!isset($disabled)) {
+            $disabled = $this->isDisabledFromAncestor($this->getInputName());
+        }
+
+        return (bool)$disabled;
     }
 
     /**
@@ -506,7 +510,7 @@ abstract class AbstractControlBlock extends FluentHtmlElement implements FormEle
             $success = $this->hasSuccessFromAncestor($this->getInputName());
         }
 
-        return $success;
+        return (bool)$success;
     }
 
     /**
