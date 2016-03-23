@@ -7,9 +7,19 @@ class ControlBlockContainerInlineTest extends PHPUnit_Framework_TestCase
 {
     use ComparesFluentHtml;
 
+    /**
+     * @return FluentForm
+     */
+    protected function getTestForm()
+    {
+        $form = FluentForm::create();
+        $form->idRegistrar(new \FewAgency\FluentHtml\HtmlIdRegistrar());
+        return $form->inline();
+    }
+
     public function testInlineForm()
     {
-        $form = FluentForm::create()->inline();
+        $form = $this->getTestForm();
         $form->containingInputBlock('test');
         $form->withErrors(['test' => 'error']);
 
@@ -21,7 +31,7 @@ class ControlBlockContainerInlineTest extends PHPUnit_Framework_TestCase
 
     public function testAncestorInline()
     {
-        $form = FluentForm::create()->inline();
+        $form = $this->getTestForm();
         $form->withErrors(['field' => 'error']);
         $form->containingInputBlock('test');
         $fieldset = $form->containingFieldset();

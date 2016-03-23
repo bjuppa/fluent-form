@@ -16,6 +16,7 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
 {
     use FormElementTrait {
         FormElementTrait::isInline as isAncestorInline;
+        FormElementTrait::isAligned as isAncestorAligned;
     }
 
     /**
@@ -33,12 +34,15 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
      */
     protected $form_block_container_inline_class = "form-block-container--inline";
 
-    //TODO: clean up alignment classes!
     protected $is_aligned;
     protected $alignment_classes;
-    protected $alignment_classes_default = [1 => 'half-width float-left align-right', 2 => 'half-width', 3 => ''];
+    protected $alignment_classes_default = [
+        1 => 'form-block__align1',
+        2 => 'form-block__align2',
+        3 => 'form-block__align3',
+    ];
     protected $alignment_offset_classes;
-    protected $alignment_offset_classes_default = [2 => 'half-width half-margin-left', 3 => ''];
+    protected $alignment_offset_classes_default = [2 => 'form-block-container__align2--offset', 3 => ''];
 
     /**
      * The values and selected options for inputs in this level of the form.
@@ -118,10 +122,15 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
         $this->disabled_maps = new MapCollection();
         $this->readonly_maps = new MapCollection();
         $this->required_maps = new MapCollection();
-        $this->withClass($this->form_block_container_class);
-        $this->withClass(function () {
-            return $this->isInline() ? $this->form_block_container_inline_class : null;
-        });
+        $this->withClass([
+            $this->form_block_container_class,
+            $this->form_block_container_aligned_class => function () {
+                return $this->isAligned();
+            },
+            $this->form_block_container_inline_class => function () {
+                return $this->isInline();
+            }
+        ]);
         $this->withContent(function () {
             //This prints blocks' description elements at top of the container under certain conditions
             if ($this->isInline()) {
@@ -148,15 +157,6 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
 
         return $this;
     }
-
-    /* TODO: implement alignment on AbstractControlBlockContainer
-
-->withAlignmentClasses(col 1, col 2, col 3, offset 2, offset 3=null)
-->getAlignmentClasses(column number, bool with_offset=false)
-->align(true)
-->isAligned()
-
-     */
 
     /**
      * Put an input block on the form and return it.
@@ -399,6 +399,56 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
         return $this->evaluate($this->required_maps)->firstBoolean($key, function () use ($key) {
             return $this->isRequiredFromAncestor($key);
         });
+    }
+
+    /* TODO: implement withAlignmentClasses on AbstractControlBlockContainer
+
+->withAlignmentClasses(col 1, col 2, col 3, offset 2, offset 3=null)
+     */
+
+    /**
+     * Get the alignment classes for an alignment element.
+     * @param $number 1: label, 2: input, or 3: description
+     * @param bool $with_offset Switch to include offset classes (if preceding element was left blank)
+     * @return array of class names
+     */
+    public function getAlignmentClasses($number, $with_offset = false)
+    {
+        $classes = (array)($this->alignment_classes[$number] ?: $this->alignment_classes_default[$number]);
+        if ($with_offset) {
+            $classes = array_merge(
+                $classes,
+                (array)($this->alignment_offset_classes[$number] ?: $this->alignment_offset_classes_default[$number])
+            );
+        }
+
+        return $classes;
+    }
+
+    /**
+     * Make control blocks in this container display horizontally aligned.
+     * @param bool|callable $align
+     * @return $this
+     */
+    public function aligned($align = true)
+    {
+        $this->is_aligned = $align;
+
+        return $this;
+    }
+
+    /**
+     * Check if the control blocks in this container are set to display horizontally aligned.
+     * @return bool
+     */
+    public function isAligned()
+    {
+        $aligned = $this->evaluate($this->is_aligned);
+        if (!isset($aligned)) {
+            $aligned = $this->isAncestorAligned();
+        }
+
+        return (bool)$aligned;
     }
 
     /**

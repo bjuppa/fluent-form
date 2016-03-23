@@ -137,6 +137,19 @@ trait FormElementTrait
     }
 
     /**
+     * Find out if this element is placed in a horizontally aligned context.
+     * @return bool
+     */
+    public function isAligned()
+    {
+        if ($ancestor = $this->getFormBlockContainer()) {
+            return $ancestor->isAligned();
+        }
+
+        return false;
+    }
+
+    /**
      * Find out if this element is placed in an inline context.
      * @return bool
      */
