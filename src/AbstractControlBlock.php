@@ -142,13 +142,13 @@ abstract class AbstractControlBlock extends FluentHtmlElement implements FormEle
             })->withContent(function () {
                 return $this->getLabelElement();
             })->withClass(function () {
-                return $this->isAligned() ? $this->getAlignmentClasses(1) : null;
+                return $this->getAlignmentClasses(1);
             }),
             //input holder
             $this->createFluentHtmlElement(function () {
                 return $this->isAligned() || $this->isInline() ? 'span' : 'div';
             })->withClass(function () {
-                return $this->isAligned() ? $this->getAlignmentClasses(2) : null;
+                return $this->getAlignmentClasses(2);
             }),
             //description
             function () {
@@ -232,7 +232,7 @@ abstract class AbstractControlBlock extends FluentHtmlElement implements FormEle
             $this->description_element = $this->createInstanceOf('DescriptionElement')
                 ->withClass($this->form_block_description_class)
                 ->withClass(function () {
-                    return $this->isAligned() ? $this->getAlignmentClasses(3) : null;
+                    return $this->getAlignmentClasses(3);
                 })
                 ->withContent(function () {
                     return $this->generateErrorListElement();
@@ -580,7 +580,7 @@ abstract class AbstractControlBlock extends FluentHtmlElement implements FormEle
     public function getAlignmentClasses($number, $with_offset = false)
     {
         //TODO: remove with_offset as parameter and forward it only if the previous alignment element won't display in html
-        return $this->getFormBlockContainer()->getAlignmentClasses($number, $with_offset);
+        return $this->isAligned() ? $this->getFormBlockContainer()->getAlignmentClasses($number, $with_offset) : [];
     }
 
 }
