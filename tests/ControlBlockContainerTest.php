@@ -56,10 +56,11 @@ class ControlBlockContainerTest extends PHPUnit_Framework_TestCase
     {
         $c = FluentForm::create();
 
-        $c->withValues(['a' => ['b' => 'C']]);
+        $c->withValues(['a' => ['b' => 'C'], 'c.c' => 'D']);
 
         $this->assertEquals('C', $c->getValue('a.b'));
         $this->assertNull($c->getValue('a.c'));
+        $this->assertEquals('D', $c->getValue('c.c'));
     }
 
     public function testGetValueFromAncestor()
@@ -141,7 +142,8 @@ class ControlBlockContainerTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($c->hasSuccess('after'));
     }
 
-    public function testWithSuccessFromAncestor() {
+    public function testWithSuccessFromAncestor()
+    {
         $form = FluentForm::create();
         $fieldset = $form->containingFieldset();
 

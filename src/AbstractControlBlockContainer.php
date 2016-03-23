@@ -2,6 +2,7 @@
 namespace FewAgency\FluentForm;
 
 use ArrayAccess;
+use FewAgency\FluentForm\Support\MapCollection;
 use FewAgency\FluentHtml\FluentHtmlElement;
 use FewAgency\FluentForm\Support\FormElementContract;
 use FewAgency\FluentForm\Support\FormElementTrait;
@@ -42,7 +43,7 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
 
     /**
      * The values and selected options for inputs in this level of the form.
-     * @var Collection of arrays, objects or other key-value implementations, in order of preference
+     * @var MapCollection
      */
     private $value_maps;
 
@@ -50,7 +51,7 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
      * The labels for controls in this level of the form.
      * @var Collection of labels keyed by control name
      */
-    private $control_labels;
+    private $control_labels; //TODO: make labels a MapCollection?
 
     /**
      * Error messages for this level of the form.
@@ -66,7 +67,7 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
 
     /**
      * Success controls in this level of the form.
-     * @var Collection of arrays, objects or other key-boolean implementations, in order of preference
+     * @var MapCollection
      */
     private $success_maps;
 
@@ -90,13 +91,13 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
     public function __construct()
     {
         parent::__construct();
-        $this->value_maps = new Collection();
+        $this->value_maps = new MapCollection();
         $this->control_labels = new Collection();
         $this->form_block_elements = new Collection();
         $this->form_block_container_elements = new Collection();
         $this->error_messages = new MessageBag();
         $this->warning_messages = new MessageBag();
-        $this->success_maps = new Collection();
+        $this->success_maps = new MapCollection();
         $this->withClass($this->form_block_container_class);
         $this->withClass(function () {
             return $this->isInline() ? $this->form_block_container_inline_class : null;
@@ -194,18 +195,15 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
     }
 
     /**
-     * Get an input value or selected option.
+     * Get an input's value or selected option.
      * @param string $key in dot-notation
      * @return mixed|null
      */
     public function getValue($key)
     {
-        $value = $this->evaluate($this->value_maps)->pluck($key)->first();
-        if (isset($value)) {
-            return $value;
-        }
-
-        return $this->getValueFromAncestor($key);;
+        return $this->evaluate($this->value_maps)->firstValue($key, function () use ($key) {
+            return $this->getValueFromAncestor($key);
+        });
     }
 
     /**
@@ -350,14 +348,9 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
      */
     public function hasSuccess($key)
     {
-        foreach ($this->success_maps as $map) {
-            $value = $this->getValueFromMap($key, $this->evaluate($map));
-            if (isset($value)) {
-                return (bool)$value;
-            }
-        }
-
-        return $this->hasSuccessFromAncestor($key);
+        return $this->evaluate($this->success_maps)->firstBoolean($key, function () use ($key) {
+            return $this->hasSuccessFromAncestor($key);
+        });
     }
 
     /**
