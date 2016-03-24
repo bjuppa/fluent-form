@@ -52,12 +52,29 @@ class ControlBlockContainerAlignedTest extends PHPUnit_Framework_TestCase
         $fieldset = $form->containingFieldset();
         $fieldset->containingInputBlock('field');
 
-        $this->assertContains('<fieldset class="form-block-container form-block-container--aligned">', $fieldset->toHtml());
+        $this->assertContains('<fieldset class="form-block-container form-block-container--aligned">',
+            $fieldset->toHtml());
         $this->assertContains('<span class="form-block__align1">', $fieldset->toHtml());
         $this->assertContains('<span class="form-block__align2">', $fieldset->toHtml());
         $this->assertContains(
             '<div class="form-block__description form-block__align3" id="field-desc">',
             $fieldset->toHtml()
         );
+    }
+
+    public function testWithAlignmentClasses()
+    {
+        $form = $this->getTestForm();
+        $form->containingInputBlock('test');
+        $form->withErrors(['test' => 'error']);
+        $fieldset = $form->containingFieldset();
+        $fieldset->containingInputBlock('field');
+        $form->withAlignmentClasses(['a', 'a2'], 'b', 'c', 'b_offset');
+
+        $this->assertContains('<span class="a a2"', (string)$form);
+        $this->assertContains('<span class="b"', (string)$form);
+        $this->assertContains('<div class="form-block__description c"', (string)$form);
+
+        $this->assertContains('<span class="b"', $fieldset->toHtml());
     }
 }

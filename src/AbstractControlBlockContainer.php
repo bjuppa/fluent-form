@@ -401,25 +401,40 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
         });
     }
 
-    /* TODO: implement withAlignmentClasses on AbstractControlBlockContainer
-
-->withAlignmentClasses(col 1, col 2, col 3, offset 2, offset 3=null)
+    /**
+     * Set custom classes for horizontally aligned inputs in this container.
+     * @param string|array $classes1
+     * @param string|array $classes2
+     * @param string|array $classes3
+     * @param string|array $offset_classes2
+     * @param string|array|null $offset_classes3
      */
+    function withAlignmentClasses($classes1, $classes2, $classes3, $offset_classes2, $offset_classes3 = null)
+    {
+        $this->alignment_classes = [1 => $classes1, 2 => $classes2, 3 => $classes3];
+        $this->alignment_offset_classes = [2 => $offset_classes2, 3 => $offset_classes3];
+    }
 
     /**
-     * Get the alignment classes for an alignment element.
+     * Get the classes for an alignment element.
      * @param $number 1: label, 2: input, or 3: description
      * @param bool $with_offset Switch to include offset classes (if preceding element was left blank)
      * @return array of class names
      */
     public function getAlignmentClasses($number, $with_offset = false)
     {
-        $classes = (array)($this->alignment_classes[$number] ?: $this->alignment_classes_default[$number]);
+        if (!empty($this->alignment_classes)) {
+            $alignment_classes = $this->alignment_classes;
+            $alignment_offset_classes = $this->alignment_offset_classes;
+        } elseif ($ancestor = $this->getFormBlockContainer()) {
+            return $ancestor->getAlignmentClasses($number, $with_offset);
+        } else {
+            $alignment_classes = $this->alignment_classes_default;
+            $alignment_offset_classes = $this->alignment_offset_classes_default;
+        }
+        $classes = (array)$alignment_classes[$number];
         if ($with_offset) {
-            $classes = array_merge(
-                $classes,
-                (array)($this->alignment_offset_classes[$number] ?: $this->alignment_offset_classes_default[$number])
-            );
+            $classes = array_merge($classes, (array)$alignment_offset_classes[$number]);
         }
 
         return $classes;
