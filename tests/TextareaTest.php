@@ -22,4 +22,11 @@ class TextareaTest extends PHPUnit_Framework_TestCase
         $this->assertContains('<textarea name="test"', (string)$b);
         $this->assertContains('>A</textarea>', (string)$b);
     }
+
+    function testMultipleValues() {
+        $input = $this->getTestBlock()->getInputElement();
+        $input->withValue(['a','b']);
+
+        $this->assertContains(">\na\nb\n</textarea>", $input->toHtml());
+    }
 }

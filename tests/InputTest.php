@@ -38,4 +38,11 @@ class InputTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($input->isRequired());
         $this->assertContains(' required', (string)$input);
     }
+
+    function testMultipleValues() {
+        $input = $this->getTestBlock()->getInputElement();
+        $input->withValue(['a','b']);
+
+        $this->assertContains('value="a,b', $input->toHtml());
+    }
 }
