@@ -1,6 +1,8 @@
 <?php
 namespace FewAgency\FluentForm;
 
+use FewAgency\FluentForm\Support\FollowedByBlockContainersTrait;
+use FewAgency\FluentForm\Support\FollowedByBlocksTrait;
 use FewAgency\FluentForm\Support\FormElementContract;
 use FewAgency\FluentForm\Support\FormElementTrait;
 use FewAgency\FluentHtml\FluentHtmlElement;
@@ -10,7 +12,7 @@ use Illuminate\Support\Collection;
 
 abstract class AbstractControlBlock extends FluentHtmlElement implements FormElementContract
 {
-    use FormElementTrait;
+    use FormElementTrait, FollowedByBlocksTrait, FollowedByBlockContainersTrait;
 
     /**
      * @var string representing name or key for the main input of this block
@@ -266,50 +268,6 @@ abstract class AbstractControlBlock extends FluentHtmlElement implements FormEle
     }
 
     /**
-     * Put an input block after this block and return it.
-     * @param $name
-     * @param string $type
-     * @return InputBlock
-     */
-    public function followedByInputBlock($name, $type = 'text')
-    {
-        return $this->followedByBlock($type, compact('name'));
-    }
-
-    /**
-     * Put a password block after this block and return it.
-     * @param string $name defaults to 'password'
-     * @return InputBlock
-     */
-    public function followedByPasswordBlock($name = 'password')
-    {
-        return $this->followedByInputBlock($name, 'password');
-    }
-
-    /**
-     * Put a button block after this block and return it.
-     * @param string|Htmlable|array|Arrayable $button_contents
-     * @param string $type
-     * @return ButtonBlock
-     */
-    public function followedByButtonBlock($button_contents, $type = 'submit')
-    {
-        return $this->followedByBlock('Button', func_get_args());
-    }
-
-    /**
-     * Put a new fieldset form block container after this block and return it.
-     * @return FieldsetElement
-     */
-    public function followedByFieldset()
-    {
-        $fieldset = $this->createInstanceOf('FieldsetElement');
-        $this->followedBy($fieldset);
-
-        return $fieldset;
-    }
-
-    /**
      * Make the input(s) in the block disabled.
      * @param bool|callable $disabled
      * @return $this
@@ -557,20 +515,6 @@ abstract class AbstractControlBlock extends FluentHtmlElement implements FormEle
         } else {
             return null;
         }
-    }
-
-    /**
-     * Put a new control-block after this block and return it.
-     * @param string $type
-     * @param array $parameters
-     * @return AbstractControlBlock
-     */
-    protected function followedByBlock($type, $parameters = [])
-    {
-        $block = $this->getFormBlockContainer()->createControlBlock($type, $parameters);
-        $this->followedBy($block);
-
-        return $block;
     }
 
     /**

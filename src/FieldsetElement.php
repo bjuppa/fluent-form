@@ -1,11 +1,14 @@
 <?php
 namespace FewAgency\FluentForm;
 
+use FewAgency\FluentForm\Support\FollowedByBlockContainersTrait;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Htmlable;
 
 class FieldsetElement extends AbstractControlBlockContainer
 {
+    use FollowedByBlockContainersTrait;
+    
     /**
      * @var LegendElement
      */

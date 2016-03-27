@@ -1,11 +1,12 @@
 <?php
 namespace FewAgency\FluentForm;
 
+use FewAgency\FluentForm\Support\ContainingBlockContainersTrait;
+use FewAgency\FluentForm\Support\ContainingBlocksTrait;
 use FewAgency\FluentForm\Support\MapCollection;
 use FewAgency\FluentHtml\FluentHtmlElement;
 use FewAgency\FluentForm\Support\FormElementContract;
 use FewAgency\FluentForm\Support\FormElementTrait;
-use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\MessageProvider;
 use Illuminate\Support\Collection;
 use Illuminate\Contracts\Support\Arrayable;
@@ -18,6 +19,7 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
         FormElementTrait::isInline as isAncestorInline;
         FormElementTrait::isAligned as isAncestorAligned;
     }
+    use ContainingBlocksTrait, ContainingBlockContainersTrait;
 
     /**
      * @var string css classname to put on block containers
@@ -156,50 +158,6 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
         $this->withContent($this->createInstanceOf('HiddenInputElement', [$name, $value]));
 
         return $this;
-    }
-
-    /**
-     * Put an input block on the form and return it.
-     * @param string $name
-     * @param string $type
-     * @return InputBlock
-     */
-    public function containingInputBlock($name, $type = 'text')
-    {
-        return $this->containingBlock($type, compact('name'));
-    }
-
-    /**
-     * Put a password block on the form and return it.
-     * @param string $name defaults to 'password'
-     * @return InputBlock
-     */
-    public function containingPasswordBlock($name = 'password')
-    {
-        return $this->containingInputBlock($name, 'password');
-    }
-
-    /**
-     * Put a button block on the form and return it.
-     * @param string|Htmlable|array|Arrayable $button_contents
-     * @param string $type
-     * @return ButtonBlock
-     */
-    public function containingButtonBlock($button_contents, $type = 'submit')
-    {
-        return $this->containingBlock('Button', func_get_args());
-    }
-
-    /**
-     * Put a new fieldset form block container in this container and return it.
-     * @return FieldsetElement
-     */
-    public function containingFieldset()
-    {
-        $fieldset = $this->createInstanceOf('FieldsetElement');
-        $this->withContent($fieldset);
-
-        return $fieldset;
     }
 
     /**
@@ -518,20 +476,6 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
         } catch (\Exception $e) {
             $block = $this->createInstanceOf('InputBlock', array_merge($parameters, [$type]));
         }
-
-        return $block;
-    }
-
-    /**
-     * Put a new control-block on the form and return it.
-     * @param string $type
-     * @param array $parameters
-     * @return AbstractControlBlock
-     */
-    protected function containingBlock($type, $parameters = [])
-    {
-        $block = $this->createControlBlock($type, $parameters);
-        $this->withContent($block);
 
         return $block;
     }
