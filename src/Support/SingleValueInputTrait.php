@@ -34,4 +34,6 @@ trait SingleValueInputTrait
 
         return $value;
     }
+
+    abstract protected function evaluate($value);
 }

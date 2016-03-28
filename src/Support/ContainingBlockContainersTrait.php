@@ -16,4 +16,6 @@ trait ContainingBlockContainersTrait
 
         return $fieldset;
     }
+
+    abstract protected function createInstanceOf($classname, $parameters = []);
 }
