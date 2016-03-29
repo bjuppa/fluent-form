@@ -1,7 +1,6 @@
 <?php
 namespace FewAgency\FluentForm\Support;
 
-
 trait ReadonlyInputTrait
 {
     /**

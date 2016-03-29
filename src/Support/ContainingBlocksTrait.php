@@ -1,7 +1,6 @@
 <?php
 namespace FewAgency\FluentForm\Support;
 
-
 use FewAgency\FluentForm\AbstractControlBlock;
 use FewAgency\FluentForm\ButtonBlock;
 use FewAgency\FluentForm\InputBlock;
