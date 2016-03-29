@@ -30,6 +30,8 @@ trait FollowedByBlocksTrait
         return $this->followedByInputBlock($name, 'password');
     }
 
+    //TODO: implement followedBySelectBlock()
+
     /**
      * Put a button block after this block and return it.
      * @param string|Htmlable|array|Arrayable $button_contents

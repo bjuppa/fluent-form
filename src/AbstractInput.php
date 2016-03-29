@@ -44,5 +44,4 @@ abstract class AbstractInput extends AbstractFormControl
             return $input->getValue();
         });
     }
-    
 }

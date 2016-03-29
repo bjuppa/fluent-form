@@ -31,6 +31,17 @@ trait ContainingBlocksTrait
     }
 
     /**
+     * Put a select block on the form and return it.
+     * @param string $name
+     * @param mixed $options
+     * @return SelectBlock
+     */
+    public function containingSelectBlock($name, $options = null)
+    {
+        return $this->containingBlock('Select', func_get_args());
+    }
+
+    /**
      * Put a button block on the form and return it.
      * @param string|Htmlable|array|Arrayable $button_contents
      * @param string $type

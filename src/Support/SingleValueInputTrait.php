@@ -4,13 +4,13 @@ namespace FewAgency\FluentForm\Support;
 trait SingleValueInputTrait
 {
     /**
-     * @var string|callable
+     * @var string|callable|mixed
      */
     private $input_value;
 
     /**
      * Set input value.
-     * @param string|callable|null $value
+     * @param string|callable|mixed $value may be arrayish which will usually result in a comma-separated value
      * @return $this
      */
     public function withValue($value)
@@ -22,7 +22,7 @@ trait SingleValueInputTrait
 
     /**
      * Get input value.
-     * @return string|null
+     * @return string|mixed
      */
     public function getValue()
     {

@@ -86,7 +86,7 @@ abstract class AbstractFormControl extends FluentHtmlElement implements FormElem
     /**
      * Set input value.
      *
-     * @param $value string|callable
+     * @param $value string|callable|mixed
      * @return $this
      */
     abstract public function withValue($value);
@@ -94,7 +94,7 @@ abstract class AbstractFormControl extends FluentHtmlElement implements FormElem
     /**
      * Get input value.
      *
-     * @return string
+     * @return string|array
      */
     abstract public function getValue();
 

@@ -100,11 +100,14 @@ class InputBlock extends AbstractControlBlock
                 return $this->hasError();
             })->disabled(function () {
                 return $this->isDisabled();
-            })->readonly(function () {
-                return $this->isReadonly();
             })->required(function () {
                 return $this->isRequired();
             });
+        if(method_exists($this->getInputElement(), 'readonly')) {
+            $this->getInputElement()->readonly(function () {
+                return $this->isReadonly();
+            });
+        }
         //Insert input element
         $this->getAlignmentElement(2)->withContent($this->getInputElement());
 
