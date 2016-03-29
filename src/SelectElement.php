@@ -64,7 +64,7 @@ class SelectElement extends AbstractFormControl implements SelectContract
      */
     public function withOptions($options)
     {
-        foreach (func_get_args() as $options) {
+        foreach (array_filter(func_get_args()) as $options) {
             if (is_string($options)) {
                 $options[$options] = $options;
             }
