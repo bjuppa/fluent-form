@@ -15,18 +15,29 @@ class SelectBlock extends InputBlock implements SelectorControlContract
         $this->withOptions($options);
     }
 
+    /**
+     * @return SelectElement
+     */
+    public function getInputElement()
+    {
+        return parent::getInputElement();
+    }
+
 
     public function withOptions($options)
     {
-        //TODO: send along func_get_args to withOptions
-        $this->getInputElement()->withOptions($options);
+        foreach (func_get_args() as $options) {
+            $this->getInputElement()->withOptions($options);
+        }
 
         return $this;
     }
 
     public function withSelectedOptions($options)
     {
-        $this->getInputElement()->withSelectedOptions($options);
+        foreach (func_get_args() as $options) {
+            $this->getInputElement()->withSelectedOptions($options);
+        }
 
         return $this;
     }
@@ -38,23 +49,27 @@ class SelectBlock extends InputBlock implements SelectorControlContract
 
     public function withDisabledOptions($options)
     {
-        // TODO: Implement withDisabledOptions() method.
+        foreach (func_get_args() as $options) {
+            $this->getInputElement()->withDisabledOptions($options);
+        }
+
         return $this;
     }
 
     public function isOptionDisabled($option)
     {
-        // TODO: Implement isOptionDisabled() method.
+        return $this->getInputElement()->isOptionDisabled($option);
     }
 
     public function multiple($multiple)
     {
-        // TODO: Implement multiple() method.
+        $this->getInputElement()->multiple($multiple);
+
         return $this;
     }
 
     public function isMultiple()
     {
-        // TODO: Implement isMultiple() method.
+        return $this->getInputElement()->isMultiple();
     }
 }
