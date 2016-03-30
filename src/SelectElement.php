@@ -118,7 +118,7 @@ class SelectElement extends AbstractFormControl implements SelectorControlContra
 
     public function isOptionSelected($option)
     {
-        if ($this->getAttribute('multiple')) {
+        if ($this->isMultiple()) {
             return $this->getValue()->contains($option);
         } else {
             return $this->getValue()->last() == $option;
