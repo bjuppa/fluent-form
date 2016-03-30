@@ -1,11 +1,11 @@
 <?php
 namespace FewAgency\FluentForm;
 
-use FewAgency\FluentForm\Support\SelectContract;
+use FewAgency\FluentForm\Support\SelectorControlContract;
 use FewAgency\FluentHtml\HtmlBuilder;
 use Illuminate\Support\Collection;
 
-class SelectElement extends AbstractFormControl implements SelectContract
+class SelectElement extends AbstractFormControl implements SelectorControlContract
 {
     /**
      * @var Collection of contents (options) for select element

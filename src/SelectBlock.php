@@ -1,10 +1,9 @@
 <?php
 namespace FewAgency\FluentForm;
 
-use FewAgency\FluentForm\Support\name;
-use FewAgency\FluentForm\Support\SelectContract;
+use FewAgency\FluentForm\Support\SelectorControlContract;
 
-class SelectBlock extends InputBlock implements SelectContract
+class SelectBlock extends InputBlock implements SelectorControlContract
 {
     /**
      * @param string $name if input

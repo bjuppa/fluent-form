@@ -1,7 +1,7 @@
 <?php
 namespace FewAgency\FluentForm\Support;
 
-interface SelectContract
+interface SelectorControlContract
 {
     /**
      * Add options to select from.
@@ -26,5 +26,5 @@ interface SelectContract
      */
     public function isSelected($option);
     
-    //TODO: add disabled and isDisabled to SelectContract
+    //TODO: add disabled and isDisabled to SelectorControlContract
 }
