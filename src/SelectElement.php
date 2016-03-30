@@ -84,7 +84,7 @@ class SelectElement extends AbstractFormControl implements SelectContract
         $option_elements = new Collection();
         foreach ($this->evaluate($this->options) as $options) {
             foreach ($options as $value => $option) {
-                if (is_array($option) and is_string($value)) {
+                if ($option instanceof Collection and is_string($value)) {
                     $option_elements->push($this->generateOptgroupElement($value, $option));
                 } else {
                     $option_elements->push($this->generateOptionElement($value, $option));
@@ -103,6 +103,16 @@ class SelectElement extends AbstractFormControl implements SelectContract
                 return $this->isSelected($value);
             });
         //TODO: set disabled on options
+    }
+
+    protected function generateOptgroupElement($label, $options)
+    {
+        $optgroup_element = $this->createFluentHtmlElement('optgroup')->withAttribute('label', $label);
+        foreach ($options as $value => $option) {
+            $optgroup_element->withContent($this->generateOptionElement($value, $option));
+        }
+
+        return $optgroup_element;
     }
 
     /**
@@ -126,7 +136,7 @@ class SelectElement extends AbstractFormControl implements SelectContract
     {
         $option = $this->evaluate($option);
 
-        if($this->getAttribute('multiple')) {
+        if ($this->getAttribute('multiple')) {
             return $this->getValue()->contains($option);
         } else {
             return $this->getValue()->last() == $option;

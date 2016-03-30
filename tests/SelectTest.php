@@ -29,7 +29,13 @@ class SelectTest extends PHPUnit_Framework_TestCase
         );
     }
 
-    //TODO: test optgroups
+    function testOptgroup()
+    {
+        $b = $this->getTestBlock();
+        $b->withOptions(['a' => 'A', 'Label' => ['b' => 'B'], 'c' => 'C']);
+
+        $this->assertContains("</option>\n<optgroup label=\"Label\"><option value=\"b\">B</option></optgroup>\n<option", (string)$b);
+    }
 
     //TODO: test disabled options on block
 
