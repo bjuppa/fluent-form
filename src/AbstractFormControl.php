@@ -111,7 +111,7 @@ abstract class AbstractFormControl extends FluentHtmlElement implements FormElem
     /**
      * Make this input disabled.
      * @param bool|callable $disabled
-     * @return InputElement
+     * @return $this
      */
     public function disabled($disabled = true)
     {
@@ -132,7 +132,7 @@ abstract class AbstractFormControl extends FluentHtmlElement implements FormElem
     /**
      * Make this input required.
      * @param bool|callable $required
-     * @return InputElement
+     * @return $this
      */
     public function required($required = true)
     {
@@ -153,7 +153,7 @@ abstract class AbstractFormControl extends FluentHtmlElement implements FormElem
     /**
      * Make this input invalid.
      * @param bool|callable $invalid
-     * @return InputElement
+     * @return $this
      */
     public function invalid($invalid = true)
     {
