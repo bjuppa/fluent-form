@@ -16,13 +16,6 @@ class SelectBlock extends InputBlock implements SelectorControlContract
     }
 
 
-    /**
-     * Add options to select from.
-     * The basic input is an array of $value=>$display_string
-     * More advanced input can have options sub-grouped by $group_title=>$options_array
-     * @param array $options
-     * @return $this
-     */
     public function withOptions($options)
     {
         //TODO: send along func_get_args to withOptions
@@ -31,25 +24,37 @@ class SelectBlock extends InputBlock implements SelectorControlContract
         return $this;
     }
 
-    /**
-     * Make an option selected
-     * @param string $options name to select
-     * @return $this
-     */
-    public function selected($options)
+    public function withSelectedOptions($options)
     {
-        $this->getInputElement()->selected($options);
+        $this->getInputElement()->withSelectedOptions($options);
 
         return $this;
     }
 
-    /**
-     * Check if an option is selected
-     * @param string $option value to check if selected
-     * @return bool
-     */
-    public function isSelected($option)
+    public function isOptionSelected($option)
     {
-        return $this->getInputElement()->isSelected($option);
+        return $this->getInputElement()->isOptionSelected($option);
+    }
+
+    public function withDisabledOptions($options)
+    {
+        // TODO: Implement withDisabledOptions() method.
+        return $this;
+    }
+
+    public function isOptionDisabled($option)
+    {
+        // TODO: Implement isOptionDisabled() method.
+    }
+
+    public function multiple($multiple)
+    {
+        // TODO: Implement multiple() method.
+        return $this;
+    }
+
+    public function isMultiple()
+    {
+        // TODO: Implement isMultiple() method.
     }
 }

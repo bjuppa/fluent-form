@@ -3,6 +3,7 @@ namespace FewAgency\FluentForm;
 
 use FewAgency\FluentForm\Support\SelectorControlContract;
 use FewAgency\FluentHtml\HtmlBuilder;
+use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Collection;
 
 class SelectElement extends AbstractFormControl implements SelectorControlContract
@@ -42,7 +43,7 @@ class SelectElement extends AbstractFormControl implements SelectorControlContra
      */
     public function withValue($value)
     {
-        return $this->selected($value);
+        return $this->withSelectedOptions($value);
     }
 
     /**
@@ -55,13 +56,6 @@ class SelectElement extends AbstractFormControl implements SelectorControlContra
         return $this->evaluate($this->selected_options)->flatten();
     }
 
-    /**
-     * Add options to select from.
-     * The basic input is an array of $value=>$display_string
-     * More advanced input can have options sub-grouped by $group_title=>$options_array
-     * @param array $options,...
-     * @return $this
-     */
     public function withOptions($options)
     {
         foreach (array_filter(func_get_args()) as $options) {
@@ -100,7 +94,7 @@ class SelectElement extends AbstractFormControl implements SelectorControlContra
         return $this->createFluentHtmlElement('option', $content)
             ->withAttribute('value', $value)
             ->withAttribute('selected', function () use ($value) {
-                return $this->isSelected($value);
+                return $this->isOptionSelected($value);
             });
         //TODO: set disabled on options
     }
@@ -115,31 +109,60 @@ class SelectElement extends AbstractFormControl implements SelectorControlContra
         return $optgroup_element;
     }
 
-    /**
-     * Make option(s) selected
-     * @param string|callable $options,... option value to select
-     * @return $this
-     */
-    public function selected($options)
+    public function withSelectedOptions($options)
     {
         $this->selected_options = $this->selected_options->merge(HtmlBuilder::flatten(func_get_args()));
 
         return $this;
     }
 
-    /**
-     * Check if an option is selected
-     * @param string|callable $option name to check
-     * @return bool
-     */
-    public function isSelected($option)
+    public function isOptionSelected($option)
     {
-        $option = $this->evaluate($option);
-
         if ($this->getAttribute('multiple')) {
             return $this->getValue()->contains($option);
         } else {
             return $this->getValue()->last() == $option;
         }
+    }
+
+    /**
+     * Make options disabled.
+     * @param string|callable|array|Arrayable $options,... values to disable
+     * @return $this
+     */
+    public function withDisabledOptions($options)
+    {
+        // TODO: Implement withDisabledOptions() method.
+        return $this;
+    }
+
+    /**
+     * Check if an option is disabled.
+     * @param string $option value to check if disabled
+     * @return bool
+     */
+    public function isOptionDisabled($option)
+    {
+        // TODO: Implement isOptionDisabled() method.
+    }
+
+    /**
+     * Enable selection of multiple items.
+     * @param bool|callable $multiple
+     * @return $this
+     */
+    public function multiple($multiple)
+    {
+        // TODO: Implement multiple() method.
+        return $this;
+    }
+
+    /**
+     * Check if selector allows selection of multiple items.
+     * @return bool
+     */
+    public function isMultiple()
+    {
+        // TODO: Implement isMultiple() method.
     }
 }

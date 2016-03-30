@@ -19,10 +19,10 @@ class SelectTest extends PHPUnit_Framework_TestCase
     {
         $b = $this->getTestBlock();
         $b->withOptions(['a' => 'A', 'b' => 'B']);
-        $b->selected(['a', 'b']);
+        $b->withSelectedOptions(['a', 'b']);
 
-        $this->assertFalse($b->isSelected('a'));
-        $this->assertTrue($b->isSelected('b'));
+        $this->assertFalse($b->isOptionSelected('a'));
+        $this->assertTrue($b->isOptionSelected('b'));
         $this->assertHtmlEquals(
             '<form class="form-block-container" method="POST"> <div class="form-block"> <div> <label class="form-block__label" for="A">A</label> </div> <div> <select name="A" class="form-block__control" id="A"> <option value="a">A</option><option value="b" selected>B</option> </select> </div> </div> </form>',
             $b
