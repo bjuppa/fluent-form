@@ -153,7 +153,8 @@ class SelectElement extends AbstractFormControl implements SelectorControlContra
      */
     public function multiple($multiple)
     {
-        // TODO: Implement multiple() method.
+        $this->withAttribute('multiple', $multiple);
+
         return $this;
     }
 
@@ -163,6 +164,6 @@ class SelectElement extends AbstractFormControl implements SelectorControlContra
      */
     public function isMultiple()
     {
-        // TODO: Implement isMultiple() method.
+        return (bool)$this->getAttribute('multiple');
     }
 }
