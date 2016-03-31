@@ -4,6 +4,7 @@ namespace FewAgency\FluentForm\Support;
 use FewAgency\FluentForm\AbstractControlBlock;
 use FewAgency\FluentForm\ButtonBlock;
 use FewAgency\FluentForm\InputBlock;
+use FewAgency\FluentForm\SelectBlock;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Htmlable;
 
@@ -30,7 +31,16 @@ trait FollowedByBlocksTrait
         return $this->followedByInputBlock($name, 'password');
     }
 
-    //TODO: implement followedBySelectBlock()
+    /**
+     * Put a select block after this block and return it.
+     * @param string $name
+     * @param mixed $options
+     * @return SelectBlock
+     */
+    public function followedBySelectBlock($name, $options = null)
+    {
+        return $this->followedByBlock('Select', func_get_args());
+    }
 
     /**
      * Put a button block after this block and return it.

@@ -4,6 +4,7 @@ namespace FewAgency\FluentForm\Support;
 use FewAgency\FluentForm\AbstractControlBlock;
 use FewAgency\FluentForm\ButtonBlock;
 use FewAgency\FluentForm\InputBlock;
+use FewAgency\FluentForm\SelectBlock;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Htmlable;
 
