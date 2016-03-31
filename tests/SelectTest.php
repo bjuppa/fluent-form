@@ -29,16 +29,35 @@ class SelectTest extends PHPUnit_Framework_TestCase
         );
     }
 
+    //TODO: testSelectedOnContainer
+
     function testOptgroup()
     {
         $b = $this->getTestBlock();
         $b->withOptions(['a' => 'A', 'Label' => ['b' => 'B'], 'c' => 'C']);
 
-        $this->assertContains("</option>\n<optgroup label=\"Label\"><option value=\"b\">B</option></optgroup>\n<option", (string)$b);
+        $this->assertContains("</option>\n<optgroup label=\"Label\"><option value=\"b\">B</option></optgroup>\n<option",
+            (string)$b);
     }
 
-    //TODO: test disabled options on block
+    function testDisabledOptionsOnBlock()
+    {
+        $b = $this->getTestBlock();
+        $b->withOptions(['a' => 'A', 'b' => 'B']);
+        $b->withDisabledOptions('b');
 
-    //TODO: test disabled options on container
+        $this->assertNotContains('<option value="a" disabled>', (string)$b);
+        $this->assertContains('<option value="b" disabled>', (string)$b);
+    }
+
+    function testDisabledOptionsOnContainer()
+    {
+        $b = $this->getTestBlock();
+        $b->withOptions(['a' => 'A', 'b' => 'B']);
+        $b->getFormBlockContainer()->withDisabled('A.b');
+
+        $this->assertNotTrue($b->isOptionDisabled('a'));
+        $this->assertTrue($b->isOptionDisabled('b'));
+    }
 
 }

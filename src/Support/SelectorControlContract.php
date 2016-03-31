@@ -43,13 +43,6 @@ interface SelectorControlContract
     public function isOptionDisabled($option);
 
     /**
-     * Enable selection of multiple items.
-     * @param bool|callable $multiple
-     * @return $this
-     */
-    public function multiple($multiple);
-
-    /**
      * Check if selector allows selection of multiple items.
      * @return bool
      */

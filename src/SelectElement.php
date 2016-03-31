@@ -1,9 +1,9 @@
 <?php
 namespace FewAgency\FluentForm;
 
+use FewAgency\FluentForm\Support\MapCollection;
 use FewAgency\FluentForm\Support\SelectorControlContract;
 use FewAgency\FluentHtml\HtmlBuilder;
-use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Collection;
 
 class SelectElement extends AbstractFormControl implements SelectorControlContract
@@ -18,11 +18,17 @@ class SelectElement extends AbstractFormControl implements SelectorControlContra
      */
     private $selected_options;
 
+    /**
+     * @var MapCollection of disabled option values
+     */
+    private $disabled_options;
+
     public function __construct($name, $options = null)
     {
         parent::__construct();
         $this->options = new Collection();
-        $this->selected_options = new Collection();
+        $this->selected_options = new Collection(); //TODO: make selected_options a MapCollection?
+        $this->disabled_options = new MapCollection();
         $this->withHtmlElementName('select');
         $this->withName($name);
         $this->withOptions($options);
@@ -30,10 +36,6 @@ class SelectElement extends AbstractFormControl implements SelectorControlContra
             return $this->getOptionElements();
         });
     }
-
-    /* TODO: implement methods on SelectElement:
-->multiple(true) appends [] to name attribute if true
-    */
 
     /**
      * Set selected option value.
@@ -53,6 +55,7 @@ class SelectElement extends AbstractFormControl implements SelectorControlContra
      */
     public function getValue()
     {
+        //TODO: make getValue() check in container if not set locally
         return $this->evaluate($this->selected_options)->flatten();
     }
 
@@ -95,8 +98,9 @@ class SelectElement extends AbstractFormControl implements SelectorControlContra
             ->withAttribute('value', $value)
             ->withAttribute('selected', function () use ($value) {
                 return $this->isOptionSelected($value);
+            })->withAttribute('disabled', function () use ($value) {
+                return $this->isOptionDisabled($value);
             });
-        //TODO: set disabled on options
     }
 
     protected function generateOptgroupElement($label, $options)
@@ -125,25 +129,20 @@ class SelectElement extends AbstractFormControl implements SelectorControlContra
         }
     }
 
-    /**
-     * Make options disabled.
-     * @param string|callable|array|Arrayable $options,... values to disable
-     * @return $this
-     */
     public function withDisabledOptions($options)
     {
-        // TODO: Implement withDisabledOptions() method.
+        $this->disabled_options->prependMaps(func_get_args());
+
         return $this;
     }
 
-    /**
-     * Check if an option is disabled.
-     * @param string $option value to check if disabled
-     * @return bool
-     */
     public function isOptionDisabled($option)
     {
-        // TODO: Implement isOptionDisabled() method.
+        return $this->evaluate($this->disabled_options)->firstBoolean($option, function () use ($option) {
+            $option = implode('.', [$this->getName(), $option]);
+
+            return $this->isDisabledFromAncestor($option);
+        });
     }
 
     /**
@@ -158,10 +157,6 @@ class SelectElement extends AbstractFormControl implements SelectorControlContra
         return $this;
     }
 
-    /**
-     * Check if selector allows selection of multiple items.
-     * @return bool
-     */
     public function isMultiple()
     {
         return (bool)$this->getAttribute('multiple');
