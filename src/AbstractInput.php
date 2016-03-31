@@ -5,7 +5,7 @@ namespace FewAgency\FluentForm;
 // done: PasswordInputElement - don't set value
 // SubmitInputElement
 // RadioInputElement
-// CheckboxInputElement
+// done: CheckboxInputElement
 // ButtonInputElement
 // FileInputElement
 
