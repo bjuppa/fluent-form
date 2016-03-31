@@ -2,7 +2,7 @@
 namespace FewAgency\FluentForm;
 
 //TODO: subclass these HTML inputs:
-// PasswordInputElement - don't set value
+// done: PasswordInputElement - don't set value
 // SubmitInputElement
 // RadioInputElement
 // CheckboxInputElement
