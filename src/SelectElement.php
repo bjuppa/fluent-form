@@ -27,7 +27,7 @@ class SelectElement extends AbstractFormControl implements SelectorControlContra
     {
         parent::__construct();
         $this->options = new Collection();
-        $this->selected_options = new Collection(); //TODO: make selected_options a MapCollection?
+        $this->selected_options = new Collection();
         $this->disabled_options = new MapCollection();
         $this->withHtmlElementName('select');
         $this->withName($name);

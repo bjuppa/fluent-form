@@ -60,7 +60,9 @@ abstract class AbstractFormControl extends FluentHtmlElement implements FormElem
             return null;
         }
 
-        //TODO: multiple attribute should add [] to $name
+        if ($this->getAttribute('multiple')) {
+            $name .= '[]';
+        }
 
         return $name;
     }
