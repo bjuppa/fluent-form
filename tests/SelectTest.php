@@ -12,7 +12,10 @@ class SelectTest extends PHPUnit_Framework_TestCase
      */
     protected function getTestBlock()
     {
-        return FluentForm::create()->containingSelectBlock('A');
+        $f = FluentForm::create();
+        $f->idRegistrar(new \FewAgency\FluentHtml\HtmlIdRegistrar());
+
+        return $f->containingSelectBlock('A');
     }
 
     function testSelectBlock()

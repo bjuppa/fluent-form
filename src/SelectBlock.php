@@ -61,7 +61,7 @@ class SelectBlock extends InputBlock implements SelectorControlContract
         return $this->getInputElement()->isOptionDisabled($option);
     }
 
-    public function multiple($multiple)
+    public function multiple($multiple=true)
     {
         $this->getInputElement()->multiple($multiple);
 

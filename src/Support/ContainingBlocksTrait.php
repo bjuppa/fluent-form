@@ -43,6 +43,17 @@ trait ContainingBlocksTrait
     }
 
     /**
+     * Put a multi-select block on the form and return it.
+     * @param string $name
+     * @param mixed $options
+     * @return SelectBlock
+     */
+    public function containingMultiSelectBlock($name, $options = null)
+    {
+        return $this->containingBlock('Select', func_get_args())->multiple();
+    }
+
+    /**
      * Put a button block on the form and return it.
      * @param string|Htmlable|array|Arrayable $button_contents
      * @param string $type

@@ -153,7 +153,7 @@ class SelectElement extends AbstractFormControl implements SelectorControlContra
      * @param bool|callable $multiple
      * @return $this
      */
-    public function multiple($multiple)
+    public function multiple($multiple=true)
     {
         $this->withAttribute('multiple', $multiple);
 

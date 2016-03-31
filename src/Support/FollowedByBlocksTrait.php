@@ -43,6 +43,17 @@ trait FollowedByBlocksTrait
     }
 
     /**
+     * Put a multi-select block after this block and return it.
+     * @param string $name
+     * @param mixed $options
+     * @return SelectBlock
+     */
+    public function followedByMultiSelectBlock($name, $options = null)
+    {
+        return $this->followedByBlock('Select', func_get_args())->multiple();
+    }
+
+    /**
      * Put a button block after this block and return it.
      * @param string|Htmlable|array|Arrayable $button_contents
      * @param string $type
