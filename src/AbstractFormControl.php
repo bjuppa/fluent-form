@@ -60,7 +60,7 @@ abstract class AbstractFormControl extends FluentHtmlElement implements FormElem
             return null;
         }
 
-        if ($this->getAttribute('multiple')) {
+        if ($this->isMultiple()) {
             $name .= '[]';
         }
 
@@ -174,5 +174,14 @@ abstract class AbstractFormControl extends FluentHtmlElement implements FormElem
     public function isInvalid()
     {
         return (bool)$this->evaluate($this->invalid);
+    }
+
+    /**
+     * Check if input should be treated as multiple option, i.e. add [] to name attribute
+     * @return bool
+     */
+    public function isMultiple()
+    {
+        return (bool)$this->getAttribute('multiple');
     }
 }
