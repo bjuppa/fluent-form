@@ -29,7 +29,20 @@ class SelectTest extends PHPUnit_Framework_TestCase
         );
     }
 
-    //TODO: testSelectedOnContainer
+    function testSelectedOptionsOnContainer()
+    {
+        $b = $this->getTestBlock();
+        $b->withOptions(['a' => 'A', 'b' => 'B']);
+        $b->getFormBlockContainer()->withValues(['A' => 'b']);
+
+        $this->assertNotTrue($b->isOptionSelected('a'));
+        $this->assertTrue($b->isOptionSelected('b'));
+
+        $b->withSelectedOptions(null);
+
+        $this->assertFalse($b->isOptionSelected('a'));
+        $this->assertFalse($b->isOptionSelected('b'));
+    }
 
     function testOptgroup()
     {

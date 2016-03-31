@@ -55,7 +55,10 @@ class SelectElement extends AbstractFormControl implements SelectorControlContra
      */
     public function getValue()
     {
-        //TODO: make getValue() check in container if not set locally
+        if ($this->selected_options->isEmpty()) {
+            return new Collection($this->getValueFromAncestor($this->getName()));
+        }
+
         return $this->evaluate($this->selected_options)->flatten();
     }
 
