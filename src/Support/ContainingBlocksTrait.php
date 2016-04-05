@@ -3,6 +3,7 @@ namespace FewAgency\FluentForm\Support;
 
 use FewAgency\FluentForm\AbstractControlBlock;
 use FewAgency\FluentForm\ButtonBlock;
+use FewAgency\FluentForm\CheckboxBlock;
 use FewAgency\FluentForm\InputBlock;
 use FewAgency\FluentForm\SelectBlock;
 use Illuminate\Contracts\Support\Arrayable;
@@ -62,6 +63,16 @@ trait ContainingBlocksTrait
     public function containingButtonBlock($button_contents, $type = 'submit')
     {
         return $this->containingBlock('Button', func_get_args());
+    }
+
+    /**
+     * Put a checkbox block on the form and return it.
+     * @param string $name
+     * @return CheckboxBlock
+     */
+    public function containingCheckboxBlock($name)
+    {
+        return $this->containingBlock('Checkbox', func_get_args());
     }
 
     /**

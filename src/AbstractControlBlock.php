@@ -145,7 +145,7 @@ abstract class AbstractControlBlock extends FluentHtmlElement implements FormEle
                 return $this->getLabelElement();
             })->withClass(function () {
                 return $this->getAlignmentClasses(1);
-            }),
+            })->onlyDisplayedIfHasContent(),
             //input holder
             $this->createFluentHtmlElement(function () {
                 return $this->isAligned() || $this->isInline() ? 'span' : 'div';

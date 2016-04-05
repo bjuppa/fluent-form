@@ -41,7 +41,7 @@ abstract class AbstractCheckableInput extends AbstractFormControl
 
         return $this;
     }
-    
+
     public function unchecked()
     {
         return $this->checked(false);

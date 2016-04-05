@@ -14,7 +14,7 @@ class CheckboxTest extends PHPUnit_Framework_TestCase
      */
     protected function getTestBlock()
     {
-        return FluentForm::create()->containingInputBlock('test', 'checkbox');
+        return FluentForm::create()->containingCheckboxBlock('test');
     }
 
     function testCheckboxInputBlock()
@@ -22,11 +22,30 @@ class CheckboxTest extends PHPUnit_Framework_TestCase
         $b = $this->getTestBlock();
 
         $this->assertContains("<div class=\"form-block\">
-<div><label class=\"form-block__label\" for=\"test\">Test</label></div>
 <div>
-<input name=\"test\" type=\"checkbox\" value=\"1\" class=\"form-block__control\" id=\"test\">
+<label>
+<input name=\"test\" type=\"checkbox\" value=\"1\">
+Test
+</label>
 </div>
 </div>", $b->toHtml());
+    }
+
+    function testWithLabel()
+    {
+        $b = $this->getTestBlock();
+
+        $this->assertContains("Test\n</label>", (string)$b);
+
+        $b->getFormBlockContainer()->withLabels(['test' => 'C']);
+
+        $this->assertNotContains("Test", (string)$b);
+        $this->assertContains('C', (string)$b);
+
+        $b->withLabel('L');
+
+        $this->assertNotContains('C', (string)$b);
+        $this->assertContains('L', (string)$b);
     }
 
     function testCheckedCheckbox()

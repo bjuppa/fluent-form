@@ -35,7 +35,7 @@ class ButtonBlock extends AbstractControlBlock
     }
 
     /**
-     * Adda a button to the block and return the new button element.
+     * Add a button to the block and return the new button element.
      * @param string|Htmlable|array|Arrayable $button_contents
      * @param string $type
      * @return ButtonElement
@@ -58,7 +58,7 @@ class ButtonBlock extends AbstractControlBlock
     }
 
     /**
-     * Get the first set button element in this block.
+     * Get the first added button element in this block.
      * @return ButtonElement
      */
     public function getMainButtonElement()

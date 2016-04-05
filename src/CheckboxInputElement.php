@@ -19,5 +19,4 @@ class CheckboxInputElement extends AbstractCheckableInput
 
         return $this;
     }
-
 }
