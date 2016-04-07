@@ -193,7 +193,7 @@ abstract class AbstractFormControl extends FluentHtmlElement implements FormElem
     {
         $label = $this->createInstanceOf('LabelElement');
 
-        $this->wrappedIn($label);
+        $this->withWrapper($label);
 
         $label->withContent(function (LabelElement $label) {
             return $label->getContentCount() < 3 ? $this->getLabel() : null;

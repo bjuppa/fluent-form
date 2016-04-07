@@ -12,7 +12,7 @@ trait FollowedByBlockContainersTrait
     public function followedByFieldset()
     {
         $fieldset = $this->createInstanceOf('FieldsetElement');
-        $this->followedBy($fieldset);
+        $this->withFollowingSibling($fieldset);
 
         return $fieldset;
     }
