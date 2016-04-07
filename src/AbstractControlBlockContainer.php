@@ -486,7 +486,7 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
      */
     protected function prepareContentsForInsertion($html_contents)
     {
-        return parent::prepareContentsForInsertion($html_contents)->each(function ($item) {
+        return parent::prepareContentsForInsertion(func_get_args())->each(function ($item) {
             if ($item instanceof AbstractControlBlock) {
                 $this->form_block_elements->push($item);
             } elseif ($item instanceof AbstractControlBlockContainer) {
