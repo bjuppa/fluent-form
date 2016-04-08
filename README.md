@@ -41,6 +41,7 @@ You may add [Laravel facades](http://laravel.com/docs/facades) in the `aliases` 
 ```
 
 ## Usage
+TODO: document usage
 
 ## Authors
 I, Björn Nilsved, work at the largest communication agency in southern Sweden.

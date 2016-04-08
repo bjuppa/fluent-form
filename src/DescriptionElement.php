@@ -60,12 +60,12 @@ class DescriptionElement extends AbstractLabel
      *
      * @return string containing rendered html of this element and all its descendants
      */
-    public function toHtml()
+    public function branchToHtml()
     {
         // Description elements should always print with an id for referencing
         $this->getId();
 
-        return parent::toHtml();
+        return parent::branchToHtml();
     }
 
 

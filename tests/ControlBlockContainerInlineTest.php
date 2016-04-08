@@ -38,7 +38,7 @@ class ControlBlockContainerInlineTest extends PHPUnit_Framework_TestCase
         $fieldset->containingInputBlock('field');
 
         $this->assertContains('<div class="form-block__description" id="field-desc">', (string)$form);
-        $this->assertContains('<span', $fieldset->toHtml());
-        $this->assertNotContains('<div', $fieldset->toHtml());
+        $this->assertContains('<span', $fieldset->branchToHtml());
+        $this->assertNotContains('<div', $fieldset->branchToHtml());
     }
 }
