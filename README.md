@@ -42,11 +42,11 @@ You may add [Laravel facades](http://laravel.com/docs/facades) in the `aliases` 
 ```
 
 ## Principles
-`FluentForm`s are built up by [*control blocks*](src/AbstractControlBlock.php),
+A `FluentForm` consists of [*control blocks*](src/AbstractControlBlock.php),
 grouped within [*control block containers*](src/AbstractControlBlockContainer.php).
 The base `FluentForm` element is such a container together with `FieldsetElement`, an example of a nested container.
 `InputBlock` and `CheckboxBlock` are examples of control blocks, each block basically consisting of an input, its label, 
-and any messages or hints describing it.
+and any messages or hints describing that input.
 
 Many properties can be set on the container level, affecting the form controls within that container.
 Properties are first checked on an individual element and if not specified there we check upwards in the html tree,
