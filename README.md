@@ -25,6 +25,7 @@ echo FluentForm::create()
 ```
 
 * [Installation](#installation--configuration)
+* [Principles](#principles)
 * [Usage](#usage)
 * [Authors - FEW Agency](#authors)
 * [License](#license)
@@ -40,8 +41,33 @@ You may add [Laravel facades](http://laravel.com/docs/facades) in the `aliases` 
 'FluentForm'  => FewAgency\FluentForm\Facades\FluentForm::class,
 ```
 
+## Principles
+`FluentForm`s are built up by [*control blocks*](src/AbstractControlBlock.php),
+grouped within [*control block containers*](src/AbstractControlBlockContainer.php).
+The base `FluentForm` element is such a container together with `FieldsetElement`, an example of a nested container.
+`InputBlock` and `CheckboxBlock` are examples of control blocks, each block basically consisting of an input, its label, 
+and any messages or hints describing it.
+
+Many properties can be set on the container level, affecting the form controls within that container.
+Properties are first checked on an individual element and if not specified there we check upwards in the html tree,
+through the form block and its block containers up to the form element itself.
+This makes it easy to set and override properties in sections of a form.
+
+Naming principles are based upon
+[those of the base-package `fewagency/fluent-html`](https://github.com/fewagency/fluent-html#naming-principles).
+Some examples of methods in this package returning a new element relative the current one are
+the `containing...Block()` methods on control block containers, and `followedBy...Block()` methods on control blocks. 
+
 ## Usage
 TODO: document usage
+
+### Start a form
+
+### Add form controls
+
+#### Form control types and options
+
+### Options on containers
 
 ## Authors
 I, Björn Nilsved, work at the largest communication agency in southern Sweden.
