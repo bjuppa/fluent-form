@@ -5,7 +5,7 @@ use FewAgency\FluentForm\FluentForm;
 
 echo "\n";
 
-// Generate a simple search form
+// Generate a simple inline search form
 echo FluentForm::create()
     ->inline()
     ->containingInputBlock('search')

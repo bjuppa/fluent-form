@@ -41,25 +41,6 @@ class FluentForm extends AbstractControlBlockContainer
     }
 
     /**
-     * Check if form has a specified method set.
-     * @param string $method to check for
-     * @return bool
-     */
-    public function hasMethod($method)
-    {
-        return strtoupper($this->form_method) == strtoupper($method);
-    }
-
-    /**
-     * Check if method is GET.
-     * @return bool true if form's method is GET
-     */
-    public function hasMethodGet()
-    {
-        return $this->hasMethod('GET');
-    }
-
-    /**
      * Set a hidden CSRF token input on the form.
      * @param $token string|callable
      * @param string $name optional name for the token input
@@ -86,6 +67,25 @@ class FluentForm extends AbstractControlBlockContainer
         }
 
         return $this;
+    }
+
+    /**
+     * Check if form has a specified method set.
+     * @param string $method to check for
+     * @return bool
+     */
+    public function hasMethod($method)
+    {
+        return strtoupper($this->form_method) == strtoupper($method);
+    }
+
+    /**
+     * Check if method is GET.
+     * @return bool true if form's method is GET
+     */
+    public function hasMethodGet()
+    {
+        return $this->hasMethod('GET');
     }
 
     /**

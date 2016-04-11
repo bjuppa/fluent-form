@@ -248,7 +248,7 @@ abstract class AbstractControlBlock extends FluentHtmlElement implements FormEle
     }
 
     /**
-     * Pull the description out of this form block to place it somewhere else.
+     * Pull the description out of this form block to place it somewhere else in the tree.
      * @return DescriptionElement
      */
     public function pullDescriptionElement()

@@ -3,7 +3,7 @@ An extension to [fluent-html](https://github.com/fewagency/fluent-html)
 for building accessible, well-formated, yet customizable HTML forms.
 
 ```php
-// Generate a simple search form
+// Generate a simple inline search form
 echo FluentForm::create()
     ->inline()
     ->containingInputBlock('search')
@@ -59,15 +59,55 @@ Some examples of methods in this package returning a new element relative the cu
 the `containing...Block()` methods on control block containers, and `followedBy...Block()` methods on control blocks. 
 
 ## Usage
-TODO: document usage
+`FluentForm::create()`
 
-### Start a form
+### Options on a form
+`withAction($url)`
+`withMethod($method, $name = '_method')`
+`withToken($token, $name = '_token')`
+
+Any other desired attributes or behaviour on the form element can be set using
+[`FluentHtml`'s standard methods](https://github.com/fewagency/fluent-html#methods-reference)
+like `withAttribute()` and `withClass()`. 
 
 ### Add form controls
+`containing...Block()` `containingInputBlock($name, $type = 'text')`
+`followedBy...Block()` `followedByInputBlock($name, $type = 'text')`
 
-#### Form control types and options
+#### Common control block options
+`withLabel($html_contents)`
+`withDescription($html_contents)`
+`disabled($disabled = true)`
+`readonly($readonly = true)`
+`required($required = true)`
+`withError($messages)`
+`withWarning($messages)`
+`withSuccess($has_success = true)`
 
-### Options on containers
+#### Control types and options
+`InputBlock`
+`CheckboxBlock`
+`SelectBlock`
+`ButtonBlock`
+
+### Container options
+`withValues($map)`
+`withLabels($map)`
+`withErrors($messages)`
+`withWarnings($messages)`
+`withSuccess($map)`
+`withDisabled($map)`
+`withReadonly($map)`
+`withRequired($map)`
+`withHiddenInput($name, $value = null)`
+
+#### Container layout
+`inline($inline = true)`
+`aligned($align = true)`
+`withAlignmentClasses($classes1, $classes2, $classes3, $offset_classes2, $offset_classes3 = null)`
+
+#### Nested containers
+`containingFieldset()` `followedByFieldset()`
 
 ## Authors
 I, Björn Nilsved, work at the largest communication agency in southern Sweden.
