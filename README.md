@@ -59,27 +59,76 @@ Some examples of methods in this package returning a new element relative the cu
 the `containing...Block()` methods on control block containers, and `followedBy...Block()` methods on control blocks. 
 
 ## Usage
-`FluentForm::create()` is the base for starting a new form.
+`FluentForm::create()` is the base for a new form.
 Depending on where you want the html output you may `echo FluentForm::create();`
 or convert it to `(string)FluentForm::create()`.
+
+Keep in mind most methods accept collections and closures as parameters
+as in any [`fewagency/fluent-html` usage](https://github.com/fewagency/fluent-html#usage).
 
 Within [Blade](http://laravel.com/docs/blade) templates the html will be rendered if placed in echo-tags:
 `{{ FluentForm::create() }}`.
 More info in the
 [Blade documentation of `fewagency/fluent-html`](https://github.com/fewagency/fluent-html#usage-with-blade-templates).
 
-### Options on a form
-`withAction($url)`
-`withMethod($method, $name = '_method')`
-`withToken($token, $name = '_token')`
+### Convenience methods on forms
+`withAction($url)` sets the action attribute of the form.
+
+`withMethod($method, $name = '_method')` changes the method on the form from the default `POST`.
+If the method is not `GET` or `POST` this will help creating form method spoofing using a hidden input,
+which is useful for those `PUT`, `PATCH`, or `DELETE` actions.
+
+`withToken($token, $name = '_token')` adds a hidden token input for your CSRF-protection.
+
+```php
+// Form with options
+echo FluentForm::create()
+    ->withAction('/login')
+    ->withMethod('DELETE')
+    ->withToken('12345');
+```
+
+```html
+<form class="form-block-container" method="POST" action="/login">
+<input name="_method" type="hidden" value="DELETE">
+<input name="_token" type="hidden" value="12345">
+</form>
+```
 
 Any other desired attributes or behaviour on the form element can be set using
 [`FluentHtml`'s standard methods](https://github.com/fewagency/fluent-html#methods-reference)
 like `withAttribute()` and `withClass()`. 
 
 ### Add form controls
-`containing...Block()` `containingInputBlock($name, $type = 'text')`
-`followedBy...Block()` `followedByInputBlock($name, $type = 'text')`
+The first control on a form (or other form block container) is added with one of the `containing...Block()` methods,
+for example `containingInputBlock($name, $type = 'text')`.
+
+Subsequent controls are added using the `followedBy...Block()` methods,
+for example `followedByInputBlock($name, $type = 'text')`.
+
+```php
+// Form with controls
+echo FluentForm::create()
+    ->containingInputBlock('username')
+    ->followedByPasswordBlock();
+```
+
+```html
+<form class="form-block-container" method="POST">
+<div class="form-block">
+<div><label class="form-block__label" for="username2">Username</label></div>
+<div>
+<input name="username" type="text" class="form-block__control" id="username2">
+</div>
+</div>
+<div class="form-block">
+<div><label class="form-block__label" for="password2">Password</label></div>
+<div>
+<input name="password" type="password" class="form-block__control" id="password2">
+</div>
+</div>
+</form>
+```
 
 #### Common control block options
 `withLabel($html_contents)`

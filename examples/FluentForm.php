@@ -25,3 +25,18 @@ echo FluentForm::create()
     ->followedByButtonBlock('Log in!');
 
 echo "\n\n";
+
+// Form with options
+echo FluentForm::create()
+    ->withAction('/login')
+    ->withMethod('DELETE')
+    ->withToken('12345');
+
+echo "\n\n";
+
+// Form with controls
+echo FluentForm::create()
+    ->containingInputBlock('username')
+    ->followedByPasswordBlock();
+
+echo "\n\n";
