@@ -50,7 +50,7 @@ and any messages or hints describing that input.
 
 Many properties can be set on the container level, affecting the form controls within that container.
 Properties are first checked on an individual element and if not specified there we check upwards in the html tree,
-through the form block and its block containers up to the form element itself.
+through the control block and its block containers up to the form element itself.
 This makes it easy to set and override properties in sections of a form.
 
 Naming principles are based upon
@@ -301,7 +301,24 @@ echo FluentForm::create()
 ```
 
 ### Container options
-`withValues($map)`
+On a control block container options can be set that are used as defaults for any form controls within that container.
+
+`withValues($map)` adds key-value maps used for populating input's values and selected options.
+It's even possible to supply a PHP object, which will pull input values from the object's public properties.
+For inputs, these maps are checked in order from the last to the first added until a matching key is found.
+For example you can first set a map of default values, like the currently stored data,
+and then add a map containing the user's last input. 
+
+An example of setting form options in a Laravel Blade view:
+```php
+{{
+FluentForm::create()
+  ->withToken(csrf_token())
+  ->withValues($model, old())
+  ->withErrors($errors)
+}}
+```
+
 `withLabels($map)`
 `withErrors($messages)`
 `withWarnings($messages)`
