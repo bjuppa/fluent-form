@@ -60,22 +60,23 @@ the `containing...Block()` methods on control block containers, and `followedBy.
 
 ## Usage
 `FluentForm::create()` is the base for a new form.
-Depending on where you want the html output you may `echo FluentForm::create();`
-or convert it to `(string)FluentForm::create()`.
 
 Keep in mind most methods accept collections and closures as parameters
 as in any [`fewagency/fluent-html` usage](https://github.com/fewagency/fluent-html#usage).
 
+Depending on where you want the html output you may `echo FluentForm::create();`
+or render it using string conversion `(string)FluentForm::create()`.
+
 Within [Blade](http://laravel.com/docs/blade) templates the html will be rendered if placed in echo-tags:
 `{{ FluentForm::create() }}`.
-More info in the
+Check out the
 [Blade documentation of `fewagency/fluent-html`](https://github.com/fewagency/fluent-html#usage-with-blade-templates).
 
 ### Convenience methods on forms
-`withAction($url)` sets the action attribute of the form.
+`withAction($url)` sets the `action` attribute of the `<form>`.
 
-`withMethod($method, $name = '_method')` changes the method on the form from the default `POST`.
-If the method is not `GET` or `POST` this will help creating form method spoofing using a hidden input,
+`withMethod($method, $name = '_method')` changes the `method` attribute on the `<form>` (default is `POST`).
+If `$method` is not `GET` or `POST` this will help creating form method spoofing using a hidden input,
 which is useful for those `PUT`, `PATCH`, or `DELETE` actions.
 
 `withToken($token, $name = '_token')` adds a hidden token input for your CSRF-protection.
@@ -100,29 +101,32 @@ Any other desired attributes or behaviour on the form element can be set using
 like `withAttribute()` and `withClass()`. 
 
 ### Add form controls
-The first control on a form (or other form block container) is added with one of the `containing...Block()` methods,
+The first control on a form (or other container) is added with one of the `containing...Block()` methods,
 for example `containingInputBlock($name, $type = 'text')`.
+This call will return the new block so you can chain any methods modifying the block directly afterwards.
 
-Subsequent controls are added using the `followedBy...Block()` methods,
+Subsequent controls are added after a block using the `followedBy...Block()` methods,
 for example `followedByInputBlock($name, $type = 'text')`.
 
 ```php
 // Form with controls
 echo FluentForm::create()
-    ->containingInputBlock('username')
-    ->followedByPasswordBlock();
+    ->containingInputBlock('username')->withLabel('Your username')
+    ->followedByPasswordBlock()->withLabel('Your password');
 ```
 
 ```html
 <form class="form-block-container" method="POST">
 <div class="form-block">
-<div><label class="form-block__label" for="username2">Username</label></div>
+<div>
+<label class="form-block__label" for="username2">Your username</label>
+</div>
 <div>
 <input name="username" type="text" class="form-block__control" id="username2">
 </div>
 </div>
 <div class="form-block">
-<div><label class="form-block__label" for="password2">Password</label></div>
+<div><label class="form-block__label" for="password2">Your password</label></div>
 <div>
 <input name="password" type="password" class="form-block__control" id="password2">
 </div>
@@ -131,14 +135,59 @@ echo FluentForm::create()
 ```
 
 #### Common control block options
-`withLabel($html_contents)`
-`withDescription($html_contents)`
-`disabled($disabled = true)`
-`readonly($readonly = true)`
-`required($required = true)`
-`withError($messages)`
-`withWarning($messages)`
-`withSuccess($has_success = true)`
+`withLabel($html_contents)` adds contents to the control block's labeling element.
+If not called, the default label will be based on the input's name.
+
+`withDescription($html_contents)` adds descriptive content related to an input using `aria-describedby`.
+
+```php
+// Element with description
+echo FluentForm::create()
+    ->containingInputBlock('name')->withDescription('Your full name');
+```
+
+```html
+<for class="form-block-container" method="POST">
+<div class="form-block">
+<div><label class="form-block__label" for="name">Name</label></div>
+<div>
+<input name="name" type="text" aria-describedby="name-desc" class="form-block__control" id="name">
+</div>
+<div class="form-block__description" id="name-desc">Your full name</div>
+</div>
+</form>
+```
+
+`disabled($disabled = true)`, `readonly($readonly = true)`, and `required($required = true)`
+sets an attribute on the form control and a css class on the control block.
+
+`withSuccess($has_success = true)` sets a css class on the control block element.
+
+`withError($messages)` and `withWarning($messages)`
+put message lists in the input's descriptive element and a css class on the control block.
+Added error messages also sets the `aria-invalid` attribute on the input element.
+
+```php
+// Element with error message
+echo FluentForm::create()
+    ->containingInputBlock('name')->withError('Must not contain numbers');
+```
+
+```html
+<form class="form-block-container" method="POST">
+<div class="form-block form-block--error">
+<div><label class="form-block__label" for="name2">Name</label></div>
+<div>
+<input name="name" type="text" aria-describedby="name2-desc" class="form-block__control" aria-invalid="true" id="name2">
+</div>
+<div class="form-block__description" id="name2-desc">
+<ul class="form-block__messages form-block__messages--error">
+<li>Must not contain numbers</li>
+</ul>
+</div>
+</div>
+</form>
+```
 
 #### Control types and options
 `InputBlock`

@@ -36,7 +36,19 @@ echo "\n\n";
 
 // Form with controls
 echo FluentForm::create()
-    ->containingInputBlock('username')
-    ->followedByPasswordBlock();
+    ->containingInputBlock('username')->withLabel('Your username')
+    ->followedByPasswordBlock()->withLabel('Your password');
+
+echo "\n\n";
+
+// Element with description
+echo FluentForm::create()
+    ->containingInputBlock('name')->withDescription('Your full name');
+
+echo "\n\n";
+
+// Element with error message
+echo FluentForm::create()
+    ->containingInputBlock('name')->withError('Must not contain numbers');
 
 echo "\n\n";
