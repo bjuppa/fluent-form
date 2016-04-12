@@ -59,7 +59,14 @@ Some examples of methods in this package returning a new element relative the cu
 the `containing...Block()` methods on control block containers, and `followedBy...Block()` methods on control blocks. 
 
 ## Usage
-`FluentForm::create()`
+`FluentForm::create()` is the base for starting a new form.
+Depending on where you want the html output you may `echo FluentForm::create();`
+or convert it to `(string)FluentForm::create()`.
+
+Within [Blade](http://laravel.com/docs/blade) templates the html will be rendered if placed in echo-tags:
+`{{ FluentForm::create() }}`.
+More info in the
+[Blade documentation of `fewagency/fluent-html`](https://github.com/fewagency/fluent-html#usage-with-blade-templates).
 
 ### Options on a form
 `withAction($url)`
