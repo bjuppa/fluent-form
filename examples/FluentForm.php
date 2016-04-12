@@ -52,3 +52,24 @@ echo FluentForm::create()
     ->containingInputBlock('name')->withError('Must not contain numbers');
 
 echo "\n\n";
+
+// Checkboxes
+echo FluentForm::create()
+    ->containingCheckboxBlock('toc')->required()->unchecked()
+    ->withCheckbox('other');
+
+echo "\n\n";
+
+// Select with optgroup, disabled and selected options
+echo FluentForm::create()
+    ->containingSelectBlock('pet')->withSelectedOptions('dog')->withDisabledOptions('cat')
+    ->withOptions(['cat' => 'Cat', 'Reptiles' => ['turtle' => 'Turtle'], 'dog' => 'Dog']);
+
+echo "\n\n";
+
+// Buttons
+echo FluentForm::create()
+    ->containingButtonBlock('Submit')
+    ->withButton('Reset', 'reset');
+
+echo "\n\n";
