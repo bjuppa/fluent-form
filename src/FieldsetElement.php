@@ -2,12 +2,13 @@
 namespace FewAgency\FluentForm;
 
 use FewAgency\FluentForm\Support\FollowedByBlockContainersTrait;
+use FewAgency\FluentForm\Support\FollowedByBlocksTrait;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Htmlable;
 
 class FieldsetElement extends AbstractControlBlockContainer
 {
-    use FollowedByBlockContainersTrait;
+    use FollowedByBlockContainersTrait, FollowedByBlocksTrait;
     
     /**
      * @var LegendElement

@@ -80,3 +80,12 @@ FluentForm::create()
     ->withRequired(['name' => true, 'phone' => false]);
 
 echo "\n\n";
+
+// Fieldset
+echo FluentForm::create()
+    ->containingFieldset()->withLegend('A Group')
+    ->containingInputBlock('inside')
+    ->getFormBlockContainer()
+    ->followedByInputBlock('outside');
+
+echo "\n\n";

@@ -379,7 +379,7 @@ FluentForm::create()
 Calling `inline($inline = true)` on a container will turn all its form control blocks and wrappers into
 `<span>` and does it's best avoiding any block-display HTML elements inside.
 Not all form controls are suitable for inline display, use it at your own discretion.
-Some CSS classes are also added for styling of inline forms.
+CSS classes are also added for styling of inline forms.
 
 Any descriptive elements containing messages related to form controls, are grouped and displayed before
 the inline content, still referenced using `aria-describedby` for good accessibility.
@@ -395,7 +395,7 @@ Any descriptive elements containing messages related to form controls are kept i
 The default CSS classes for alignment can be overridden on each block container using
 `withAlignmentClasses($classes1, $classes2, $classes3, $offset_classes2, $offset_classes3 = null)`.
 The `offset...` classes are printed whenever a preceding column is not displayed, 
-e.g. for checkboxes that don't have a label wrapper as the first element of the control block.
+e.g. for checkboxes that don't have a label wrapper as the first element of their control block.
 
 #### Nested containers
 On any form block container, like a `<form>`, the method `containingFieldset()` can be used to add and return
@@ -403,6 +403,39 @@ a nested form block container. On any form block, `followedByFieldset()` can be 
 
 The fieldset can be treated as a regular form block container, but it also has `withLegend($html_contents)`
 to add contents to its `<legend>`.
+
+To add more control blocks outside a nested block container, use `getFormBlockContainer()` on the last item,
+and then `followedBy...Block()`.
+Or `getForm()` and then `containing...Block()` if you want to go all the way up adding more blocks to the top container. 
+
+```php
+// Fieldset
+echo FluentForm::create()
+    ->containingFieldset()->withLegend('A Group')
+    ->containingInputBlock('inside')
+    ->getFormBlockContainer()
+    ->followedByInputBlock('outside');
+```
+
+```html
+<form class="form-block-container" method="POST">
+<fieldset class="form-block-container">
+<legend>A Group</legend>
+<div class="form-block">
+<div><label class="form-block__label" for="inside">Inside</label></div>
+<div>
+<input name="inside" type="text" class="form-block__control" id="inside">
+</div>
+</div>
+</fieldset>
+<div class="form-block">
+<div><label class="form-block__label" for="outside">Outside</label></div>
+<div>
+<input name="outside" type="text" class="form-block__control" id="outside">
+</div>
+</div>
+</form>
+```
 
 ## Authors
 I, Björn Nilsved, work at the largest communication agency in southern Sweden.

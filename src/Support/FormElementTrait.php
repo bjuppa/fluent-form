@@ -1,6 +1,7 @@
 <?php
 namespace FewAgency\FluentForm\Support;
 
+use FewAgency\FluentForm\FieldsetElement;
 use FewAgency\FluentForm\FluentForm;
 use FewAgency\FluentForm\AbstractControlBlockContainer;
 
@@ -17,7 +18,7 @@ trait FormElementTrait
 
     /**
      * Get the the block container element if this element is part of one.
-     * @return AbstractControlBlockContainer|null
+     * @return AbstractControlBlockContainer|FieldsetElement|null
      */
     public function getFormBlockContainer()
     {
