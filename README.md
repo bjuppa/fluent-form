@@ -45,18 +45,28 @@ You may add [Laravel facades](http://laravel.com/docs/facades) in the `aliases` 
 A `FluentForm` consists of [*control blocks*](src/AbstractControlBlock.php),
 grouped within [*control block containers*](src/AbstractControlBlockContainer.php).
 The base `FluentForm` element is such a container together with `FieldsetElement`, an example of a nested container.
-`InputBlock` and `CheckboxBlock` are examples of control blocks, each block basically consisting of an input, its label, 
-and any messages or hints describing that input.
+`InputBlock` and `CheckboxBlock` are examples of control blocks.
 
-Many properties can be set on the container level, affecting the form controls within that container.
-Properties are first checked on an individual element and if not specified there we check upwards in the HTML tree,
-through the control block and its block containers up to the form element itself.
+### Control blocks
+Control blocks contain between one and three elements, in this order: 
+1. The label wrapper is used for holding the control's label.
+The label wrapper is not always present, e.g. for blocks containing a checkbox wrapped in its own label.
+2. The form control wrapper is present on all control blocks and holds the actual form control.
+In some cases several form controls may be present within the control wrapper.
+3. The descriptive element is present only if the form control has a description or messages to show to the user.
+
+### Control block containers
+Many control properties can be set on the container level, affecting the form controls within that container.
+These properties are first checked on an individual element and if not specified there we check upwards in the HTML tree,
+through the control block, its block containers, up to the `<form>` element itself.
 This makes it easy to set and override properties in sections of a form.
 
+### Method names
 Naming principles are based upon
 [those of the base-package `fewagency/fluent-html`](https://github.com/fewagency/fluent-html#naming-principles).
 Some examples of methods in this package returning a new element relative the current one are
-the `containing...Block()` methods on control block containers, and `followedBy...Block()` methods on control blocks. 
+the `containing...Block()` methods found on control block containers,
+and `followedBy...Block()` methods of control blocks. 
 
 ## Usage
 `FluentForm::create()` is the base for a new form.
@@ -64,11 +74,11 @@ the `containing...Block()` methods on control block containers, and `followedBy.
 Keep in mind most methods accept collections and closures as parameters
 as in any [`fewagency/fluent-html` usage](https://github.com/fewagency/fluent-html#usage).
 
-Depending on where you want the HTML output you may `echo FluentForm::create();`
-or render it using string conversion `(string)FluentForm::create()`.
+Depending on where you want your form HTML output you may `echo FluentForm::create()->...;`
+or render it using PHP string conversion, i.e. `(string)FluentForm::create()->...`.
 
-Within [Blade](http://laravel.com/docs/blade) templates the HTML will be rendered if placed in echo-tags:
-`{{ FluentForm::create() }}`.
+Within [Blade](http://laravel.com/docs/blade) templates, the HTML will be rendered if placed in echo-tags:
+`{{ FluentForm::create()->... }}`.
 Check out the
 [Blade documentation of `fewagency/fluent-html`](https://github.com/fewagency/fluent-html#usage-with-blade-templates).
 
@@ -103,12 +113,12 @@ like `withAttribute()` and `withClass()`.
 ### Add form controls
 The first control on a form (or other container) is added with one of the `containing...Block()` methods,
 for example `containingInputBlock($name, $type = 'text')`.
-This call will return the new block so you can chain any methods modifying the block directly afterwards.
+This call will return the new block so you can chain any methods modifying that new block directly afterwards.
 
 Subsequent controls are added after another control block using the `followedBy...Block()` methods,
 for example `followedByInputBlock($name, $type = 'text')`.
 
-#### Block types available and their parameters:
+#### Block types and their parameters:
 - `...InputBlock($name, $type = 'text')`
 - `...PasswordBlock($name = 'password')`
 - `...SelectBlock($name, $options = null)`
@@ -148,10 +158,10 @@ echo FluentForm::create()
 `withLabel($html_contents)` adds contents to the control block's labeling element.
 If not called, the default label will be based on the input's name.
 
-`withInputValue($value)` is available on most control blocks and will set the underlying input's value directly.
+`withInputValue($value)` is available on most control blocks and will set the main underlying input's value directly.
 
 `withInputAttribute($attributes, $value = true)` is available on most control blocks and will set attributes
-directly on the underlying input element.
+directly on the main underlying input element.
 
 `withDescription($html_contents)` adds descriptive content related to the input using `aria-describedby`.
 
@@ -174,7 +184,7 @@ echo FluentForm::create()
 ```
 
 `disabled($disabled = true)`, `readonly($readonly = true)`, and `required($required = true)`
-sets an attribute on the form control and a CSS class on the control block.
+sets the relevant HTML attribute on the form control and a corresponding CSS class on the control block.
 
 `withSuccess($has_success = true)` sets a CSS class on the control block element.
 
@@ -207,7 +217,7 @@ echo FluentForm::create()
 #### Control types and options
 
 ##### Text inputs
-`InputBlock($name, $type = 'text')` handles all the text-type inputs specified by `$type`, including `textarea`.
+`InputBlock($name, $type = 'text')` generates any `<input>` specified by `$type`, including `textarea`.
 
 Some types get special treatments:
 - `password` won't print the `value` attribute unless you specifically set it on the input element.
@@ -215,12 +225,15 @@ Some types get special treatments:
 that you are free to override using `withInputAttribute()`.
 
 ##### Checkboxes
-`CheckboxBlock($name)` is a checkbox input with a default `value` attribute of "1". 
+`CheckboxBlock($name)` is a checkbox input with a default `value` attribute of "1".
+
 `withInputValue($value)` can be used to set a custom `value` on the checkbox.
-`checked($checked = true)` and `unchecked()` manipulates the `checked` attribute on the underlying input.
+
+`checked($checked = true)` and `unchecked()` manipulates the `checked` attribute on the underlying inputs.
+
 More checkboxes can be added using `withCheckbox($name)` or `containingCheckbox($name)`.
 The first checkbox is treated as the block's main input,
-extra checkboxes won't have any messages or descriptions displayed automatically.
+so extra checkboxes won't have any messages or descriptions displayed automatically.
 
 ```php
 // Checkboxes
@@ -246,11 +259,14 @@ Other
 </form>
 ```
 
-##### Select inputs
+##### Select controls
 `SelectBlock($name, $options = null)` can be easily turned into a multiselect using `multiple($multiple = true)`.
+
 The `$options` (any collection of option display strings keyed by option value)
 can be provided on creation or added later through `withOptions($options)`.
+
 `<optgroup>`s can be generated by putting a collection of options keyed by an optgroup label within `$options`.
+
 Options are selected using `withSelectedOptions($options)` and disabled using `withDisabledOptions($options)`.
 
 ```php
@@ -277,10 +293,11 @@ echo FluentForm::create()
 
 ##### Buttons
 `ButtonBlock($button_contents, $type = 'submit')` is a block containing one button from start.
+
 More buttons can be added using `withButton($button_contents, $type = "submit")` or
 `containingButton($button_contents, $type = "submit")`.
 The first button is treated as the block's main input,
-extra buttons won't have any messages or descriptions displayed automatically.
+so extra buttons won't have any messages or descriptions displayed automatically.
 
 ```php
 // Buttons
@@ -301,13 +318,13 @@ echo FluentForm::create()
 ```
 
 ### Container options
-On a control block container, defaults options can be set that are used for any form controls within that container.
+On a control block container, defaults options can be set that are used for any descendant form controls.
 
 `withValues($map)` adds key-value maps used for populating inputs' values and selected options.
 If given a PHP object, input values will be pulled from that object's public properties.
-These maps are checked in order from the last to the first added until a matching key is found.
+These maps are checked in order, from the last to the first one added, until a matching key is found.
 For example you can first set a map of default values, like the currently stored data,
-and then add a map containing the user's last input. 
+and then add a map containing the user's last input.
 
 `withLabels($map)` adds key-value maps for populating inputs' labels.
 
@@ -324,9 +341,9 @@ FluentForm::create()
     ->withRequired(['name' => true, 'phone' => false]); 
 ```
 
-To add a hidden input, simply call `withHiddenInput($name, $value = null)`.
+To add a hidden input, simply call `withHiddenInput($name, $value = null)` on the container.
 
-#### Laravel example
+#### Laravel form options example
 ```php
 {{
 FluentForm::create()
@@ -341,28 +358,29 @@ FluentForm::create()
 }}
 ```
 
-#### Container layout
+#### Container layouts
 
 ##### Inline form layout
 Calling `inline($inline = true)` on a container will turn all its form control blocks and wrappers into
 `<span>` and does it's best avoiding any block-display HTML elements inside.
 Not all form controls are suitable for inline display, use it at your own discretion.
-Some CSS classes are also added for easy styling of inline forms.
+Some CSS classes are also added for styling of inline forms.
 
 Any descriptive elements containing messages related to form controls, are grouped and displayed before
-the inline content, but still referenced using `aria-describedby` for good accessibility.
+the inline content, still referenced using `aria-describedby` for good accessibility.
 
 ##### Aligned form layout
 Horizontally aligning labels with their form-controls is configured on a container using `aligned($align = true)`.
 An aligned section will render any wrappers of labels and form controls as `<span>` and add CSS classes for styling.
-Without any styling, labels and inputs will just display next to each other on the same line, the actual aligning needs
-to be done in CSS.
+Without any styling, labels and inputs will just display next to each other on the same line, the actual aligning
+has to be done in CSS.
 
 Any descriptive elements containing messages related to form controls are kept in block-display HTML after the input.
 
 The default CSS classes for alignment can be overridden on each block container using
-`withAlignmentClasses($classes1, $classes2, $classes3, $offset_classes2, $offset_classes3 = null)`
-where the `offset` classes are printed when a preceding column is not displayed.
+`withAlignmentClasses($classes1, $classes2, $classes3, $offset_classes2, $offset_classes3 = null)`.
+The `offset...` classes are printed whenever a preceding column is not displayed, 
+e.g. for checkboxes that don't have a label wrapper as the first element of the control block.
 
 #### Nested containers
 `containingFieldset()` `followedByFieldset()`
