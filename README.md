@@ -383,7 +383,11 @@ The `offset...` classes are printed whenever a preceding column is not displayed
 e.g. for checkboxes that don't have a label wrapper as the first element of the control block.
 
 #### Nested containers
-`containingFieldset()` `followedByFieldset()`
+On any form block container, like a `<form>`, the method `containingFieldset()` can be used to add and return
+a nested form block container. On any form block, `followedByFieldset()` can be called with similar effect.
+
+The fieldset can be treated as a regular form block container, but it also has `withLegend($html_contents)`
+to add contents to its `<legend>`.
 
 ## Authors
 I, Björn Nilsved, work at the largest communication agency in southern Sweden.
