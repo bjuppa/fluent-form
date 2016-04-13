@@ -23,10 +23,12 @@ class CheckboxTest extends PHPUnit_Framework_TestCase
 
         $this->assertContains("<div class=\"form-block\">
 <div>
+<div class=\"form-block__checkbox-wrapper\">
 <label>
 <input name=\"test\" type=\"checkbox\" value=\"1\">
 Test
 </label>
+</div>
 </div>
 </div>", $b->toHtml());
     }

@@ -8,7 +8,7 @@ echo "\n";
 // Generate a simple inline search form
 echo FluentForm::create()
     ->inline()
-    ->containingInputBlock('search')
+    ->containingInputBlock('query', 'search')
     ->followedByButtonBlock('Search!');
 
 echo "\n\n";

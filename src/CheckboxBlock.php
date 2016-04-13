@@ -12,6 +12,8 @@ class CheckboxBlock extends AbstractControlBlock implements CheckableControlCont
      */
     private $main_checkbox;
 
+    protected $checkbox_wrapper_classname = 'form-block__checkbox-wrapper';
+
     /**
      * @param string $name of input
      */
@@ -53,7 +55,9 @@ class CheckboxBlock extends AbstractControlBlock implements CheckableControlCont
             return $this->isRequired();
         });
         //Wrap in label and insert input element
-        $this->getAlignmentElement(2)->withContent($checkbox->wrappedInLabel());
+        $this->getAlignmentElement(2)->withContent($checkbox->wrappedInLabel()->wrappedInElement(function () {
+            return $this->isInline() ? 'span' : 'div';
+        })->withClass($this->checkbox_wrapper_classname));
 
         if (empty($this->main_checkbox)) {
             $this->main_checkbox = $checkbox;

@@ -6,16 +6,16 @@ for building accessible, well-formated, yet customizable HTML forms.
 // Generate a simple inline search form
 echo FluentForm::create()
     ->inline()
-    ->containingInputBlock('search')
+    ->containingInputBlock('query', 'search')
     ->followedByButtonBlock('Search!');
 ```
 
 ```html
 <form class="form-block-container form-block-container--inline" method="POST">
 <span class="form-block">
-<span><label class="form-block__label" for="search">Search</label></span>
+<span><label class="form-block__label" for="query">Query</label></span>
 <span>
-<input name="search" type="text" class="form-block__control" id="search">
+<input name="query" type="search" class="form-block__control" id="query">
 </span>
 </span>
 <span class="form-block">
@@ -48,9 +48,10 @@ The base `FluentForm` element is such a container together with `FieldsetElement
 `InputBlock` and `CheckboxBlock` are examples of control blocks.
 
 ### Control blocks
-Control blocks contain between one and three elements, in this order: 
+Control blocks contain between one and three elements, in this order:
+
 1. The label wrapper is used for holding the control's label.
-The label wrapper is not always present, e.g. for blocks containing a checkbox wrapped in its own label.
+The label wrapper is not always present, e.g. for blocks containing checkbox that are wrapped in their own labels.
 2. The form control wrapper is present on all control blocks and holds the actual form control.
 In some cases several form controls may be present within the control wrapper.
 3. The descriptive element is present only if the form control has a description or messages to show to the user.
@@ -68,8 +69,17 @@ Some examples of methods in this package returning a new element relative the cu
 the `containing...Block()` methods found on control block containers,
 and `followedBy...Block()` methods of control blocks. 
 
+### CSS class names
+This packages uses the [BEM approach for CSS naming](http://getbem.com/naming/).
+
 ## Usage
 `FluentForm::create()` is the base for a new form.
+
+Form controls can be named and referenced with dot-notation.
+A control named `person.name` will have its `name` attribute rendered as `person[name]`.
+
+The `name` attribute of a control named `pets` will be rendered with appended empty brackets (`pets[]`)
+if the input is a "multiple" input.
 
 Keep in mind most methods accept collections and closures as parameters
 as in any [`fewagency/fluent-html` usage](https://github.com/fewagency/fluent-html#usage).
@@ -80,7 +90,8 @@ or render it using PHP string conversion, i.e. `(string)FluentForm::create()->..
 Within [Blade](http://laravel.com/docs/blade) templates, the HTML will be rendered if placed in echo-tags:
 `{{ FluentForm::create()->... }}`.
 Check out the
-[Blade documentation of `fewagency/fluent-html`](https://github.com/fewagency/fluent-html#usage-with-blade-templates).
+[Blade documentation of `fewagency/fluent-html`](https://github.com/fewagency/fluent-html#usage-with-blade-templates)
+for more info.
 
 ### Convenience methods on forms
 `withAction($url)` sets the `action` attribute of the `<form>`.
@@ -246,14 +257,18 @@ echo FluentForm::create()
 <form class="form-block-container" method="POST">
 <div class="form-block form-block--required">
 <div>
+<div class="form-block__checkbox-wrapper">
 <label>
 <input name="toc" type="checkbox" value="1" required>
 Toc
 </label>
+</div>
+<div class="form-block__checkbox-wrapper">
 <label>
 <input name="other" type="checkbox" value="1" required>
 Other
 </label>
+</div>
 </div>
 </div>
 </form>
@@ -318,12 +333,12 @@ echo FluentForm::create()
 ```
 
 ### Container options
-On a control block container, defaults options can be set that are used for any descendant form controls.
+On a control block container, default options can be set that are used for any descendant form controls.
 
 `withValues($map)` adds key-value maps used for populating inputs' values and selected options.
 If given a PHP object, input values will be pulled from that object's public properties.
 These maps are checked in order, from the last to the first one added, until a matching key is found.
-For example you can first set a map of default values, like the currently stored data,
+For example you can first add a map of default values, like the currently stored data,
 and then add a map containing the user's last input.
 
 `withLabels($map)` adds key-value maps for populating inputs' labels.
