@@ -49,7 +49,7 @@ The base `FluentForm` element is such a container together with `FieldsetElement
 and any messages or hints describing that input.
 
 Many properties can be set on the container level, affecting the form controls within that container.
-Properties are first checked on an individual element and if not specified there we check upwards in the html tree,
+Properties are first checked on an individual element and if not specified there we check upwards in the HTML tree,
 through the control block and its block containers up to the form element itself.
 This makes it easy to set and override properties in sections of a form.
 
@@ -64,10 +64,10 @@ the `containing...Block()` methods on control block containers, and `followedBy.
 Keep in mind most methods accept collections and closures as parameters
 as in any [`fewagency/fluent-html` usage](https://github.com/fewagency/fluent-html#usage).
 
-Depending on where you want the html output you may `echo FluentForm::create();`
+Depending on where you want the HTML output you may `echo FluentForm::create();`
 or render it using string conversion `(string)FluentForm::create()`.
 
-Within [Blade](http://laravel.com/docs/blade) templates the html will be rendered if placed in echo-tags:
+Within [Blade](http://laravel.com/docs/blade) templates the HTML will be rendered if placed in echo-tags:
 `{{ FluentForm::create() }}`.
 Check out the
 [Blade documentation of `fewagency/fluent-html`](https://github.com/fewagency/fluent-html#usage-with-blade-templates).
@@ -174,12 +174,12 @@ echo FluentForm::create()
 ```
 
 `disabled($disabled = true)`, `readonly($readonly = true)`, and `required($required = true)`
-sets an attribute on the form control and a css class on the control block.
+sets an attribute on the form control and a CSS class on the control block.
 
-`withSuccess($has_success = true)` sets a css class on the control block element.
+`withSuccess($has_success = true)` sets a CSS class on the control block element.
 
 `withError($messages)` and `withWarning($messages)`
-put message lists in the input's descriptive element and a css class on the control block.
+put message lists in the input's descriptive element and a CSS class on the control block.
 Added error messages also sets the `aria-invalid` attribute on the input element.
 
 ```php
@@ -342,9 +342,27 @@ FluentForm::create()
 ```
 
 #### Container layout
-`inline($inline = true)`
-`aligned($align = true)`
+
+##### Inline form layout
+Calling `inline($inline = true)` on a container will turn all its form control blocks and wrappers into
+`<span>` and does it's best avoiding any block-display HTML elements inside.
+Not all form controls are suitable for inline display, use it at your own discretion.
+Some CSS classes are also added for easy styling of inline forms.
+
+Any descriptive elements containing messages related to form controls, are grouped and displayed before
+the inline content, but still referenced using `aria-describedby` for good accessibility.
+
+##### Aligned form layout
+Horizontally aligning labels with their form-controls is configured on a container using `aligned($align = true)`.
+An aligned section will render any wrappers of labels and form controls as `<span>` and add CSS classes for styling.
+Without any styling, labels and inputs will just display next to each other on the same line, the actual aligning needs
+to be done in CSS.
+
+Any descriptive elements containing messages related to form controls are kept in block-display HTML after the input.
+
+The default CSS classes for alignment can be overridden on each block container using
 `withAlignmentClasses($classes1, $classes2, $classes3, $offset_classes2, $offset_classes3 = null)`
+where the `offset` classes are printed when a preceding column is not displayed.
 
 #### Nested containers
 `containingFieldset()` `followedByFieldset()`
