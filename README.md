@@ -301,32 +301,45 @@ echo FluentForm::create()
 ```
 
 ### Container options
-On a control block container options can be set that are used as defaults for any form controls within that container.
+On a control block container, defaults options can be set that are used for any form controls within that container.
 
-`withValues($map)` adds key-value maps used for populating input's values and selected options.
-It's even possible to supply a PHP object, which will pull input values from the object's public properties.
-For inputs, these maps are checked in order from the last to the first added until a matching key is found.
+`withValues($map)` adds key-value maps used for populating inputs' values and selected options.
+If given a PHP object, input values will be pulled from that object's public properties.
+These maps are checked in order from the last to the first added until a matching key is found.
 For example you can first set a map of default values, like the currently stored data,
 and then add a map containing the user's last input. 
 
-An example of setting form options in a Laravel Blade view:
+`withLabels($map)` adds key-value maps for populating inputs' labels.
+
+`withErrors($messages)` and `withWarnings($messages)` adds messages keyed by control name.
+
+To set *success*, *disabled*, *readonly*, or *required* states on controls within a container,
+use `withSuccess($map)`, `withDisabled($map)`, `withReadonly($map)`, and `withRequired($map)`.
+Input to those methods can be strings of control names or key-boolean maps keyed by control name.
+
+```php
+// Adding maps to containers
+FluentForm::create()
+    ->withSuccess('name', 'phone')
+    ->withRequired(['name' => true, 'phone' => false]); 
+```
+
+To add a hidden input, simply call `withHiddenInput($name, $value = null)`.
+
+#### Laravel example
 ```php
 {{
 FluentForm::create()
+  // Put the Laravel CSRF token on the form
   ->withToken(csrf_token())
+  // Use default values from an Eloquent model, and old user input if flashed into session
   ->withValues($model, old())
-  ->withErrors($errors)
+   // Add Laravel validation errors to the form
+  ->withErrors($errors) 
+  // Pick default labels from the validation language file 
+  ->withLabels(trans('validation.attributes'))
 }}
 ```
-
-`withLabels($map)`
-`withErrors($messages)`
-`withWarnings($messages)`
-`withSuccess($map)`
-`withDisabled($map)`
-`withReadonly($map)`
-`withRequired($map)`
-`withHiddenInput($name, $value = null)`
 
 #### Container layout
 `inline($inline = true)`

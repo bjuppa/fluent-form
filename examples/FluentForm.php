@@ -73,3 +73,10 @@ echo FluentForm::create()
     ->withButton('Reset', 'reset');
 
 echo "\n\n";
+
+// Adding maps to containers
+FluentForm::create()
+    ->withSuccess('name', 'phone')
+    ->withRequired(['name' => true, 'phone' => false]);
+
+echo "\n\n";

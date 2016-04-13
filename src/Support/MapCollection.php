@@ -59,7 +59,7 @@ class MapCollection extends Collection
         $string_map = [];
         foreach ($maps as $map) {
             if (is_string($map)) {
-                //Collect any strings into a map of string=>true items for insertion later
+                //Collect any strings into a map of string=>true items for collective insertion
                 $string_map[$map] = true;
             } elseif (!empty($map)) {
                 //Put any collected strings into a map on the collection, before the current map is inserted

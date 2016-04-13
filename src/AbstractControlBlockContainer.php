@@ -212,7 +212,7 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
     /**
      * Merge a new array of messages into the error messages.
      *
-     * @param  MessageProvider|array $messages keyed by fieldname
+     * @param  MessageProvider|array $messages keyed by control name
      * @return $this
      */
     public function withErrors($messages)
@@ -226,7 +226,7 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
     }
 
     /**
-     * Get the error messages for a field.
+     * Get the error messages for a form control.
      *
      * @param string $key
      * @return array of message strings
@@ -239,7 +239,7 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
     /**
      * Merge a new array of messages into the warning messages.
      *
-     * @param  MessageProvider|array $messages keyed by fieldname
+     * @param  MessageProvider|array $messages keyed by control name
      * @return $this
      */
     public function withWarnings($messages)
@@ -253,7 +253,7 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
     }
 
     /**
-     * Get the warning messages for a field.
+     * Get the warning messages for a form control.
      *
      * @param string $key
      * @return array of message strings
