@@ -81,6 +81,15 @@ FluentForm::create()
 
 echo "\n\n";
 
+// Custom HTML next to input
+echo FluentForm::create()
+    ->containingInputBlock('test')
+    ->getInputElement()->followedByElement('span','extra content')
+    ->getAncestorInstanceOf(\FewAgency\FluentForm\AbstractControlBlock::class)
+    ->followedByInputBlock('after');
+
+echo "\n\n";
+
 // Fieldset
 echo FluentForm::create()
     ->containingFieldset()->withLegend('A Group')

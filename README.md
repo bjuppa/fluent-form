@@ -332,6 +332,56 @@ echo FluentForm::create()
 </form>
 ```
 
+#### Custom HTML in blocks
+Sometimes you'll want to do special things to the HTML elements within your control blocks.
+
+Here are some methods that can be used to pull out elements on different blocks:
+
+- `getInputElement()`
+- `getMainButtonElement()`
+- `getMainCheckboxElement()`
+- `getLabelElement()`
+- `getDescriptionElement()`
+
+Via those elements you can add and modify HTML, both within and around, using the
+[methods of `FluentHtmlElement`](https://github.com/fewagency/fluent-html#methods-reference).
+
+After doing customizations, you may find yourself deep into a branch of "normal" `FluentHtmlElement`s,
+outside of the elements of this package.
+You can find your way back up to the form block or container through
+[`FluentHtmlElement`'s structure navigation methods](https://github.com/fewagency/fluent-html#methods-for-structure-navigation).
+`getAncestorInstanceOf(\FewAgency\FluentForm\AbstractControlBlock::class)`
+or
+`getAncestorInstanceOf(\FewAgency\FluentForm\AbstractControlBlockContainer::class)`
+may be especially useful.
+
+```php
+// Custom HTML next to input
+echo FluentForm::create()
+    ->containingInputBlock('test')
+    ->getInputElement()->followedByElement('span','extra content')
+    ->getAncestorInstanceOf(\FewAgency\FluentForm\AbstractControlBlock::class)
+    ->followedByInputBlock('after');
+```
+
+```html
+<form class="form-block-container" method="POST">
+<div class="form-block">
+<div><label class="form-block__label" for="test">Test</label></div>
+<div>
+<input name="test" type="text" class="form-block__control" id="test">
+<span>extra content</span>
+</div>
+</div>
+<div class="form-block">
+<div><label class="form-block__label" for="after">After</label></div>
+<div>
+<input name="after" type="text" class="form-block__control" id="after">
+</div>
+</div>
+</form>
+```
+
 ### Container options
 On a control block container, default options can be set that are used for any descendant form controls.
 
