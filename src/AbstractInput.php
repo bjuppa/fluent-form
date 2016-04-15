@@ -1,15 +1,12 @@
 <?php
 namespace FewAgency\FluentForm;
 
-//TODO: subclass these HTML inputs:
-// done: PasswordInputElement - don't set value
+//Potentially subclass these HTML inputs:
 // SubmitInputElement
-// RadioInputElement
-// done: CheckboxInputElement
 // ButtonInputElement
 // FileInputElement
 
-//TODO: subclass these HTML5 inputs:
+//Potentially subclass these HTML5 inputs:
 // NumberInputElement
 // DateInputElement
 // MonthInputElement
@@ -17,7 +14,6 @@ namespace FewAgency\FluentForm;
 // TimeInputElement
 // DatetimeInputElement
 // DatetimeLocalInputElement
-// done: EmailInputElement
 // SearchInputElement
 // UrlInputElement
 // ColorInputElement
@@ -26,6 +22,10 @@ namespace FewAgency\FluentForm;
 use FewAgency\FluentForm\Support\ReadonlyInputTrait;
 use FewAgency\FluentForm\Support\SingleValueInputTrait;
 
+/**
+ * Class AbstractInput works as a base for all the <input>s
+ * @package FewAgency\FluentForm
+ */
 abstract class AbstractInput extends AbstractFormControl
 {
     use SingleValueInputTrait, ReadonlyInputTrait;
