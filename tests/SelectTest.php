@@ -36,7 +36,7 @@ class SelectTest extends PHPUnit_Framework_TestCase
     {
         $b = $this->getTestBlock();
         $b->withOptions(['a' => 'A', 'b' => 'B']);
-        $b->getFormBlockContainer()->withValues(['A' => 'b']);
+        $b->getControlBlockContainer()->withValues(['A' => 'b']);
 
         $this->assertNotTrue($b->isOptionSelected('a'));
         $this->assertTrue($b->isOptionSelected('b'));
@@ -70,7 +70,7 @@ class SelectTest extends PHPUnit_Framework_TestCase
     {
         $b = $this->getTestBlock();
         $b->withOptions(['a' => 'A', 'b' => 'B']);
-        $b->getFormBlockContainer()->withDisabled('A.b');
+        $b->getControlBlockContainer()->withDisabled('A.b');
 
         $this->assertNotTrue($b->isOptionDisabled('a'));
         $this->assertTrue($b->isOptionDisabled('b'));

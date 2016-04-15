@@ -39,7 +39,7 @@ Test
 
         $this->assertContains("Test\n</label>", (string)$b);
 
-        $b->getFormBlockContainer()->withLabels(['test' => 'C']);
+        $b->getControlBlockContainer()->withLabels(['test' => 'C']);
 
         $this->assertNotContains("Test", (string)$b);
         $this->assertContains('C', (string)$b);
@@ -53,7 +53,7 @@ Test
     function testCheckedCheckbox()
     {
         $b = $this->getTestBlock();
-        $b->getFormBlockContainer()->withValues(['test' => 'on']);
+        $b->getControlBlockContainer()->withValues(['test' => 'on']);
 
         $this->assertContains('checked', (string)$b);
     }
@@ -61,7 +61,7 @@ Test
     function testCheckboxWithValue()
     {
         $b = $this->getTestBlock();
-        $b->getFormBlockContainer()->withValues(['test' => 'on']);
+        $b->getControlBlockContainer()->withValues(['test' => 'on']);
         $b->withInputValue('other');
 
         $this->assertNotContains('checked', (string)$b);

@@ -20,7 +20,7 @@ trait FormElementTrait
      * Get the the block container element if this element is part of one.
      * @return AbstractControlBlockContainer|FieldsetElement|null
      */
-    public function getFormBlockContainer()
+    public function getControlBlockContainer()
     {
         return $this->getAncestorInstanceOf('FewAgency\FluentForm\AbstractControlBlockContainer');
     }
@@ -32,7 +32,7 @@ trait FormElementTrait
      */
     protected function getValueFromAncestor($key)
     {
-        if ($ancestor = $this->getFormBlockContainer()) {
+        if ($ancestor = $this->getControlBlockContainer()) {
             return $ancestor->getValue($key);
         }
 
@@ -46,7 +46,7 @@ trait FormElementTrait
      */
     protected function getLabelFromAncestor($key)
     {
-        if ($ancestor = $this->getFormBlockContainer()) {
+        if ($ancestor = $this->getControlBlockContainer()) {
             return $ancestor->getLabel($key);
         }
 
@@ -60,7 +60,7 @@ trait FormElementTrait
      */
     protected function getErrorsFromAncestor($key)
     {
-        if ($ancestor = $this->getFormBlockContainer()) {
+        if ($ancestor = $this->getControlBlockContainer()) {
             return $ancestor->getErrors($key);
         }
 
@@ -74,7 +74,7 @@ trait FormElementTrait
      */
     protected function getWarningsFromAncestor($key)
     {
-        if ($ancestor = $this->getFormBlockContainer()) {
+        if ($ancestor = $this->getControlBlockContainer()) {
             return $ancestor->getWarnings($key);
         }
 
@@ -88,7 +88,7 @@ trait FormElementTrait
      */
     protected function hasSuccessFromAncestor($key)
     {
-        if ($ancestor = $this->getFormBlockContainer()) {
+        if ($ancestor = $this->getControlBlockContainer()) {
             return $ancestor->hasSuccess($key);
         }
 
@@ -102,7 +102,7 @@ trait FormElementTrait
      */
     protected function isDisabledFromAncestor($key)
     {
-        if ($ancestor = $this->getFormBlockContainer()) {
+        if ($ancestor = $this->getControlBlockContainer()) {
             return $ancestor->isDisabled($key);
         }
 
@@ -116,7 +116,7 @@ trait FormElementTrait
      */
     protected function isReadonlyFromAncestor($key)
     {
-        if ($ancestor = $this->getFormBlockContainer()) {
+        if ($ancestor = $this->getControlBlockContainer()) {
             return $ancestor->isReadonly($key);
         }
 
@@ -130,7 +130,7 @@ trait FormElementTrait
      */
     protected function isRequiredFromAncestor($key)
     {
-        if ($ancestor = $this->getFormBlockContainer()) {
+        if ($ancestor = $this->getControlBlockContainer()) {
             return $ancestor->isRequired($key);
         }
 
@@ -143,7 +143,7 @@ trait FormElementTrait
      */
     public function isAligned()
     {
-        if ($ancestor = $this->getFormBlockContainer()) {
+        if ($ancestor = $this->getControlBlockContainer()) {
             return $ancestor->isAligned();
         }
 
@@ -156,7 +156,7 @@ trait FormElementTrait
      */
     public function isInline()
     {
-        if ($ancestor = $this->getFormBlockContainer()) {
+        if ($ancestor = $this->getControlBlockContainer()) {
             return $ancestor->isInline();
         }
 

@@ -39,12 +39,12 @@ class FormBlockTest extends PHPUnit_Framework_TestCase
         $this->assertContains('autocorrect="off"', $input->toHtml());
     }
 
-    public function testGetFormBlockContainer()
+    public function testGetControlBlockContainer()
     {
         $b = $this->getTestBlock();
 
         $this->assertInstanceOf('FewAgency\FluentForm\AbstractControlBlockContainer',
-            $b->getFormBlockContainer());
+            $b->getControlBlockContainer());
     }
 
     public function testWithLabel()

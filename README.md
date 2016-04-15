@@ -454,7 +454,7 @@ a nested form block container. On any form block, `followedByFieldset()` can be 
 The fieldset can be treated as a regular form block container, but it also has `withLegend($html_contents)`
 to add contents to its `<legend>`.
 
-To add more control blocks outside a nested block container, use `getFormBlockContainer()` on the last item,
+To add more control blocks outside a nested block container, use `getControlBlockContainer()` on the last item,
 and then `followedBy...Block()`.
 Or `getForm()` and then `containing...Block()` if you want to go all the way up adding more blocks to the top container. 
 
@@ -463,7 +463,7 @@ Or `getForm()` and then `containing...Block()` if you want to go all the way up 
 echo FluentForm::create()
     ->containingFieldset()->withLegend('A Group')
     ->containingInputBlock('inside')
-    ->getFormBlockContainer()
+    ->getControlBlockContainer()
     ->followedByInputBlock('outside');
 ```
 

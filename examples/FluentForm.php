@@ -94,7 +94,7 @@ echo "\n\n";
 echo FluentForm::create()
     ->containingFieldset()->withLegend('A Group')
     ->containingInputBlock('inside')
-    ->getFormBlockContainer()
+    ->getControlBlockContainer()
     ->followedByInputBlock('outside');
 
 echo "\n\n";

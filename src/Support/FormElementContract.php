@@ -19,5 +19,5 @@ interface FormElementContract
      * Get the the block container element if this element is part of one.
      * @return AbstractControlBlockContainer|null
      */
-    public function getFormBlockContainer(); //TODO: rename getFormBlockContainer() to getControlBlockContainer()
+    public function getControlBlockContainer();
 }

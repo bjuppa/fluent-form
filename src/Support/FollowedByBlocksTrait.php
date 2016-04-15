@@ -83,7 +83,7 @@ trait FollowedByBlocksTrait
      */
     protected function followedByBlock($type, $parameters = [])
     {
-        $block = $this->getFormBlockContainer()->createControlBlock($type, $parameters);
+        $block = $this->getControlBlockContainer()->createControlBlock($type, $parameters);
         $this->withFollowingSibling($block);
 
         return $block;

@@ -136,7 +136,7 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
         $this->withContent(function () {
             //This prints blocks' description elements at top of the container under certain conditions
             if ($this->isInline()) {
-                $container = $this->getFormBlockContainer();
+                $container = $this->getControlBlockContainer();
                 if (empty($container) or !$container->isInline()) {
                     return $this->pullSubBlocksDescriptionElements();
                 }
@@ -384,7 +384,7 @@ abstract class AbstractControlBlockContainer extends FluentHtmlElement implement
         if (!empty($this->alignment_classes)) {
             $alignment_classes = $this->alignment_classes;
             $alignment_offset_classes = $this->alignment_offset_classes;
-        } elseif ($ancestor = $this->getFormBlockContainer()) {
+        } elseif ($ancestor = $this->getControlBlockContainer()) {
             return $ancestor->getAlignmentClasses($number, $with_offset);
         } else {
             $alignment_classes = $this->alignment_classes_default;
