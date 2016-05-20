@@ -423,6 +423,13 @@ FluentForm::create()
 }}
 ```
 
+Adding an [Eloquent model](https://laravel.com/docs/eloquent) to `withValues()` will access the model's values
+through its [array representation](https://laravel.com/docs/eloquent-serialization),
+meaning only visible properties will be used in the form.
+Should you want to expose all attributes of an Eloquent model in the form
+without making them visible in array and json-representations,
+`$model->getAttributes()` can be supplied to `withValues()`. 
+
 #### Container layouts
 
 ##### Inline form layout
