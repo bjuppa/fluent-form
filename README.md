@@ -70,7 +70,7 @@ the `containing...Block()` methods found on control block containers,
 and `followedBy...Block()` methods of control blocks. 
 
 ### CSS class names
-This packages uses the [BEM approach for CSS naming](http://getbem.com/naming/).
+This package uses the [BEM approach for CSS naming](http://getbem.com/naming/).
 
 ## Usage
 `FluentForm::create()` is the base for a new form.
