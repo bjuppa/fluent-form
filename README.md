@@ -51,7 +51,7 @@ The base `FluentForm` element is such a container together with `FieldsetElement
 Control blocks contain between one and three elements, in this order:
 
 1. The label wrapper is used for holding the control's label.
-The label wrapper is not always present, e.g. for blocks containing checkbox that are wrapped in their own labels.
+The label wrapper is not always present, e.g. for blocks containing checkbox inputs wrapped in their own labels.
 2. The form control wrapper is present on all control blocks and holds the actual form control.
 In some cases several form controls may be present within the control wrapper.
 3. The descriptive element is present only if the form control has a description or messages to show to the user.
