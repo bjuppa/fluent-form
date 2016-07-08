@@ -173,6 +173,19 @@ If not called, the default label will be based on the input's name.
 
 `withInputAttribute($attributes, $value = true)` is available on most control blocks and will set attributes
 directly on the main underlying input element.
+Here's a neat trick to format the input's value attribute
+(the example is using [Carbon](http://carbon.nesbot.com) to format a date-time): 
+
+```php
+->withInputAttribute('value', function($input) {
+  $value = $input->getValue();
+  try {
+    $value = \Carbon\Carbon::parse($value)->toW3cString();
+  } catch(Exception $e) {
+  }
+  return $value;
+})
+```
 
 `withDescription($html_contents)` adds descriptive content related to the input using `aria-describedby`.
 
@@ -493,6 +506,8 @@ echo FluentForm::create()
 </div>
 </form>
 ```
+
+
 
 ## Authors
 I, Björn Nilsved, work at the largest communication agency in southern Sweden.
