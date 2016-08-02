@@ -27,6 +27,7 @@ echo FluentForm::create()
 * [Installation](#installation--configuration)
 * [Principles](#principles)
 * [Usage](#usage)
+* [Alternatives](#alternatives)
 * [Authors - FEW Agency](#authors)
 * [License](#license)
 
@@ -182,6 +183,7 @@ Here's a neat trick to format the input's value attribute
   try {
     $value = \Carbon\Carbon::parse($value)->toW3cString();
   } catch(Exception $e) {
+    // Do nothing on errors
   }
   return $value;
 })
@@ -507,7 +509,10 @@ echo FluentForm::create()
 </form>
 ```
 
-
+## Alternatives
+https://github.com/formers/former is another fluent-style form-generator with major differences being
+it is more tightly integrated with Laravel,
+and it is fluent only per input, not the whole form.
 
 ## Authors
 I, Björn Nilsved, work at the largest communication agency in southern Sweden.
